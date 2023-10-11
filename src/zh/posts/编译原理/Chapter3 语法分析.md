@@ -1,13 +1,22 @@
 ---
-name: Chapter3 语法分析
-icon: edit
-date: 2022-01-01
+title: Chapter3 语法分析
+# cover: /assets/images/cover1.jpg
+
+icon: page
+order: 1
+author: ChiChen
+date: 2023-10-11
 category:
   - 笔记
 tag:
 
   - 笔记/编译原理
+sticky: true
+star: false
+footer: 
+copyright: 转载请注明出处
 ---
+
 # Chapter3 语法分析
 
 - 正则表达式的能力有限，无法分析具体的语法细节(例如嵌套、$a^nb^n$的n值)，与其等价的有穷自动机同理，因此引入了下推自动机和上下文有关、无关文法

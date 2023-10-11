@@ -1,13 +1,22 @@
 ---
-name: Chapter5 代码生成
-icon: edit
-date: 2022-01-01
+title: Chapter5 语法生成
+# cover: /assets/images/cover1.jpg
+
+icon: page
+order: 1
+author: ChiChen
+date: 2023-10-11
 category:
   - 笔记
 tag:
 
   - 笔记/编译原理
+sticky: true
+star: false
+footer: 
+copyright: 转载请注明出处
 ---
+
 # Chapter5 代码生成
 
 ## 介绍

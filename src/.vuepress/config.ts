@@ -7,12 +7,12 @@ export default defineUserConfig({
   locales: {
     "/": {
       lang: "en-US",
-      title: "Blog Demo",
-      description: "A blog demo for vuepress-theme-hope",
+      title: "ChiChen's Blog",
+      description: "A blog of a",
     },
     "/zh/": {
       lang: "zh-CN",
-      title: "博客演示",
+      title: "ChiChen's Blog",
       description: "vuepress-theme-hope 的博客演示",
     },
   },

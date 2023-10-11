@@ -27,22 +27,13 @@ export const zhNavbar = navbar([
         children: [
           {
             text: "震惊，1=0！？",
-            icon: "edit",
+            icon: "page",
             link: "编程杂谈/震惊，1=0！？.md",
           },
-          {
-            text: "香蕉 2",
-            icon: "edit",
-            link: "2",
-          },
-          "3",
-          "4",
+
         ],
       },
-      { text: "樱桃", icon: "edit", link: "cherry" },
-      { text: "火龙果", icon: "edit", link: "dragonfruit" },
-      "tomato",
-      "strawberry",
+
     ],
   },
   {
