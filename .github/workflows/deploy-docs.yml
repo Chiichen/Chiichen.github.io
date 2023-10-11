@@ -1,11 +1,10 @@
-
 name: 部署文档
 
 on:
   push:
     branches:
       # 确保这是你正在使用的分支名称
-      - main
+      - master
 
 jobs:
   deploy-gh-pages:
@@ -17,8 +16,6 @@ jobs:
           fetch-depth: 0
           # 如果你文档需要 Git 子模块，取消注释下一行
           # submodules: true
-
-
 
       - name: 设置 Node.js
         uses: actions/setup-node@v3
