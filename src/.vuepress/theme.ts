@@ -118,6 +118,11 @@ export default hopeTheme({
     comment: {
       
       provider: "Giscus",
+      repo:"Chiichen/Chiichen.github.io",
+      repoId:"R_kgDOKevcoA",
+      category:"Announcements",
+      categoryId:"DIC_kwDOKevcoM4CaDrF",
+      mapping:"title",
     },
 
     // all features are enabled for demo, only preserve features you need here
