@@ -6,7 +6,7 @@ title: 博客主页
 heroImage: /logo.svg
 heroText: Chi
 heroFullScreen: true
-tagline: 真正的大师永远都怀着一颗学徒的心
+tagline: EveryBody dies but not everybody lives
 projects:
   - icon: project
     name: DragonOS

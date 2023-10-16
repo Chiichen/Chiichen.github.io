@@ -54,7 +54,9 @@ $\rightarrow T\_while \rightarrow( \rightarrow T\_IntConst+137\rightarrow<···
 
 #### 字符表（alphabet）
 
-- 是指一个由符号（字符、数字、特殊符号）组成的有限集，例如$$\sum=\{0,1\},A=\{a,b,c\}$$
+- 是指一个由符号（字符、数字、特殊符号）组成的有限集，例如
+  
+  $$\sum=\{0,1\},A=\{a,b,c\}$$
 
 #### 字符串（string）
 
@@ -171,7 +173,8 @@ bool simulateDFA(string input){
 
 #### 算法
 
-- 将RE分为连续的子表达式(subexpression)，每个括号内表示一个子表达式，可以用一个一般树来描述，越靠近根节点运算优先级越低$$ab|c^* \rightarrow ((ab)|(c^*))$$
+- 将RE分为连续的子表达式(subexpression)，每个括号内表示一个子表达式，可以用一个一般树来描述，越靠近根节点运算优先级越低
+$$ab|c^* \rightarrow ((ab)|(c^*))$$
 - 构建起基本子表达式的NFA
 - 再将构建起来的NFA结合起来，形成最终的NFA
 

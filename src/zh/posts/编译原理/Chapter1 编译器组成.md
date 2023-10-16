@@ -38,7 +38,9 @@ $$C(源代码)\rightarrow TAC(Three Address Code)中间（intermediate）码\rig
 
 ## 词法分析
 
-- 本质上就是为了输出一个合法的token序列，每个token就是一个关键词或者一个关键词+词素(lexeme)的组合如$$\begin{array}{c}T\_While\quad 关键词\\ T\_Identifier \;\;x \quad 关键词+词素\end{array}$$
+- 本质上就是为了输出一个合法的token序列，每个token就是一个关键词或者一个关键词+词素(lexeme)的组合如
+  
+  $$\begin{array}{c}T\_While\quad 关键词\\ T\_Identifier \;\;x \quad 关键词+词素\end{array}$$
 
 ## 语法分析
 

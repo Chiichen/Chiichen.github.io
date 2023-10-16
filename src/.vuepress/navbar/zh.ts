@@ -26,11 +26,15 @@ export const zhNavbar = navbar([
         prefix: "杂谈/",
         children: [
           {
-            text: "震惊，1=0！？",
+            text: "震惊,1=0",
             icon: "page",
-            link: "编程杂谈/震惊，1=0！？.md",
+            link: "编程杂谈/震惊,1=0.md",
           },
-
+          {
+            text: "记一次 GP Debug 的心路历程",
+            icon: "page",
+            link: "Debug杂谈/记一次 GP Debug 的心路历程.md",
+          },
         ],
       },
 
