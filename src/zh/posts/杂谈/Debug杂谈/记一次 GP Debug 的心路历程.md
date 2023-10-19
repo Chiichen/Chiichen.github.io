@@ -58,3 +58,123 @@ movapd %XMM0 0xe0(rsp)
 ## 真相大白
 
 然后 @longjin 提醒我检查内核的结构体是否与用户空间传入的结构体一致，我一看，真不一样，把这个一改，果然就跑起来了。开了硬件浮点之后之前的问题也不再出现了。但是为什么之前的 libc 能跑，这就是一个未解之谜了。经此一事，我们就要知道对于用户空间传入的数据要保持 100% 的敬畏之心，因为出现的错误很有可能千奇百怪。
+
+## 坏起来了
+
+我第二天又仔细看了一下串口输出，发现输出不对，原来是另一个结构体的数据成员顺序与 relibc 库中用户传入的不一样，昨天改完之后实际上因为这个错误直接在 `do_signal` 中 `return` 了，所以现在似乎还是会在那个浮点寄存器的位置出现 GP，而在我尝试把用户空间定义的信号处理函数中的输出部分注释掉
+
+```c
+bool handle_ok = false;
+int count = 0;
+void handler(int sig)
+{
+    // printf("handle %d\n", sig); 原来报错的位置
+    handle_ok = true;
+    count ++;
+}
+
+int main()
+{
+    printf("handler:%d",&handler);
+    signal(SIGKILL, &handler);
+    printf("registered.\n");
+
+
+    while (1)
+    {
+        // handler(SIGKILL);
+            printf("Test signal running\n");
+            raise(SIGKILL);
+        if (handle_ok)
+        {
+            printf("Handle OK!\n");
+            count++;
+            handle_ok = false;
+        }
+
+        if (count >0){
+            printf("count:%d\n", count);
+            signal(SIGKILL, SIG_DFL);
+        }
+    }
+
+    return 0;
+}
+```
+
+然后发现，信号处理函数可以正常运行，但是在重置信号处理函数之后
+
+```c
+signal(SIGKILL,SIG_DFL); //重置为默认信号处理函数，就是退出进程
+```
+
+退出进程这个动作会卡在 Exit 过程中
+
+```rust
+    pub fn exit(exit_code: usize) -> ! {
+        // 关中断
+        let irq_guard = unsafe { CurrentIrqArch::save_and_disable_irq() };
+        let pcb = ProcessManager::current_pcb();
+        pcb.sched_info
+            .write()
+            .set_state(ProcessState::Exited(exit_code));
+        pcb.wait_queue.wakeup(Some(ProcessState::Blocked(true)));
+        drop(pcb);
+        ProcessManager::exit_notify();
+        drop(irq_guard);
+        kdebug!(
+            "current pcb shced_info:{:?}\n current pcb pid :{:?}",
+            ProcessManager::current_pcb().sched_info().state(),
+            ProcessManager::current_pcb().pid(),
+        );
+        kdebug!(
+            "cfs len:{:?}",
+            __get_cfs_scheduler().get_cfs_queue_len(smp_get_processor_id())
+        );
+        compiler_fence(Ordering::SeqCst);
+        sched();
+        loop {} // 卡在这里
+    }
+```
+
+按逻辑来说这里应该会直接把这个进程调度走，而且不会再把它加入队列。但不知道为什么，莫名其妙没有调度它，所以又再一次卡住了，现在问题就是伪造栈帧上执行的函数的 `rsp` 寄存器有问题，而且默认处理函数调用 `ProcessManager::exit` 无法正常退出。
+
+## 继续 debug
+
+到这里实在没办法了，实在想不出来哪里篡改了 rsp 的值，我怀疑是某个地方有个隐藏的入栈/弹栈，但是我确实看不出来。就只能开始对着 linux/arch/x86/kernel/signal.c 的代码，看哪里有不一样，终于，我看到了这一段代码
+
+```c
+/* in /arch/x86/kernel/signal.c get_sigframe(struct ksignal *ksig, struct pt_regs *regs, size_t frame_size,
+      void __user **fpstate) */
+
+ sp = fpu__alloc_mathframe(sp, ia32_frame, &buf_fx, &math_size);
+ *fpstate = (void __user *)sp;
+
+ sp -= frame_size;
+
+ if (ia32_frame)
+  /*
+   * Align the stack pointer according to the i386 ABI,
+   * i.e. so that on function entry ((sp + 4) & 15) == 0.
+   */
+  sp = ((sp + 4) & -FRAME_ALIGNMENT) - 4;
+ else
+  sp = round_down(sp, FRAME_ALIGNMENT) - 8;
+```
+
+注意看最后一行 `sp = round_down(sp, FRAME_ALIGNMENT) - 8` 前面很好理解，`sp = round_down(sp, FRAME_ALIGNMENT)` 就是对齐16位栈帧，但是-8？我直接套到系统上一用，直接成功了，虽然还是无法 exit， 但是已经是巨大的一步了。
+
+## 原来是你
+
+现在仍有不能调度的问题，于是乎我去看调度的代码(调度器几乎是不可调试的，因为调用的极为频繁，使得日志、gdb都无能为力)，祈祷能肉眼看出问题所在，我刚点开 do_sched 一看，我 DNA 直接动了
+
+```rust
+pub fn do_sched() -> Option<Arc<ProcessControlBlock>> {
+    // 当前进程持有锁，不切换，避免死锁
+    if ProcessManager::current_pcb().preempt_count() != 0 {
+        return None;
+    }
+}
+```
+
+某种直觉告诉我，这里很有可能就是死锁引起的问题。于是我回到 `do_signal` 一看，果然有个自旋锁守卫 sig_guard 没有在调用 `handle_signal->setup_frame->default_handler->exit` 这个调用链之前释放，导致无法退出，drop掉这个 guard 之后果然就没问题了。所以以后遇到没正常调度的情况，请优先考虑是否有未释放的锁。
