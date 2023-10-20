@@ -17,9 +17,9 @@ footer:
 copyright: 转载请注明出处
 ---
 
-# Chapter1 编译器组成
+## Chapter1 编译器组成
 
-## 编译器的结构
+### 编译器的结构
 
 - 词法分析Lexical analysis (Scanning)
 - 语法分析Syntax analysis (Parsing)
@@ -36,20 +36,20 @@ copyright: 转载请注明出处
 
 $$C(源代码)\rightarrow TAC(Three Address Code)中间（intermediate）码\rightarrow 机器码$$
 
-## 词法分析
+### 词法分析
 
 - 本质上就是为了输出一个合法的token序列，每个token就是一个关键词或者一个关键词+词素(lexeme)的组合如
   
   $$\begin{array}{c}T\_While\quad 关键词\\ T\_Identifier \;\;x \quad 关键词+词素\end{array}$$
 
-## 语法分析
+### 语法分析
 
 - 就是将一个token序列表示为一棵语法树
 
-## 语义分析
+### 语义分析
 
 - 就是将语法分析得到的语法树转化为一个带注解（annotated）的语法树
 
-## 中间代码生成
+### 中间代码生成
 
 - 从语法树生成通用的中间代码

@@ -30,14 +30,14 @@ copyright: 转载请注明出处
 
 ## 扫描过程
 
-```
+```c
  while(137<n) 
   ++i;
 ```
 
 $\rightarrow T\_while \rightarrow( \rightarrow T\_IntConst+137\rightarrow<·····$
 
-![扫描过程图示](/assets/images/编译原理/词法分析/扫描过程图示.png)
+![扫描过程图示](./images/词法分析/扫描过程图示.png)
 
 ### 词元（tokens）
 
@@ -180,10 +180,10 @@ $$ab|c^* \rightarrow ((ab)|(c^*))$$
 
 #### 基本子表达式的NFA
 
-![子表达式NFA1](/assets/images/编译原理/词法分析/子表达式NFA1.png)
-![子表达式NFA3](/assets/images/编译原理/词法分析/子表达式NFA3.png)
-![子表达式NFA4](/assets/images/编译原理/词法分析/子表达式NFA4.png)
-![子表达式NFA5](/assets/images/编译原理/词法分析/子表达式NFA5.png)
+![子表达式NFA1](./images/词法分析/子表达式NFA1.png)
+![子表达式NFA3](./images/词法分析/子表达式NFA3.png)
+![子表达式NFA4](./images/词法分析/子表达式NFA4.png)
+![子表达式NFA5](./images/词法分析/子表达式NFA5.png)
 
 - 对于一个长度为$m$的正则表达式和有$n$个状态的NFA，可以在$O(mn^2)$的时间里判断这个正则表达式是否被匹配
 
@@ -204,27 +204,27 @@ $$ab|c^* \rightarrow ((ab)|(c^*))$$
 - move方法：$move(I,a)=\{t|s\in I,t=T(s,a)\}$
 - 子集构造法：$Subset\;I_a=\varepsilon\_closure(Move(I,a))$
 
-### 算法
+### 子集构造算法
 
 1. 计算$M$的初始状态$的\varepsilon\_closure$，并作为$M^{'}$ 的初始状态
 2. 对于这个集合以及每个后续集合 S ，我们计算每个字符 $a∈Σ$ 上的转换 $S_a$，这定义了一个新状态以及一个新转换$S\stackrel{a}{\longrightarrow} S_a$
 3. 不断进行这个过程，直到没有新的状态和转换生成
 4. 标记包含接受态的状态
 
-![NFA2DFA](/assets/images/编译原理/词法分析/NFA2DFA.png)
-![NFA2DFA2](/assets/images/编译原理/词法分析/NFA2DFA2.png)
+![NFA2DFA](./images/词法分析/NFA2DFA.png)
+![NFA2DFA2](./images/词法分析/NFA2DFA2.png)
 
 ## 最小化DFA
 
 - 等价状态：对于两个状态$S_a和S_b$，如果对于符号表中的每一个输入，$S_a和S_b$都有相同或等价的k个状态，则这两个状态是等价的
 
-### 算法
+### Hopcroft算法
 
 1. 将DFA中的状态划分为两个等价类：接受状态和非接受状态。
 2. 对于每个等价类，根据输入字符的转移关系。如果对于某个字符使得一个等价类内的一个状态转移到另一个等价类中的状态，就将这个状态其进一步划分为更小的等价类。
 3. 重复第2步，直到不能再划分为止。
 
-```
+```c
 //基于等价类的思想
 split(S)
     foreach(character c)
@@ -238,6 +238,6 @@ hopcroft()
         split(s)
 ```
 
-![最小化DFA](/assets/images/编译原理/词法分析/最小化DFA.png)
+![最小化DFA](./images/词法分析/最小化DFA.png)
 
 - 不过一般做题直接颅内找等价就行了，不用一定按照这个划分一步步做下去。
