@@ -112,7 +112,9 @@ $\rightarrow T\_while \rightarrow( \rightarrow T\_IntConst+137\rightarrow<···
 
 ### 有限自动机的数学定义
 
-是一个五元组(tuple)$$\begin{array}{c}
+是一个五元组(tuple)
+
+$$\begin{array}{c}
 M=(  \sum,S,F,S_{0},S_{a} )\\
 F:S\times \sum \rightarrow S \\
 \sum为符号表 \\
