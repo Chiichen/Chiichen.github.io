@@ -130,7 +130,7 @@ $$
 ## 歧义(Ambiguity)
 
 - 对于一个CFG，同样的输入可能有不同的解析
-![[语法树歧义.png]](./images/语法分析/语法树歧义.png)
+![语法树歧义.png](./images/语法分析/语法树歧义.png)
 
 ### 解决方法
 
@@ -187,9 +187,9 @@ if\;\beta\Rightarrow^*\varepsilon\;then\;\varepsilon\in FIRST(\beta)
 \end{array}$$
 - 计算
 
-![First()计算 3](./images/语法分析/First()计算%203.png)
-![First()计算 4](./images/语法分析/First()计算%204.png)
-![First()计算 5](./images/语法分析/First()计算%205.png)
+![First()计算 3](./images/语法分析/First()计算3.png)
+![First()计算 4](./images/语法分析/First()计算4.png)
+![First()计算 5](./images/语法分析/First()计算5.png)
 
 //Todo 提取简练笔记
 
@@ -205,8 +205,7 @@ if\;S\Rightarrow...A,\;then\;\$\in FOLLOW(A)\\
 \end{array}$$
 
 - 计算：
-![[Follow()计算 1.png]](./images/语法分析/Follow()计算%201.png)
-![[Follow()计算 2.png]](./images/语法分析/Follow()计算%202.png)
+![Follow()计算 2.png](./images/语法分析/Follow()计算2.png)
 
 ##### 可空的非终止符(nullable nonterminal)
 
@@ -214,14 +213,14 @@ if\;S\Rightarrow...A,\;then\;\$\in FOLLOW(A)\\
   $$S\Rightarrow^*\varepsilon$$
 则称S是一个可空的非终止符
 - 计算：
-![[nullble set计算 2.png]](./images/语法分析/nullble%20set计算%202.png)
+![nullble set计算 2.png](<./images/语法分析/nullableset计算2.png>)
 
 ##### 判定LL(1)文法
 
 - 计算每个可空的非终止符
 - 计算产生式右侧所有的$FIRST(\alpha)$并验证其两两交集是否为空
 - 计算(1)中算出的非终止符的$FOLLOW(A)$并验证$FIRST(A)\cap FOLLOW(A)=\varnothing$
-![[判断LL(1)示例.png]](./images/语法分析/判断LL(1)示例.png)
+![判断LL(1)示例.png](./images/语法分析/判断LL(1)示例.png)
 
 ##### 非LL(1)到LL(1)
 
@@ -329,8 +328,8 @@ void U(){
 - 构造分析表，对每个产生式$A\rightarrow \alpha$重复以下两步：
   1. $对每个在FIRST[\alpha]$中的$token$，把产生式$A\rightarrow\alpha$加入表项$M[A,a]中$
   2. 如果$\varepsilon \in First(\alpha)$，对$Follow(A)\text{中的每个元素(包括token和}\$)$，把$A\rightarrow \alpha$加入表项$M[A,a]$
-  ![[构建LL(1) parsing table 1.png]](./images/语法分析/构建LL(1)%20parsing%20table%201.png)
-  ![[构建LL(1) parsing table 2.png]](./images/语法分析/构建LL(1)%20parsing%20table%202.png)
+  ![构建LL(1) parsing table 1.png](<./images/语法分析/构建LL(1)_parsing_table1.png>)
+  ![构建LL(1) parsing table 2.png](<./images/语法分析/构建LL(1)_parsing_table2.png>)
   - 从分析表的角度来说，一个不满足LL(1)文法的CFG文法产生的产生表的一个表项内可能有多个产生式，无法做到唯一选择
   
 ##### 分析步骤
@@ -358,9 +357,9 @@ void U(){
 
 - 不断尝试可能的token，如果能使得错误消失，那么就能继续分析了
 - 通常从错误部分上下文的$FOLLOW(优先)和FIRST$集合中的token尝试
-![[panic mode 1.png]](./images/语法分析/panic%20mode%201.png)
-![[panic mode 2.png]](./images/语法分析/panic%20mode%202.png)
-![[panic mode 3.png]](./images/语法分析/panic%20mode%203.png)
+![panic mode 1.png](<./images/语法分析/panic_mode1.png>)
+![panic mode 2.png](<./images/语法分析/panic_mode2.png>)
+![panic mode 3.png](<./images/语法分析/panic_mode3.png>)
 
 ## Bottom-up Parsing I
 
@@ -381,20 +380,20 @@ void U(){
 ### Shift and Reduce Parsing
 
 - 把分析栈成文右句型的可行前缀(viable prefix)
-![[ShiftAndReduce.png]](./images/语法分析/ShiftAndReduce.png)
+![ShiftAndReduce.png](./images/语法分析/ShiftAndReduce.png)
 - 这种方法也被称为LR(0)，因为不需要lookahead token
 - 但是LR算法需要看到栈顶以下多个元素，因此需要引入state来标记
 
 ### LR Parsing
 
-![[LR Parsing 基本原理.png]](./images/语法分析/LR%20Parsing%20基本原理.png)
+![LR Parsing 基本原理.png](<./images/语法分析/LR Parsing 基本原理.png>)
 
 - 其中$S_m$是状态，$X_m$是文法符号
 
 #### Parsing Table
 
-![[LR Parsing table.png]](./images/语法分析/LR%20Parsing%20table.png)
-![[LR Parsing table2.png]](./images/语法分析/LR%20Parsing%20table2.png)
+![LR Parsing table.png](<./images/语法分析/LR Parsing table.png>)
+![LR Parsing table2.png](<./images/语法分析/LR Parsing table2.png>)
 
 - 对表项$action[S_m,a_i]$：
   - Shift($s_k$)表示把对应的标识符$S_m$和状态$s_k$从输入移入到分析栈中
@@ -404,8 +403,8 @@ void U(){
     3. 把状态$S_j=GOTO[S_i,A]入栈$
 - Accept：表示分析顺利结束
 - Error：表示分析遇到了某些问题
-![[LR parsing table example.png]](./images/语法分析/LR%20parsing%20table%20example.png)
-![[LR parsing table example2.png]](./images/语法分析/LR%20parsing%20table%20example2.png)
+![LR parsing table example.png](<./images/语法分析/LR parsing table example.png>)
+![LR parsing table example2.png](<./images/语法分析/LR parsing table example2.png>)
 
 ### LR(0) items and parsing table
 
@@ -417,7 +416,7 @@ void U(){
 
 #### Items 的自动机形式
 
-![[LR 自动机示意图.png]](./images/语法分析/LR%20自动机示意图.png)
+![LR自动机示意图.png](<./images/语法分析/LR自动机示意图.png>)
 
 ##### 构建NFA
 
@@ -432,7 +431,7 @@ void U(){
 2. 构建开始状态：把每个产生式都加入初始状态
 3. 构造转移：对项集中的每个项，看输入符号后位置点会不会后移，是的话就构造一个转移和对应的项集，并把其$\varepsilon$闭包加入项集，把完成项作为accepting state
 4. 不断重复2，3，把增广产生式存在的项集作为接受状态
-![[LR parsing DFA.png]](./images/语法分析/LR%20parsing%20DFA.png)
+![LR parsing DFA.png](<./images/语法分析/LR parsing DFA.png>)
 
 ##### 构建LR(0) Parsing Table
 
@@ -467,7 +466,7 @@ void U(){
 
 #### SLR(1)分析表
 
-![SLR(1)分析表](./images/语法分析/SLR(1)%20分析表.png)
+![SLR(1)分析表](./images/语法分析/SLR(1)分析表.png)
 
 #### SLR(1)算法
 
