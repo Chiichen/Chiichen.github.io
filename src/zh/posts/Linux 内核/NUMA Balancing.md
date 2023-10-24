@@ -14,7 +14,6 @@ tag:
 
 - Linux 内核
 - NUMA
-- 
 sticky: false
 star: false
 footer:

@@ -386,14 +386,14 @@ void U(){
 
 ### LR Parsing
 
-![LR Parsing 基本原理.png](<./images/语法分析/LR Parsing 基本原理.png>)
+![LR Parsing 基本原理.png](<./images/语法分析/LR_Parsing_基本原理.png>)
 
 - 其中$S_m$是状态，$X_m$是文法符号
 
 #### Parsing Table
 
-![LR Parsing table.png](<./images/语法分析/LR Parsing table.png>)
-![LR Parsing table2.png](<./images/语法分析/LR Parsing table2.png>)
+![LR Parsing table.png](<./images/语法分析/LR_Parsing_table.png>)
+![LR Parsing table2.png](<./images/语法分析/LR_Parsing_table2.png>)
 
 - 对表项$action[S_m,a_i]$：
   - Shift($s_k$)表示把对应的标识符$S_m$和状态$s_k$从输入移入到分析栈中
@@ -403,8 +403,8 @@ void U(){
     3. 把状态$S_j=GOTO[S_i,A]入栈$
 - Accept：表示分析顺利结束
 - Error：表示分析遇到了某些问题
-![LR parsing table example.png](<./images/语法分析/LR parsing table example.png>)
-![LR parsing table example2.png](<./images/语法分析/LR parsing table example2.png>)
+![LR parsing table example.png](<./images/语法分析/LR_parsing_table_example.png>)
+![LR parsing table example2.png](<./images/语法分析/LR_parsing_table_example2.png>)
 
 ### LR(0) items and parsing table
 
@@ -431,7 +431,7 @@ void U(){
 2. 构建开始状态：把每个产生式都加入初始状态
 3. 构造转移：对项集中的每个项，看输入符号后位置点会不会后移，是的话就构造一个转移和对应的项集，并把其$\varepsilon$闭包加入项集，把完成项作为accepting state
 4. 不断重复2，3，把增广产生式存在的项集作为接受状态
-![LR parsing DFA.png](<./images/语法分析/LR parsing DFA.png>)
+![LR parsing DFA.png](<./images/语法分析/LR_parsing_DFA.png>)
 
 ##### 构建LR(0) Parsing Table
 
