@@ -86,8 +86,10 @@ $$\begin{array}{c}
 exp\rightarrow exp\; addop\; term|term\\
 exp\rightarrow term\{addop\;term\}\text{(左结合性)}\\
 exp\rightarrow term[addop \; term]\text{(右结合性)}
-\end{array}$$
-- 中括号表示其中的符号出现0次或1次，大括号表示0次或
+\end{array}
+$$
+
+- 中括号表示其中的符号出现0次或1次，大括号表示0次至无数次
 
 ## 推导(Derivation)与规约(Reduction)
 
@@ -120,7 +122,7 @@ exp\rightarrow term[addop \; term]\text{(右结合性)}
 
 ### 抽象语法树
 
-![[语法树与抽象语法树.png]]
+![语法树与抽象语法树](./images/语法分析/语法树与抽象语法树.png)
 
 - 比起语法树，省略了部分细节，带来了更好的语法抽象，对于后续编译阶段是一个更好的数据结构
 - 它反映了源码token序列的一个抽象，比语法树更高效
@@ -128,20 +130,22 @@ exp\rightarrow term[addop \; term]\text{(右结合性)}
 ## 歧义(Ambiguity)
 
 - 对于一个CFG，同样的输入可能有不同的解析
-![[语法树歧义.png]]
+![[语法树歧义.png]](./images/语法分析/语法树歧义.png)
 
 ### 解决方法
 
 - 消除歧义(Disambiguity rule)：不改变文法，列举所有可能造成歧义的情况并进行消除，不现实的
 - 文法重写：改变文法，进行同义转换：(添加优先级，添加关联性)
+
 $$E\rightarrow E-E|E \times E|(E)|i\;\Rightarrow \begin{array}{c}
 E\rightarrow E-E|T\\
 T\rightarrow T\times T|F\\
 F\rightarrow(E)|i
 \end{array}$$
-![[消除歧义1.png]]
-![[消除歧义2.png]]
-![[消除歧义3.png]]
+
+![消除歧义1](./images/语法分析/消除歧义1.png)
+![消除歧义2](./images/语法分析/消除歧义2.png)
+![消除歧义3](./images/语法分析/消除歧义3.png)
 
 # 语法分析算法(parsing)
 
@@ -183,27 +187,26 @@ if\;\beta\Rightarrow^*\varepsilon\;then\;\varepsilon\in FIRST(\beta)
 \end{array}$$
 - 计算
 
-![[First()计算 1.png]]
-![[First()计算 2.png]]
-![[First()计算 3.png]]
-![[First()计算 4.png]]
-![[First()计算 5.png]]
+![First()计算 3](./images/语法分析/First()计算%203.png)
+![First()计算 4](./images/语法分析/First()计算%204.png)
+![First()计算 5](./images/语法分析/First()计算%205.png)
+
 //Todo 提取简练笔记
 
 ###### Follow Sets
 
 - 定义：
+
 $$\begin{array}{c}
 G=(V_N,V_T,P,S)\text{是一个文法}\\A\in V_N\\
 FOLLOW(A)=\{a\in V_T|S\Rightarrow^*...Aa...\},\\
 if\;S\Rightarrow...A,\;then\;\$\in FOLLOW(A)\\
 \$是用来标记输入的终止的符号
-
 \end{array}$$
 
 - 计算：
-![[Follow()计算 1.png]]
-![[Follow()计算 2.png]]
+![[Follow()计算 1.png]](./images/语法分析/Follow()计算%201.png)
+![[Follow()计算 2.png]](./images/语法分析/Follow()计算%202.png)
 
 ##### 可空的非终止符(nullable nonterminal)
 
@@ -211,15 +214,14 @@ if\;S\Rightarrow...A,\;then\;\$\in FOLLOW(A)\\
   $$S\Rightarrow^*\varepsilon$$
 则称S是一个可空的非终止符
 - 计算：
-![[nullble set计算 1.png]]
-![[nullble set计算 2.png]]
+![[nullble set计算 2.png]](./images/语法分析/nullble%20set计算%202.png)
 
 ##### 判定LL(1)文法
 
 - 计算每个可空的非终止符
 - 计算产生式右侧所有的$FIRST(\alpha)$并验证其两两交集是否为空
 - 计算(1)中算出的非终止符的$FOLLOW(A)$并验证$FIRST(A)\cap FOLLOW(A)=\varnothing$
-![[判断LL(1)示例.png]]
+![[判断LL(1)示例.png]](./images/语法分析/判断LL(1)示例.png)
 
 ##### 非LL(1)到LL(1)
 
@@ -296,19 +298,19 @@ void U(){
 
 ###### 示例
 
-![[递归下降示例1.png]]
-![[递归下降示例2.png]]
-![[递归下降示例3.png]]
-![[递归下降示例4.png]]
-![[递归下降示例5.png]]
+![递归下降示例1.png](./images/语法分析/递归下降示例1.png)
+![递归下降示例2.png](./images/语法分析/递归下降示例2.png)
+![递归下降示例3.png](./images/语法分析/递归下降示例3.png)
+![递归下降示例4.png](./images/语法分析/递归下降示例4.png)
+![递归下降示例5.png](./images/语法分析/递归下降示例5.png)
 
 ##### 输出(生成语法树)
 
 - 语法树是一个中间表示
 - 生成抽象语法树需要定义一个语义规则
-![[语法树、抽象语法树示例.png]]
-![[构建语法树代码1.png]]
-![[构建语法树代码2.png]]
+![语法树、抽象语法树示例.png](./images/语法分析/语法树、抽象语法树示例.png)
+![构建语法树代码1.png](./images/语法分析/构建语法树代码1.png)
+![构建语法树代码2.png](./images/语法分析/构建语法树代码2.png)
 
 ##### 优劣
 
@@ -318,7 +320,7 @@ void U(){
 #### LL(1)
 
 - 就是在递归下降的基础上用栈代替了递归，时间复杂度为$O(n|G|)，n是字符串的长度，G是语法的长度$
-![[LL(1)原理.png]]
+![LL(1)原理.png](./images/语法分析/LL(1)原理.png)
 - 通过分析表(parsing table)来分析怎么转化一个非终止符号(如果不满足LL(1)文法，就会出现一个表项里有多个产生式)
 
 ##### 产生分析表
@@ -327,8 +329,8 @@ void U(){
 - 构造分析表，对每个产生式$A\rightarrow \alpha$重复以下两步：
   1. $对每个在FIRST[\alpha]$中的$token$，把产生式$A\rightarrow\alpha$加入表项$M[A,a]中$
   2. 如果$\varepsilon \in First(\alpha)$，对$Follow(A)\text{中的每个元素(包括token和}\$)$，把$A\rightarrow \alpha$加入表项$M[A,a]$
-  ![[构建LL(1) parsing table 1.png]]
-  ![[构建LL(1) parsing table 2.png]]
+  ![[构建LL(1) parsing table 1.png]](./images/语法分析/构建LL(1)%20parsing%20table%201.png)
+  ![[构建LL(1) parsing table 2.png]](./images/语法分析/构建LL(1)%20parsing%20table%202.png)
   - 从分析表的角度来说，一个不满足LL(1)文法的CFG文法产生的产生表的一个表项内可能有多个产生式，无法做到唯一选择
   
 ##### 分析步骤
@@ -340,10 +342,10 @@ void U(){
 
 - 具体流程图(包括错误出现)：
 
-![[LL(1)流程图.png]]
+![LL(1)流程图.png](./images/语法分析/LL(1)流程图.png)
 
 - 示例：
-![[LL(1)举例.png]]
+![LL(1)举例.png](./images/语法分析/LL(1)举例.png)
 
 ### 错误处理
 
@@ -356,9 +358,9 @@ void U(){
 
 - 不断尝试可能的token，如果能使得错误消失，那么就能继续分析了
 - 通常从错误部分上下文的$FOLLOW(优先)和FIRST$集合中的token尝试
-![[panic mode 1.png]]
-![[panic mode 2.png]]
-![[panic mode 3.png]]
+![[panic mode 1.png]](./images/语法分析/panic%20mode%201.png)
+![[panic mode 2.png]](./images/语法分析/panic%20mode%202.png)
+![[panic mode 3.png]](./images/语法分析/panic%20mode%203.png)
 
 ## Bottom-up Parsing I
 
@@ -379,20 +381,20 @@ void U(){
 ### Shift and Reduce Parsing
 
 - 把分析栈成文右句型的可行前缀(viable prefix)
-![[ShiftAndReduce.png]]
+![[ShiftAndReduce.png]](./images/语法分析/ShiftAndReduce.png)
 - 这种方法也被称为LR(0)，因为不需要lookahead token
 - 但是LR算法需要看到栈顶以下多个元素，因此需要引入state来标记
 
 ### LR Parsing
 
-![[LR Parsing 基本原理.png]]
+![[LR Parsing 基本原理.png]](./images/语法分析/LR%20Parsing%20基本原理.png)
 
 - 其中$S_m$是状态，$X_m$是文法符号
 
 #### Parsing Table
 
-![[LR Parsing table.png]]
-![[LR Parsing table2.png]]
+![[LR Parsing table.png]](./images/语法分析/LR%20Parsing%20table.png)
+![[LR Parsing table2.png]](./images/语法分析/LR%20Parsing%20table2.png)
 
 - 对表项$action[S_m,a_i]$：
   - Shift($s_k$)表示把对应的标识符$S_m$和状态$s_k$从输入移入到分析栈中
@@ -402,8 +404,8 @@ void U(){
     3. 把状态$S_j=GOTO[S_i,A]入栈$
 - Accept：表示分析顺利结束
 - Error：表示分析遇到了某些问题
-![[LR parsing table example.png]]
-![[LR parsing table example2.png]]
+![[LR parsing table example.png]](./images/语法分析/LR%20parsing%20table%20example.png)
+![[LR parsing table example2.png]](./images/语法分析/LR%20parsing%20table%20example2.png)
 
 ### LR(0) items and parsing table
 
@@ -415,7 +417,7 @@ void U(){
 
 #### Items 的自动机形式
 
-![[LR 自动机示意图.png]]
+![[LR 自动机示意图.png]](./images/语法分析/LR%20自动机示意图.png)
 
 ##### 构建NFA
 
@@ -430,7 +432,7 @@ void U(){
 2. 构建开始状态：把每个产生式都加入初始状态
 3. 构造转移：对项集中的每个项，看输入符号后位置点会不会后移，是的话就构造一个转移和对应的项集，并把其$\varepsilon$闭包加入项集，把完成项作为accepting state
 4. 不断重复2，3，把增广产生式存在的项集作为接受状态
-![[LR parsing DFA.png]]
+![[LR parsing DFA.png]](./images/语法分析/LR%20parsing%20DFA.png)
 
 ##### 构建LR(0) Parsing Table
 
@@ -454,7 +456,7 @@ void U(){
 #### SLR(1)文法
 
 - simple在使用的仍然是LR(0)的DFA
-//Todo 插入图片
+![SLR(1)文法](./images/语法分析/SLR(1)语法.png)
 
 对于一个状态$I=\{X\rightarrow \alpha \cdot b \beta,A\rightarrow r \cdot,B\rightarrow \delta \cdot\}$其中$b\in V_T$ 如果$Follow(A)\cap Follow(B)=\varnothing$且不包含$b$ 那么$I$的下一个行动取决于下一个输入的token $'a'$
 
@@ -465,7 +467,7 @@ void U(){
 
 #### SLR(1)分析表
 
-//Todo 插入图片
+![SLR(1)分析表](./images/语法分析/SLR(1)%20分析表.png)
 
 #### SLR(1)算法
 
@@ -474,14 +476,15 @@ void U(){
 #### SLR(1)的缺点
 
 - 只关注FOLLOW set，在某些情况下不能正确规约。原因是Follow(A)表示某个非终止符号所有可能跟着的符号，而并不是在每个包含A的句型中都会出现Follow(A)中的符号，我们用Follow(A)进行规约的时候就会出现这种问题
-//Todo 插入图片
+
+![SLR(1)的缺点](./images/语法分析/SLR(1)的缺点.png)
 
 ### LR(1)
 
 #### LR(1)的项
 
 - LR(1)的项由LR(0)的项(被称为核core)和一个lookahead token组成
-//插入图片
+![LR(1)的项](./images/语法分析/LR(1)项.png)
 
 - 所有LR(0)、LL(1)文法都是LR(1)文法
 - 所有确定的CFL(context free language)都有一个LR(1)文法
