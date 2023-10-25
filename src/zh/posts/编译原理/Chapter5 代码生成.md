@@ -36,20 +36,20 @@ copyright: 转载请注明出处
 
 #### 运算
 
-![[TAC Code1.png]]
+![[TAC_Code1.png]](./images/代码生成/TAC_Code1.png)
 
 #### 变量赋值
 
-![[TAC Instruction.png]]
+![[TAC_Instruction.png]](./images/代码生成/TAC_Instruction.png)
 
 #### 布尔值
 
-![[TAC Code2.png]]
+![[TAC_Code2.png]](./images/代码生成/TAC_Code2.png)
 
 #### 流程控制语句
 
-![[TAC Code3.png]]
-![[TAC Code4.png]]
+![[TAC_Code3.png]](./images/代码生成/TAC_Code3.png)
+![[TAC_Code4.png]](./images/代码生成/TAC_Code4.png)
 
 ### 三地址码的实现
 
@@ -79,9 +79,9 @@ $$\begin{aligned}
 &\text{aexp}\to\text{aexp+factor}\mid\text{factor} \\
 &\text{factor}\to\text{(exp)}\mid\text{num}\mid\text{id}
 \end{aligned}$$
-![[综合属性语义规则1.png]]
-![[综合属性语义规则2.png]]
-![[综合属性语义分析.png]]
+![[综合属性语义规则1.png]](./images/代码生成/综合属性语义规则1.png)
+![[综合属性语义规则2.png]](./images/代码生成/综合属性语义规则2.png)
+![[综合属性语义分析.png]](./images/代码生成/综合属性语义分析.png)
 
 #### 语言结构
 
@@ -101,7 +101,7 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ###### $S\to\text{if E then S1}$
-![[if结构.png]]
+![[if结构.png]](./images/代码生成/if结构.png)
 $$\begin{aligned}
 &\text{E.true}=\text{newlabel ();} \\
 &\text{E.false}=\text{S.next;} \\
@@ -109,7 +109,7 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ###### $S\to\text{if E then S1 else S2}$
-![[if-else结构.png]]
+![[if-else结构.png]](./images/代码生成/if-else结构.png)
 $$\begin{aligned}
 &\text{E.true=newlabel};\text{E.false=newlabel}; \\
 &\text{S1.next=S.next};\text{S2.next=S.next;} \\
@@ -131,7 +131,7 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ###### $\text{S}\to\text{while E do S1}$
-![[while结构.png]]
+![[while结构.png]](./images/代码生成/while结构.png)
 $$\begin{aligned}
 &\text{S.begin=newlabel};\text{E.true=newlabel};\text{E.false=S.next;} \\
 &\text{S1.next=S.begin;} \\
@@ -156,7 +156,7 @@ $$\begin{aligned}
 
 ###### $\text{E}\to\text{E1 or E2}$
 
-![[or结构.png]]
+![[or结构.png]](./images/代码生成/or结构.png)
 $$\begin{aligned}
 &\text{E1.true=E.true;} \\
 &\text{E1.false=newlabel;}  \\
@@ -166,7 +166,7 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ###### $\text{E}\to \text{E1 and E2}$
-![[and结构.png]]
+![[and结构.png]](./images/代码生成/and结构.png)
 $$\begin{aligned}
 &\text{E1.true=newlabel;} \\
 &\text{E1.false=E.false;} \\
@@ -185,7 +185,7 @@ $$\begin{gathered}
 
 ###### 例子
 
-![[布尔表达式例子.png]]
+![[布尔表达式例子.png]](./images/代码生成/布尔表达式例子.png)
 
 ##### 流程控制与布尔表达式翻译
 
@@ -207,7 +207,7 @@ while a<b do
     x=y-z
 ```
 
-![[流程控制示例图.png]]
+![[流程控制示例图.png]](./images/代码生成/流程控制示例图.png)
 
 ## 代码优化
 
@@ -271,7 +271,7 @@ $a=2;b=3;c=a+b\rightarrow c=5$
 
 #### 内联展开和尾递归
 
-![[尾递归优化.png]]
+![[尾递归优化.png]](./images/代码生成/尾递归优化.png)
 
 ### 优化的时期
 - 三地址码生成时：直接优化语义树，可能对某个子树进行删除或者替换
@@ -292,12 +292,12 @@ $a=2;b=3;c=a+b\rightarrow c=5$
 ##### Code motion
 
 - 代码移动减少了循环中的代码量，就是把循环内的和循环无关的代码移动到循环外
-![[代码移动.png]]
+![[代码移动.png]](./images/代码生成/代码移动.png)
 ##### Induction variables deletion
 
 - 归纳变量（Induction Variable）是指在循环的每次迭代中都会增加或减少固定数量的变量，或者是另一个归纳变量的线性函数。归纳变量通常用于循环优化中，例如循环展开和代码移动。
 
-![[删除.png]]
+![[删除.png]](./images/代码生成/删除.png)
 
 #### 线程间优化（Interprocedural optimization)
 
@@ -310,7 +310,7 @@ $a=2;b=3;c=a+b\rightarrow c=5$
 1. 第一个指令是一个basic block的开始
 2. 每个作为jump的目标的label的语句是一个新的basic block的开始
 3. 每个跟着有条件跳转的指令都会开启一个新的basic block (跟2差不多)
-![[flowgraph.png]]
+![[flowgraph.png]](./images/代码生成/flowgraph.png)
 
 #### DAG(directed acyclic graph)
 
@@ -318,7 +318,7 @@ $a=2;b=3;c=a+b\rightarrow c=5$
 - 叶子节点是从这个block之外来的变量和值
 - 内部节点都是对值的操作
 - 赋值被表现为把目标变量或临时变量attach到这个节点上
-![[DAG1.png]]
+![[DAG1.png]](./images/代码生成/DAG1.png)
 
 - 基本块的开始标签和最后的跳转标签不被包括在DAG中
 - 复制操作不会增加新的节点，誓师会把新的标签添加到被复制值的节点上
@@ -329,5 +329,5 @@ $a=2;b=3;c=a+b\rightarrow c=5$
 - 对于x=y+z，如果y和z不变，则+的内部节点不需要创建，而是执行y+z （常量折叠）
 - 对于x=y+z，如果已经存在一个与y+z具有相同值的节点，我们不会创建新节点，而是给现有节点附加标签x。 （局部公共子表达式消除）
 - 如果 x 之前标记过其他节点，我们删除该标签，因为 x 的“当前”值是刚刚创建的节点（消除不必要的分配）
-![[DAG2.png]]
-![[DAG3.png]]
+![[DAG2.png]](./images/代码生成/DAG2.png)
+![[DAG3.png]](./images/代码生成/DAG3.png)
