@@ -15,4 +15,6 @@ sticky: true
 star: false
 footer: 
 copyright: Copyright with marking the source
+article: false
+index: false
 ---

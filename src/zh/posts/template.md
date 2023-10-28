@@ -15,5 +15,8 @@ sticky: false
 # this page will appear in starred articles
 star: false
 footer: 
+isOriginal: true
 copyright: 转载请注明出处
+article: false
+index: false
 ---

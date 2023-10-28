@@ -15,6 +15,7 @@ sticky: true
 star: false
 footer: 
 copyright: 转载请注明出处
+isOriginal: true
 ---
 
 # Chapter2 词法分析
