@@ -58,7 +58,7 @@ export default hopeTheme({
   },
 
   locales: {
-    "/": {
+    "/en/": {
       // navbar
       navbar: enNavbar,
 
@@ -71,7 +71,7 @@ export default hopeTheme({
 
       blog: {
         description: "A FrontEnd programmer",
-        intro: "/intro.html",
+        intro: "/en/intro.html",
       },
 
       metaLocales: {
@@ -82,7 +82,7 @@ export default hopeTheme({
     /**
      * Chinese locale config
      */
-    "/zh/": {
+    "/": {
       // navbar
       navbar: zhNavbar,
 
@@ -95,7 +95,7 @@ export default hopeTheme({
 
       blog: {
         description: "一个前端开发者",
-        intro: "/zh/intro.html",
+        intro: "/intro.html",
       },
 
       // page meta
