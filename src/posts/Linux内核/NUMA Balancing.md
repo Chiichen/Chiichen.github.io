@@ -8,12 +8,11 @@ order: 1
 author: ChiChen
 date: 2023-10-17
 category:
-- 笔记
-- Linux 内核
+    - 笔记
+    - Linux 内核
 tag:
-
-- Linux 内核
-- NUMA
+  - Linux 内核
+  - NUMA
 sticky: false
 star: false
 footer:

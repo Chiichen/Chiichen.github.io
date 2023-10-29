@@ -33,6 +33,8 @@ copyright: 转载请注明出处
 cd /linux
 export ARCH=x86
 make CC=clang x86_64_defconfig
+# ./scripts/config --file .config -e CONFIG_NUMA_BALANCE CONFIG_NUMA_BALANCING_DEFAULT_ENABLED CONFIG_NUMA
+# Todo 还有一些nuuma_balance相关设置项要打开，不然后面要在编译时手动选择Y
 ```
 
 ### config可选项
@@ -56,8 +58,10 @@ Processor type and features ---->
 ### 编译
 
 ```bash
-#编译，并用来获取 compile_commands.json 文件
- bear make CC=clang -j 32
+# 下面这行官方脚本获取的编译命令有问题，很多文件clangd编译不过
+# ./scripts/config --file .config -e CONFIG_NUMA_BALANCE
+#编译,linux默认编译器使用的是gcc，会导致clangd索引不全，使用bear获取compile_command.json，索引后可以改成 make -j 32
+bear -- make CC=clang -j 32
  # 结束输出Kernel: arch/x86/boot/bzImage is ready
 ```
 
