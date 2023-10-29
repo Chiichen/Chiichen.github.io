@@ -20,14 +20,23 @@ export const zhNavbar = navbar([
         ],
       },
       {
+        text: "Linux内核",
+        icon: "edit",
+        prefix:"Linux内核/",
+        children:[
+            {text:"VsCode+Qemu开发Linux内核",icon:"edit",link:"vscode qemu开发Linux内核"},
+            {text:"Linux内核Numa实现细节",icon:"edit",link:"NUMA Balancing"},
+        ],
+      },
+      {
         text: "杂谈",
         icon: "edit",
         prefix: "杂谈/",
         children: [
           {
-            text: "震惊,1=0",
+            text: "震惊!!1=0",
             icon: "page",
-            link: "编程杂谈/震惊,1=0.md",
+            link: "编程杂谈/震惊!1等于0.md",
           },
           {
             text: "记一次 GP Debug 的心路历程",
