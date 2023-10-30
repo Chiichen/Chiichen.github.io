@@ -16,6 +16,14 @@ export const zhNavbar = navbar([
         ],
       },
       {
+        text:"数据库",
+        icon:"edit",
+        prefix:"数据库/",
+        children:[
+            {text:"数据库笔记",icon:"edit",link:"Chapter1 Introduction"}
+        ],
+      },
+      {
         text: "Linux内核",
         icon: "edit",
         prefix:"Linux内核/",

@@ -248,7 +248,7 @@ numa_migrate_prep
  should_numa_migrate_memory    //衡量是否需要迁移到当前节点
 
 bool should_numa_migrate_memory(struct task_struct *p, struct page * page, 
-                int src_nid, int dst_cpu)                                                                                                                                                                                                     
+                int src_nid, int dst_cpu)                                                                                                                                                                 
 {
     struct numa_group *ng = deref_curr_numa_group(p);
     int dst_nid = cpu_to_node(dst_cpu);
@@ -592,6 +592,144 @@ numa_faults node=4 task_private=0 task_shared=0 group_private=0 group_shared=0
 numa_faults node=5 task_private=0 task_shared=0 group_private=0 group_shared=0
 numa_faults node=6 task_private=0 task_shared=0 group_private=0 group_shared=0
 numa_faults node=7 task_private=0 task_shared=0 group_private=0 group_shared=0
+```
+
+## 更新
+
+在 [Patch series "memory tiering: hot page selection", v4.](https://lore.kernel.org/lkml/20220622083519.708236-2-ying.huang@intel.com/T/)中，有部分代码发生了改动，主要是针对分级内存进行了优化
+
+```c
+
+static void numa_promotion_adjust_threshold(struct pglist_data *pgdat,
+         unsigned long rate_limit,
+         unsigned int ref_th)
+{
+ unsigned int now, start, th_period, unit_th, th;
+ unsigned long nr_cand, ref_cand, diff_cand;
+
+ now = jiffies_to_msecs(jiffies);
+ th_period = sysctl_numa_balancing_scan_period_max;
+ start = pgdat->nbp_th_start;
+ if (now - start > th_period &&
+     cmpxchg(&pgdat->nbp_th_start, start, now) == start) {
+  ref_cand = rate_limit *
+   sysctl_numa_balancing_scan_period_max / MSEC_PER_SEC;
+  nr_cand = node_page_state(pgdat, PGPROMOTE_CANDIDATE);
+  diff_cand = nr_cand - pgdat->nbp_th_nr_cand;
+  unit_th = ref_th * 2 / NUMA_MIGRATION_ADJUST_STEPS;
+  th = pgdat->nbp_threshold ? : ref_th;
+  if (diff_cand > ref_cand * 11 / 10)
+   th = max(th - unit_th, unit_th);
+  else if (diff_cand < ref_cand * 9 / 10)
+   th = min(th + unit_th, ref_th * 2);
+  pgdat->nbp_th_nr_cand = nr_cand;
+  pgdat->nbp_threshold = th;
+ }
+}
+
+bool should_numa_migrate_memory(struct task_struct *p, struct folio *folio,
+    int src_nid, int dst_cpu)
+{
+ struct numa_group *ng = deref_curr_numa_group(p);
+ int dst_nid = cpu_to_node(dst_cpu);
+ int last_cpupid, this_cpupid;
+
+ /*
+  * The pages in slow memory node should be migrated according
+  * to hot/cold instead of private/shared.
+  */
+ if (sysctl_numa_balancing_mode & NUMA_BALANCING_MEMORY_TIERING &&
+     !node_is_toptier(src_nid)) {
+  struct pglist_data *pgdat;
+  unsigned long rate_limit;
+  unsigned int latency, th, def_th;
+
+  pgdat = NODE_DATA(dst_nid);
+  if (pgdat_free_space_enough(pgdat)) {
+   /* workload changed, reset hot threshold */
+   pgdat->nbp_threshold = 0;
+   return true;
+  }
+
+  def_th = sysctl_numa_balancing_hot_threshold;
+  rate_limit = sysctl_numa_balancing_promote_rate_limit << \
+   (20 - PAGE_SHIFT);
+  numa_promotion_adjust_threshold(pgdat, rate_limit, def_th);
+
+  th = pgdat->nbp_threshold ? : def_th;
+  latency = numa_hint_fault_latency(folio);
+  if (latency >= th)
+   return false;
+
+  return !numa_promotion_rate_limit(pgdat, rate_limit,
+        folio_nr_pages(folio));
+ }
+
+ this_cpupid = cpu_pid_to_cpupid(dst_cpu, current->pid);
+ last_cpupid = folio_xchg_last_cpupid(folio, this_cpupid);
+
+ if (!(sysctl_numa_balancing_mode & NUMA_BALANCING_MEMORY_TIERING) &&
+     !node_is_toptier(src_nid) && !cpupid_valid(last_cpupid))
+  return false;
+
+ /*
+  * Allow first faults or private faults to migrate immediately early in
+  * the lifetime of a task. The magic number 4 is based on waiting for
+  * two full passes of the "multi-stage node selection" test that is
+  * executed below.
+  */
+ if ((p->numa_preferred_nid == NUMA_NO_NODE || p->numa_scan_seq <= 4) &&
+     (cpupid_pid_unset(last_cpupid) || cpupid_match_pid(p, last_cpupid)))
+  return true;
+
+ /*
+  * Multi-stage node selection is used in conjunction with a periodic
+  * migration fault to build a temporal task<->page relation. By using
+  * a two-stage filter we remove short/unlikely relations.
+  *
+  * Using P(p) ~ n_p / n_t as per frequentist probability, we can equate
+  * a task's usage of a particular page (n_p) per total usage of this
+  * page (n_t) (in a given time-span) to a probability.
+  *
+  * Our periodic faults will sample this probability and getting the
+  * same result twice in a row, given these samples are fully
+  * independent, is then given by P(n)^2, provided our sample period
+  * is sufficiently short compared to the usage pattern.
+  *
+  * This quadric squishes small probabilities, making it less likely we
+  * act on an unlikely task<->page relation.
+  */
+ if (!cpupid_pid_unset(last_cpupid) &&
+    cpupid_to_nid(last_cpupid) != dst_nid)
+  return false;
+
+ /* Always allow migrate on private faults */
+ if (cpupid_match_pid(p, last_cpupid))
+  return true;
+
+ /* A shared fault, but p->numa_group has not been set up yet. */
+ if (!ng)
+  return true;
+
+ /*
+  * Destination node is much more heavily used than the source
+  * node? Allow migration.
+  */
+ if (group_faults_cpu(ng, dst_nid) > group_faults_cpu(ng, src_nid) *
+     ACTIVE_NODE_FRACTION)
+  return true;
+
+ /*
+  * Distribute memory according to CPU & memory use on each node,
+  * with 3/4 hysteresis to avoid unnecessary memory migrations:
+  *
+  * faults_cpu(dst)   3   faults_cpu(src)
+  * --------------- * - > ---------------
+  * faults_mem(dst)   4   faults_mem(src)
+  */
+ return group_faults_cpu(ng, dst_nid) * group_faults(p, src_nid) * 3 >
+        group_faults_cpu(ng, src_nid) * group_faults(p, dst_nid) * 4;
+}
 ```
 
 ## 参考
