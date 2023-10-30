@@ -12,11 +12,7 @@ export const zhNavbar = navbar([
         icon: "edit",
         prefix: "编译原理/",
         children: [
-          { text: "Chapter1 编译器组成", icon: "edit", link: "Chapter1 编译器组成" },
-          { text: "Chapter2 词法分析", icon: "edit", link: "Chapter2 词法分析" },
-          { text: "Chapter3 语法分析", icon: "edit", link: "Chapter3 语法分析" },
-          { text: "Chapter4 语义分析", icon: "edit", link: "Chapter4 语义分析" },
-         { text: "Chapter5 代码生成", icon: "edit", link: "Chapter5 代码生成" },
+            {text:"编译原理笔记",icon:"edit",link:"Chapter0 前言"},
         ],
       },
       {
@@ -25,7 +21,8 @@ export const zhNavbar = navbar([
         prefix:"Linux内核/",
         children:[
             {text:"VsCode+Qemu开发Linux内核",icon:"edit",link:"vscode qemu开发Linux内核"},
-            {text:"Linux内核Numa实现细节",icon:"edit",link:"NUMA Balancing"},
+            {text:"Linux内核Numa实现细节",icon:"edit",link:"NUMA Balance实现浅析"},
+            {text:"Patch:多层内存Numa Balancing",icon:"edit",link:"Patch解读/LWN针对多层内存系统重新进行NUMA平衡"},
         ],
       },
       {
