@@ -11,6 +11,7 @@ category:
     - Linux 内核
 tag:
     - Linux 内核
+    - 内存管理
     - NUMA
 # this page is sticky in article list
 sticky: true
