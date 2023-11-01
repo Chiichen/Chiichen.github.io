@@ -300,7 +300,8 @@ bool should_numa_migrate_memory(struct task_struct *p, struct page * page,
 上面也提到，在共享内存的情况下需要根据numa_group的历史信息来决定是否迁移,这部分的信息主要在task_numa_fault 中完成的。
 
 ```c
-task_numa_fault {
+void task_numa_fault(int last_cpupid, int mem_node, int pages, int flags) {
+ struct task_struct *p = current;
  //根据page->flags中cpupid来检查是否是私有访问的，它不同于mmap中的PRIVATE属性，而是表示是否多线程访问。
  priv = cpupid_match_pid(p, last_cpupid); 
  //如果是共享访问的，则尝试将共享访问的task组知道一个group中
