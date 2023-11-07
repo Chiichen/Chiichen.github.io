@@ -48,6 +48,11 @@ export const zhNavbar = navbar([
             icon: "page",
             link: "Debug杂谈/记一次 GP Debug 的心路历程.md",
           },
+          {
+            text:"Rust生命周期常见误区",
+            icon:"page",
+            link:"编程杂谈/Rust生命周期常见误区.md"
+          }
         ],
       },
 
