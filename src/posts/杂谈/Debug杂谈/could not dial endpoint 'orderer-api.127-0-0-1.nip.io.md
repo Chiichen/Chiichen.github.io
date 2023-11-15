@@ -8,12 +8,12 @@ order: 1
 author: ChiChen
 date: 2023-10-18
 category:
-- 杂谈
-- 网络问题
+    - 杂谈
+    - Debug杂谈
+    - 网络问题
 tag:
-
-- Debug
-- 网络问题
+    - Debug
+    - 网络问题
 sticky: false
 star: false
 footer:
