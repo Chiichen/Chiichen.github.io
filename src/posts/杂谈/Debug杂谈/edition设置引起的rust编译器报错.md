@@ -11,7 +11,6 @@ category:
     - 杂谈
     - Rust
 tag:
-    - Debug
     - Rust
 sticky: false
 star: false

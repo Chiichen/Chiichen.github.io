@@ -8,12 +8,11 @@ order: 1
 author: ChiChen
 date: 2023-10-28
 category:
-- 笔记
-- Linux 内核
+    - 笔记
+    - Linux 内核
 tag:
-
-- Linux 内核
-- 开发环境
+    - Linux 内核
+    - 开发环境
 sticky: true
 star: true
 footer:
