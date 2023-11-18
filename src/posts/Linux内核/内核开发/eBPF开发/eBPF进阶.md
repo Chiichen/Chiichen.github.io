@@ -4,7 +4,7 @@ title: eBPF进阶
 icon: page
 order: 1
 author: ChiChen
-date: 2023-11-15
+date: 2023-11-16
 category:
     - 杂谈
     - Linux内核
@@ -70,3 +70,26 @@ $ sudo  find /sys/kernel/debug/tracing/events -type d | grep page_fault
 然后在后续的 tracepoint name 和 catagery 中分别填写 page_fault_user 和 exceptions，就会创建一个新的基于 tracepoint 的应用
 
 ## 修改
+
+### 获取上下文
+
+每个 Tracepoint 都提供了一个上下文环境，我们可以通过命令来获取上下文中的数据：
+
+```bash
+$ sudo  cat /sys/kernel/debug/tracing/events/exceptions/page_fault_user/format
+name: page_fault_user
+ID: 119
+format:
+        field:unsigned short common_type;       offset:0;       size:2; signed:0;
+        field:unsigned char common_flags;       offset:2;       size:1; signed:0;
+        field:unsigned char common_preempt_count;       offset:3;       size:1; signed:0;
+        field:int common_pid;   offset:4;       size:4; signed:1;
+
+        field:unsigned long address;    offset:8;       size:8; signed:0;
+        field:unsigned long ip; offset:16;      size:8; signed:0;
+        field:unsigned long error_code; offset:24;      size:8; signed:0;
+
+print fmt: "address=%ps ip=%ps error_code=0x%lx", (void *)REC->address, (void *)REC->ip, REC->error_code
+```
+
+因为这些上下文信息都是通过一个裸指针返回的，所以我们需要这些信息来通过偏移量访问这些数据。
