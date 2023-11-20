@@ -48,6 +48,8 @@ sudo apt install linux-tools-common linux-tools-5.15.0-52-generic linux-cloud-to
 ```bash
 git clone --recurse-submodules https://github.com/libbpf/bpftool.git
 cd src
+# 安装libelf
+sudo apt-get install libelf-dev
 make install # 这里可能提示创建 usr/local/sbin/bpftool permission deny 我直接用root运行似乎没问题
 ```
 
