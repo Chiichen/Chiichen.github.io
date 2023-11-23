@@ -8,7 +8,7 @@ author: ChiChen
 date: 2023/10/24
 category:
     - 笔记
-    - 编程杂谈
+    - Rust
 tag:
     - Rust
 # this page is sticky in article list
