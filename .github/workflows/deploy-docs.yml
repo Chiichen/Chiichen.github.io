@@ -33,6 +33,9 @@ jobs:
           npm run docs:build
           > src/.vuepress/dist/.nojekyll
 
+      - name: 复制google认证文件
+        run: cp src/.vuepress/public/google0125794c904df104.html src/.vuepress/dist
+      
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
         with:
