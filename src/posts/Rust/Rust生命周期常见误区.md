@@ -1297,4 +1297,4 @@ error[E0597]: `some_string` does not live long enough
 
 ## 拓展阅读
 
-[Learning Rust in 2020](./learning-rust-in-2020.md)
+[Learning Rust in 2020](https://github.com/pretzelhammer/rust-blog/blob/master/posts/learning-rust-in-2020.md)
