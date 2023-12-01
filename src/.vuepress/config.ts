@@ -3,21 +3,6 @@ import { docsearchPlugin } from "@vuepress/plugin-docsearch";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: "/",
-  port: 10086,
-  locales: {
-    "/": {
-      lang: "zh-CN",
-      title: "ChiChen's Blog",
-      description: "vuepress-theme-hope 的博客演示",
-    },
-    "/en/": {
-      lang: "en-US",
-      title: "ChiChen's Blog",
-      description: "A blog of a",
-
-    },
-  },
   plugins: [
     docsearchPlugin({
       appId: 'KPJEYDTI5K',
@@ -26,7 +11,7 @@ export default defineUserConfig({
 
       indexName: 'chiichenio',
 
-      insights: true, // Optional, automatically send insights when user interacts with search results
+      // insights: true, // Optional, automatically send insights when user interacts with search results
 
       // container: '### REPLACE ME WITH A CONTAINER (e.g. div) ###'
 
@@ -51,6 +36,22 @@ export default defineUserConfig({
       },
     }),
   ],
+  base: "/",
+  port: 10086,
+  locales: {
+    "/": {
+      lang: "zh-CN",
+      title: "ChiChen's Blog",
+      description: "vuepress-theme-hope 的博客演示",
+    },
+    "/en/": {
+      lang: "en-US",
+      title: "ChiChen's Blog",
+      description: "A blog of a",
+
+    },
+  },
+
   theme,
 
   // Enable it with pwa
