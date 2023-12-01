@@ -21,16 +21,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
+          cache: pnpm
 
       - name: 安装依赖
-        run: npm ci
+        run: pnpm ci
 
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
-          npm run docs:build
+          pnpm docs:build
           > src/.vuepress/dist/.nojekyll
 
       - name: 复制google认证文件
