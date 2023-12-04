@@ -7,22 +7,7 @@ export const zhNavbar = navbar([
     icon: "edit",
     prefix: "/posts/",
     children: [
-      {
-        text: "编译原理",
-        icon: "edit",
-        prefix: "编译原理/",
-        children: [
-          { text: "编译原理笔记", icon: "edit", link: "Chapter0 前言" },
-        ],
-      },
-      {
-        text: "数据库",
-        icon: "edit",
-        prefix: "数据库/",
-        children: [
-          { text: "数据库笔记", icon: "edit", link: "Chapter1 Introduction" }
-        ],
-      },
+
       {
         text: "Linux内核",
         icon: "edit",
@@ -57,6 +42,29 @@ export const zhNavbar = navbar([
       },
 
     ],
+  },
+  {
+    text: "课程笔记",
+    icon: "note",
+    prefix: "/posts/课程笔记",
+    children: [
+      {
+        text: "编译原理",
+        icon: "edit",
+        prefix: "编译原理/",
+        children: [
+          { text: "编译原理笔记", icon: "edit", link: "Chapter0 前言" },
+        ],
+      },
+      {
+        text: "数据库",
+        icon: "edit",
+        prefix: "数据库/",
+        children: [
+          { text: "数据库笔记", icon: "edit", link: "Chapter1 Introduction" }
+        ],
+      },
+    ]
   },
   {
     text: "V2 文档",
