@@ -7,9 +7,9 @@ order: 1
 author: ChiChen
 date: 2023-10-11
 category:
-  - 笔记
+  - 课程笔记
 tag:
-  - 笔记/编译原理
+  - 编译原理
 sticky: true
 star: false
 footer: 
@@ -26,5 +26,5 @@ isOriginal: true
 
 ### 写给全体
 
-1.本系列笔记是对自己大学生活的记录，不保证能记录下所有知识点，仅供同学们学习参考。
+1.本系列课程笔记是对自己大学生活的记录，不保证能记录下所有知识点，仅供同学们学习参考。
 2.参考书籍为龙书第二版 (Compilers: Principles,Techniques,and Tools 译名：编译原理  Alfred V. Aho / Monica S. Lam / Ravi Sethi / Jeffrey D. Ullman等著)

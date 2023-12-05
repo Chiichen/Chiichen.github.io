@@ -7,10 +7,10 @@ order: 1
 author: ChiChen
 date: 2023-10-11
 category:
-  - 笔记
+  - 课程笔记
 tag:
 
-  - 笔记/编译原理
+  - 编译原理
 sticky: true
 star: false
 footer: 
@@ -192,7 +192,7 @@ if\;\beta\Rightarrow^*\varepsilon\;then\;\varepsilon\in FIRST(\beta)
 ![First()计算 4](./images/语法分析/First()计算4.png)
 ![First()计算 5](./images/语法分析/First()计算5.png)
 
-//Todo 提取简练笔记
+//Todo 提取简练课程笔记
 
 ###### Follow Sets
 

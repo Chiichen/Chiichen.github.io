@@ -7,10 +7,10 @@ order: 1
 author: ChiChen
 date: 2023-10-11
 category:
-  - 笔记
+  - 课程笔记
 tag:
 
-  - 笔记/编译原理
+  - 编译原理
 sticky: true
 star: false
 footer: 

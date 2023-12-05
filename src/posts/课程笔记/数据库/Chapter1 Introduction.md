@@ -7,9 +7,9 @@ order: 1
 author: ChiChen
 date: 2023-10-30
 category:
-  - 笔记
+  - 课程笔记
 tag:
-  - 笔记/数据库
+  - 数据库
 # this page is sticky in article list
 sticky: false
 # this page will appear in starred articles
