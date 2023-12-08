@@ -6,7 +6,6 @@ order: 1
 author: ChiChen
 date: 2023-11-15
 category:
-    - 杂谈
     - Linux内核
 tag:
     - Linux内核
