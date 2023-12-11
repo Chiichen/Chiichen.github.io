@@ -1,5 +1,5 @@
 ---
-title: 第二章 项目管理与IT环境
+title: 第2章 项目管理与IT环境
 # cover: /assets/images/cover1.jpg
 icon: page
 # This control sidebar order
