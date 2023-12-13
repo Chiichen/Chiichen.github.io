@@ -1,9 +1,15 @@
 import { defineUserConfig } from "vuepress";
 import { docsearchPlugin } from "@vuepress/plugin-docsearch";
+import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import theme from "./theme.js";
+import { getDirname, path } from '@vuepress/utils'
 
+const __dirname = getDirname(import.meta.url)
 export default defineUserConfig({
   plugins: [
+    registerComponentsPlugin({
+      componentsDir: path.resolve(__dirname, './components'),
+    }),
     docsearchPlugin({
       appId: 'KPJEYDTI5K',
 

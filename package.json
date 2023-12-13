@@ -13,6 +13,8 @@
   "devDependencies": {
     "@vuepress/client": "2.0.0-rc.0",
     "@vuepress/plugin-docsearch": "2.0.0-rc.0",
+    "@vuepress/plugin-register-components": "2.0.0-rc.0",
+    "@vuepress/utils": "2.0.0-rc.0",
     "mathjax-full": "^3.2.2",
     "mermaid": "^10.6.1",
     "vue": "^3.3.9",
