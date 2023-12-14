@@ -39,8 +39,8 @@ copyright: 转载请注明出处
 
 - 如果一个功能性需求是“当用户按下绿色按钮时，选项对话框出现”：
   - `性能(performance qualification)`要求可能描述对话框出现的速度；
-  - `可靠性要求(availability qualification)`可能描述这个功能会出现故障的频率以及修复的速度；
-  - `可用性要求(usability qualification)`可能描述学习这个功能的简易程度。
+  - `可用性要求(availability qualification)`可能描述这个功能会出现故障的频率以及修复的速度；
+  - `可用性(易用性)要求(usability qualification)`可能描述学习这个功能的简易程度。
 
 :::info 两类质量属性
 
