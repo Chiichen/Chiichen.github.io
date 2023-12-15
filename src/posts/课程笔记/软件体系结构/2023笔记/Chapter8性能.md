@@ -261,18 +261,19 @@ $$rank_d(n_i)=\max_{n_j\in pred(n_i)}\{rank_d(n_j)+\overline{w_j}+\overline{c_{j
 
 :::info 计算方法
 
-$$
-
 $EST(n_i,,p_j)$ 和 $EFT(n_i,p_j)$ 分别是任务 $n_i$ 在处理器 $p_j$ 上的最早执行开始时间和最早执行结束时间。对于入口任务 $n_entry$，
 $$
 EST(n_{entry},p_j)=0
 $$
 对于图中的其他任务，从入口任务开始递归计算 $EFT$ 和 $EST$ 值，分别如下所示。为了计算任务 $n_i$ 的 $EFT$，需要计算任务 $n_i$ 的所有直接前置任务你肯定已经被安排好了。
+
+$$
 \begin{array}{c}
 EST(n_i,p_j)=\max\left\{avail[j],\max_{n_m\in pred(n_i)}(AFT(n_m)+c_{m,i})\right\}\\
 EFT(n_i,p_j)=w_{i,j}+EST(n_i,p_j)\\
 AFT(n_i)=\min_{\forall j}EFT(n_i,p_j)\;(AFT——Actual Finish Time)
 \end{array}
+$$
 
 其中 $pred (n_i)$ 是任务 $n_i$ 的直接前置任务的集合，$avail[j] $ 是处理器 $p_j$ 准备好执行任务的最早时间。如果 $n_k$ 是处理器 $p_j$ 上最后分配的任务，则$avail [j]$ 是当我们有基于非插入的调度策略时处理器 $p_j$ ，完成了任务 $n_k$ 的执行，并且准备好执行另一个任务的时间。$EST$ 方程中的内部 $max$ 块返回就绪时间，即 $n_i$ 所需的所有数据都已到达处理器$p_j$的时间
 
