@@ -3,10 +3,13 @@ import { docsearchPlugin } from "@vuepress/plugin-docsearch";
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import theme from "./theme.js";
 import { getDirname, path } from '@vuepress/utils'
-
+import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 const __dirname = getDirname(import.meta.url)
 export default defineUserConfig({
   plugins: [
+    googleAnalyticsPlugin({
+      id: 'G-0ENBRM6T52',
+    }),
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, './components'),
     }),
