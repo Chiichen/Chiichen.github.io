@@ -9,7 +9,7 @@ date: 2023-12-07
 category:
   - 课程笔记
 tag:
-  - IT项目管理
+  - 软件项目管理
 # this page is sticky in article list
 sticky: false
 # this page will appear in starred articles
