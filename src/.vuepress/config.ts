@@ -6,10 +6,31 @@ import { getDirname, path } from '@vuepress/utils'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 const __dirname = getDirname(import.meta.url)
 export default defineUserConfig({
+  head: [
+    /*************** start 添加谷歌统计 ***********/
+    [
+      "script",
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-0ENBRM6T52",
+        async: true
+      }
+    ],
+    [
+      "script",
+      {},
+      `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0ENBRM6T52');
+      `
+    ],
+    /*************** end 添加谷歌统计 ***********/
+  ],
   plugins: [
-    googleAnalyticsPlugin({
-      id: 'G-0ENBRM6T52',
-    }),
+    // googleAnalyticsPlugin({
+    //   id: 'G-0ENBRM6T52',
+    // }),
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, './components'),
     }),
