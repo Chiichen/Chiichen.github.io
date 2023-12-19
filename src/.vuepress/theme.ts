@@ -9,14 +9,14 @@ export default hopeTheme({
   hostname: "https://chiichen.github.io/",
 
   author: {
-    name: "Chi",
+    name: "Chiichen",
   },
 
   iconAssets: "iconfont",
 
   logo: "/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "Chiichen/Chiichen.github.io",
 
   docsDir: "docs",
 

@@ -4,7 +4,6 @@ import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import theme from "./theme.js";
 import { getDirname, path } from '@vuepress/utils'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
-import { hopeTheme } from "vuepress-theme-hope";
 const __dirname = getDirname(import.meta.url)
 export default defineUserConfig({
   head: [
@@ -117,18 +116,8 @@ export default defineUserConfig({
     },
   },
 
-  theme: hopeTheme({
-    // 默认为 GitHub. 同时也可以是一个完整的 URL
-    repo: "Chiichen/Chiichen.github.io",
-    // 自定义仓库链接文字。默认从 `repo` 中自动推断为
-    // "GitHub" / "GitLab" / "Gitee" / "Bitbucket" 其中之一，或是 "Source"。
-    repoLabel: "GitHub",
-    // 是否在导航栏内显示仓库链接，默认为 `true`
-    repoDisplay: true,
-  }),
+  theme,
 
   // Enable it with pwa
   // shouldPrefetch: false,
 });
-
-
