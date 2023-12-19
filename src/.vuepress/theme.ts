@@ -17,7 +17,7 @@ export default hopeTheme({
   logo: "/logo.svg",
 
   repo: "Chiichen/Chiichen.github.io",
-
+  docsBranch: "master",
   docsDir: "src",
 
   blog: {
