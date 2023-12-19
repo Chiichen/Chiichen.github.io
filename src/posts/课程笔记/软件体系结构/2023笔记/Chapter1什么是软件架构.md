@@ -173,7 +173,7 @@ copyright: 转载请注明出处
 
 #### 服务结构( Service structure)
 
-- 这些单元是通过![SOAP](https://www.wikiwand.com/en/SOAP)等服务协调机制相互协作的服务。
+- 这些单元是通过[SOAP](https://www.wikiwand.com/en/SOAP)等服务协调机制相互协作的服务。
 - 服务结构有助于构建一个由相互独立且匿名的组件组成的系统
 
 #### 并发结构(Concurrency structure)
