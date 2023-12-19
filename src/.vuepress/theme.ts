@@ -18,7 +18,7 @@ export default hopeTheme({
 
   repo: "Chiichen/Chiichen.github.io",
 
-  docsDir: "docs",
+  docsDir: "src",
 
   blog: {
     medias: {
