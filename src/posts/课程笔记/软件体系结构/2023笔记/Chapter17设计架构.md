@@ -85,7 +85,7 @@ copyright: 转载请注明出处
   - 放宽或取消需求
   - 争取更多的预算
 
-## 属性驱动设计方法(The Attribute-Driven Design Method)
+## 属性驱动设计方法(The Attribute-Driven Design Method, ADD)
 
 - 一种迭代的方法。在每个迭代中，您会：
   - 选择系统的一个部分进行设计。
