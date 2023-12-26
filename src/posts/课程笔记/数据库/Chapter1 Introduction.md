@@ -66,7 +66,7 @@ copyright: 转载请注明出处
 
 应用程序隐藏数据类型的详细信息。 出于安全目的，视图还可以隐藏信息（例如员工的工资）。
 
-![视图层](image/20231030152526.png)
+![视图层](<images/Chapter1 Introduction/20231030152526.png>)
 
 ## Instances and Schemas
 
@@ -148,7 +148,7 @@ salary         numeric(8,2))
     - 实体：企业中区别于其他对象的“事物”或“对象” 由一组属性描述
     - 关系：多个实体之间的关联 用实体关系图来形象地表示：
 
-![实体关系图](image/20231030170439.png)
+![实体关系图](<images/Chapter1 Introduction/20231030170439.png>)
 
 ## Storage Management
 
@@ -167,7 +167,7 @@ salary         numeric(8,2))
 2. 优化
 3. 执行
 
-![Query Processing](image/20231030170724.png)
+![Query Processing](<images/Chapter1 Introduction/20231030170724.png>)
 
 - 评估给定查询的替代方法
   - 等价表达式
@@ -187,11 +187,11 @@ salary         numeric(8,2))
 
 ## 数据库用户和管理员
 
-![数据库用户和管理员](image/20231030172452.png)
+![数据库用户和管理员](<images/Chapter1 Introduction/20231030172452.png>)
 
 ## 数据库内部一览
 
-![数据库内部一览](image/20231030172520.png)
+![数据库内部一览](<images/Chapter1 Introduction/20231030172520.png>)
 
 ## 数据库架构
 
@@ -201,3 +201,5 @@ salary         numeric(8,2))
 - CS架构(Client-Server)
 - 并行（多处理器）
 - 分布式
+
+![Alt text](<images/Chapter1 Introduction/image.png>)
