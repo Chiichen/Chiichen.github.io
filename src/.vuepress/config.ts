@@ -106,12 +106,12 @@ export default defineUserConfig({
     "/": {
       lang: "zh-CN",
       title: "ChiChen's Blog",
-      description: "vuepress-theme-hope 的博客演示",
+      description: "博客杂谈",
     },
     "/en/": {
       lang: "en-US",
       title: "ChiChen's Blog",
-      description: "A blog of a",
+      description: "A blog of mine",
 
     },
   },
