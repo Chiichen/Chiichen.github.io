@@ -1,5 +1,5 @@
 ---
-title: Chapter 7 Entity-Relationship Model
+title: Chapter7 Entity-Relationship Model
 # cover: /assets/images/cover1.jpg
 icon: page
 # This control sidebar order

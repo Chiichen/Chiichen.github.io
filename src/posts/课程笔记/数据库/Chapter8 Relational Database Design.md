@@ -23,7 +23,7 @@ copyright: 转载请注明出处
 
 ![Example](<images/Chapter8 Relational Database Design/image-2.png>)
 
-- 如果分解后无法重建原始信息，那么就是有损分解(Lossy Decomposition)，反之则为无损分截(Lossless-Join Decomposition)
+- 如果分解后无法重建原始信息，那么就是有损分解(Lossy Decomposition)，反之则为无损分解(Lossless-Join Decomposition)
 ![有损分解](<images/Chapter8 Relational Database Design/image.png>)
 ![无损分解](<images/Chapter8 Relational Database Design/image-1.png>)
 - 所以我们需要一个理论来告诉我们怎么合理的分解关系。好的分解要做到：
