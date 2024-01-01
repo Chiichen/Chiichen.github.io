@@ -1,5 +1,5 @@
 ---
-title: Chapter14 Transactions
+title: Chapter15 Concurrency Control
 # cover: /assets/images/cover1.jpg
 icon: page
 # This control sidebar order
