@@ -93,11 +93,11 @@ copyright: 转载请注明出处
   - 网络模型
   - 层次模型
 
-## Data Manipulation Language (DML)
+## 数据操作语言(Data Manipulation Language, DML)
 
 - 有两种类型的程序操作语言：
   - 程序性(Procedural)：用户指定需要哪些数据以及如何获取这些数据
-  - 声明性（Declarative )(nonprocedural）：用户指定需要哪些数据，而不指定如何获取这些数据
+  - 声明性(Declarative)(nonprocedural)：用户指定需要哪些数据，而不指定如何获取这些数据
 
 ## SQL
 

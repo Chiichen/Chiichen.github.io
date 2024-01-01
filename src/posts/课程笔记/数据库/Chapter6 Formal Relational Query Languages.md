@@ -196,6 +196,6 @@ $$
 
 ### 修改(Modification)
 
-- 增加(Insertion)：$r\leftarrow r-E$
-- 删除(Deletion)：$r\leftarrow r \cup E$
+- 增加(Insertion)：$r\leftarrow r \cup E$
+- 删除(Deletion)：$r\leftarrow r-E$
 - 更新(Updating)：$r\leftarrow \Pi_{F_1,\ldots,F_n}(r)$

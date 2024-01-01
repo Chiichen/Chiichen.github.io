@@ -118,6 +118,8 @@ $$\begin{aligned}
 ![Entity With Composite, Multivalued, and Derived Attributes](<images/Chapter7 Entity-Relationship Model/image-5.png>)
 ![Relationship Sets with Attributes](<images/Chapter7 Entity-Relationship Model/image-6.png>)
 ![E-R Diagram with a Ternary Relationship](<images/Chapter7 Entity-Relationship Model/image-14.png>)
+![E-R图示例](<images/Chapter7 Entity-Relationship Model/image-16.png>)
+
 ### 角色(Role)
 ![Role](<images/Chapter7 Entity-Relationship Model/image-7.png>)
 - 关系的实体集不一定是不同的。
@@ -133,6 +135,7 @@ $$\begin{aligned}
 ![Many-to-One Relationships](<images/Chapter7 Entity-Relationship Model/image-10.png>)
 ![Many-to-Many Relationship](<images/Chapter7 Entity-Relationship Model/image-11.png>)
 ![ Participation of an Entity Set in a Relationship Set](<images/Chapter7 Entity-Relationship Model/image-12.png>)
+- 下图表示学生有且只有一名指导老师，而老师可以指导$0\ldots n$名学生
 ![Alternative Notation for Cardinality Limits](<images/Chapter7 Entity-Relationship Model/image-13.png>)
 - 对于三元（或更高度）关系，我们最多允许从关系中有一个箭头出去，以表示基数约束。
 - 例如，从 proj_guide 到 instructor 的箭头表示每个学生至多有一个项目导师。
