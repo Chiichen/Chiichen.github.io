@@ -308,9 +308,8 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 
 ## 第三范式(Third Normal Form)
 
-- 一个关系模式R在第三范式（3NF）中，如果对于F中的所有：
-$\alpha \rightarrow \beta$
-至少满足以下条件之一：
+- 在第二范式的基础上，数据表中如果不存在非关键字段对任一候选关键字段的传递函数依赖则符合第三范式
+- 一个关系模式R在第三范式（3NF）中，如果对于F中的所有$\alpha \rightarrow \beta$，至少满足以下条件之一：
   - $\alpha \subseteq \beta$
   - $\alpha$是$R$的超键
   - $\beta-\alpha$中的每个属性$A$都包含在$R$的候选键中（注意：每个属性可能在不同的候选键中）
@@ -340,7 +339,7 @@ $\alpha \rightarrow \beta$
 步骤：
 
 1. 计算规范覆盖$F_c=\{\alpha_1 \rightarrow\beta_1,\alpha_2\rightarrow\beta_2,\ldots,\alpha_n\rightarrow\beta_n\}$
-2. 生成新关系$R_1=\alpha_1\beta_1,R_2=\alpha_2\beta_2\text{,L },R_n=\alpha_n\beta_n$
+2. 生成新关系$R_1=\alpha_1\beta_1,R_2=\alpha_2\beta_2,\ldots ,R_n=\alpha_n\beta_n$
 3. 找到$R$的候选键：$\gamma_1,\gamma_2,\ldots,\gamma_m$
 4. 如果没有模式$R_j$包含$R$的候选键，那么生成一个新的模式$R_{n+1}=\gamma_1$
 5. 输出$R_1,R_2,\ldots,R_{n+1}$(可选)
@@ -427,3 +426,18 @@ $\alpha \rightarrow \beta$
 
 - 如果一个关系模式符合第四范式（4NF），那么它也符合BCNF（Boyce-Codd范式）。
 $4NF\subset BCNF \subset 3NF \subset 2NF \subset 1NF$
+
+:::info
+第一范式(1NF)
+非码的非平凡 | ↓ 消除非主属性对码的部分函数依赖
+第二范式(2NF)
+↓ 消除非主属性对码的传递函数依赖
+第三范式(3NF)
+↓ 消除主属性对码的部分和传递函数依赖
+BC范式(BCNF)
+↓ 消除非平凡且非函数依赖的多值依赖
+第四范式(4NF)
+↓消除不是由候选码所蕴含的连接依赖
+第五范式(5NF)
+
+:::
