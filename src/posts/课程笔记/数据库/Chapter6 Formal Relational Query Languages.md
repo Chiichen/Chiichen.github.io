@@ -50,7 +50,7 @@ copyright: 转载请注明出处
 ![Selction操作](<images/Chapter6 Formal Relational Query Languages/image.png>)
 
 - 基本形式：$\sigma_{p}(R)$
-- $p$称为选择谓词，可以由多个独立的命题通过
+- $p$称为选择谓词，可以由多个独立的命题通过$\wedge ,\vee$等符号连接
 - 被定义为：$\sigma_{p}(r)=\{t\mid t\in r\mathrm{~and~}p(t)\}$
 - 例如：$\sigma_{dept\_name=``Physics"}(instructor)$
 
@@ -72,7 +72,8 @@ copyright: 转载请注明出处
 - $r\cup s$需要满足两个条件：
     1. r, s必须具有相同的arity（相同的属性数量）
     2. 属性域必须兼容（例如：$r$的第$k$列与$s$的第$k$列处理相同类型的值）
-- 例如，查找 2009 年秋季学期或 2010 年春季学期或两者都教授的所有课程：$$\begin{aligned}\Pi_{\mathrm{course\_}id}\left(\sigma_{\mathrm{~semester=“}\mathsf{Fall”~}\land\mathrm{~year=}2009}\left(\mathrm{section}\right)\right)\cup\\\Pi_{\mathrm{course\_}id}\left(\sigma_{\mathrm{~semester=“}\mathsf{Spring”}\land\mathrm{~year=}2010}\left(\mathrm{section}\right)\right)\end{aligned}$$
+- 例如，查找 2009 年秋季学期或 2010 年春季学期或两者都教授的所有课程：
+$$\begin{aligned}\Pi_{\mathrm{course\_}id}\left(\sigma_{\mathrm{~semester=“}\mathsf{Fall”~}\land\mathrm{~year=}2009}\left(\mathrm{section}\right)\right)\cup\\\Pi_{\mathrm{course\_}id}\left(\sigma_{\mathrm{~semester=“}\mathsf{Spring”}\land\mathrm{~year=}2010}\left(\mathrm{section}\right)\right)\end{aligned}$$
 
 #### 差集(Set difference)
 
@@ -112,7 +113,7 @@ $$\begin{aligned}\Pi_{\mathrm{course\_}id}\left(\sigma_{\mathrm{~semester=“}\m
 
 - 基本形式：$r \bowtie s$
 - 设 $r$ 和 $s$ 分别是基于模式 $R$ 和 $S$ 的关系。那么，$r \bowtie s$是基于模式 $R \cup S$ 的关系，其获取方式如下：
-考虑每对元组 t：
+考虑每对元组 $t$：
   - 如果来自 $r$ 的元组 $t_r$ 和来自 $s$ 的元组 $t_s$ 在 $R \cap S$ 的每个属性上具有相同的值，则将一个元组 $t$ 添加到结果中，
     - 其中 $t$ 在 $r$ 上具有与 $t_r$ 相同的值，
     - $t$ 在 $s$ 上具有与 $t_s$ 相同的值。
@@ -131,7 +132,7 @@ $$
 #### Theta连接(Theta Join)
 
 - 定义为：$r \bowtie_\theta s=\sigma_\theta(r\times s)$
-- 例如，假设一个顾客要购买一个车模和一个船模，但不想为船花费比车更多的钱。那么可以有$car \bowtie_{Carprice\le BoatPrice} boat $
+- 例如，假设一个顾客要购买一个车模和一个船模，但不想为船花费比车更多的钱。那么可以有$car \bowtie_{Carprice\le BoatPrice} boat$
 - 当$\theta$为等号时，又被称为相等连接
 
 #### 赋值(Assignment Operation)
@@ -171,8 +172,8 @@ $$
 
 #### 除法(Division Operation)
 
-- 基本形式：$r\div s $
-- 定义为:$R\div S =\{t[a_1,\ldots,a_n]\mid t\in R \wedge \forall s\in S((t[a_1,\ldots,a_n]\cup s)\in R)\} $，这里的$[a_1,\ldots,a_n]$时唯一于$R$的属性名字的集合
+- 基本形式：$r\div s$
+- 定义为:$R\div S =\{t[a_1,\ldots,a_n]\mid t\in R \wedge \forall s\in S((t[a_1,\ldots,a_n]\cup s)\in R)\}$，这里的$[a_1,\ldots,a_n]$是唯一于$R$的属性名字的集合
 ![Division Example](<images/Chapter6 Formal Relational Query Languages/image-10.png>)
 - 如果DBProject包含数据库项目的所有任务，那么上述划分的结果恰好包含完成数据库项目中两项任务的学生。
 ![Division Example 2](<images/Chapter6 Formal Relational Query Languages/image-11.png>)

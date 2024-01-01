@@ -427,7 +427,7 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 - 如果一个关系模式符合第四范式（4NF），那么它也符合BCNF（Boyce-Codd范式）。
 $4NF\subset BCNF \subset 3NF \subset 2NF \subset 1NF$
 
-:::info
+:::info 范式之间的关系
 第一范式(1NF)
 非码的非平凡 | ↓ 消除非主属性对码的部分函数依赖
 第二范式(2NF)
