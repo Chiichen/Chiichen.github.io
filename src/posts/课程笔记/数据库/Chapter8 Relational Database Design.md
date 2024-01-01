@@ -66,7 +66,7 @@ copyright: 转载请注明出处
 
 3. $\{(\text{学号}) \rightarrow (\text{姓名}, \text{年龄})\}$
 
-在这个例子中，候选键只有一个，即$(\text{姓名}, \text{课程名称})$，因此主键也是$(\text{姓名}, \text{课程名称})$。
+在这个例子中，候选键只有一个，即$(\text{学号}, \text{课程名称})$，因此主键也是$(\text{学号}, \text{课程名称})$。
 
 我们可以观察到，属性$\text{姓名}$、$\text{年龄}$和$\text{学分}$是部分依赖于主键的，而属性$\text{成绩}$是完全依赖于主键的。由于存在部分依赖关系，这个关系模式不满足第二范式。
 
@@ -90,16 +90,15 @@ copyright: 转载请注明出处
 - 定义为：$\alpha \rightarrow \beta$等价于
     1. $\alpha$是模式$(\alpha,\beta)$的`超码(super key)`
     2. 属性$\alpha$的取值决定$\beta$的取值
-- 如果一个函数依赖在关系的所有实例中都被满足，则它是`平凡(trivial)`的。
-  - 例如：
-    - $ID, name \rightarrow ID$ 是平凡的，因为在关系的每个实例中都满足。
-    - $name \rightarrow name$ 也是平凡的，因为它总是成立。
-  - 通常情况下，如果$\beta \subseteq a$，函数依赖$α \rightarrow β$是平凡的。
+- 在函数依赖$\alpha \rightarrow \beta$中，如果$\beta \subseteq a$，我们就称它是`平凡(trivial)`的。因为对于任意的关系$R$它总是成立的。
+  - 例如：$ID, name \rightarrow ID$ 是平凡的 $name \rightarrow name$ 也是平凡的
+- 在函数依赖$\alpha \rightarrow \beta$中，如果对于$\alpha$的任何一个真子集$\alpha '$，都有$\alpha '\nrightarrow\beta$那么就称$\beta$对$\alpha$有完全函数依赖
+- 在函数依赖$\alpha \rightarrow \beta$中，如果$\beta$不完全函数依赖于$\alpha$就称$\beta$对$\alpha$部分函数依赖
 
 ### 函数依赖与超键
 
-- 如果且仅当 $K \rightarrow R$，$K$ 是关系模式 $R$ 的超键。
-- 如果且仅当满足以下条件时，$K$ 是 $R$ 的候选键：
+- 当且仅当 $K \rightarrow R$，$K$ 是关系模式 $R$ 的超键。
+- 当且仅当满足以下条件时，$K$ 是 $R$ 的候选键：
   - $K \rightarrow R$，并且
   - 对于任何 $\alpha \subset K$，都不满足 $\alpha \rightarrow R$。
 
@@ -147,7 +146,7 @@ $$\begin{aligned}&R_1\cap R_2\to R_1\\&R_1\cap R_2\to R_2\end{aligned}$$
 
 - $F^+$表示所有能从函数依赖$F$中推出的函数依赖闭包
 - 如果两个函数依赖集的闭包相等，那么我们就说这两个函数依赖集是等价的
-我们可以通过反复应用Armstrong公理（Armstrong's Axioms）来找到$F^+$，即$F$的闭包：
+- 我们可以通过反复应用Armstrong公理（Armstrong's Axioms）来找到$F^+$，即$F$的闭包：
   - 自反性：如果$\beta$是$\alpha$的子集，那么$\alpha \rightarrow \beta$。
   - 扩充性：如果$\alpha \rightarrow \beta$，那么对于任意$\gamma$，都有$\gamma\alpha \rightarrow \gamma\beta$。
   - 传递性：如果$\alpha \rightarrow \beta$，且$\beta \rightarrow \gamma$，那么$\alpha \rightarrow \gamma$。
@@ -245,10 +244,10 @@ $$\alpha\text{ is a superkey }\Leftrightarrow R\subseteq\alpha^{+}.$$
 - 示例中的关系模式不符合BCNF：
 
 $$
-inst\_dept(ID，name，salary，dept_name，building，budget)
+inst\_dept(ID，name，salary，dept\_name，building，budget)
 $$
 
-因为$dept\_name\rightarrow building，budget$在$inst\_dept$上成立，但$dept\_name$不是超键。
+因为$dept\_name\rightarrow (building,budget)$在$inst\_dept$上成立，但$dept\_name$不是超键。
 
 - 又例如：
   - 假设仓库管理关系表为$\text{StorehouseManage}(\text{仓库ID}, \text{存储物品ID}, \text{管理员ID}, \text{数量})$，且有一个管理员只在一个仓库工作；一个仓库可以存储多种物品。这个数据库表中存在如下决定关系：
@@ -281,7 +280,7 @@ $$
 
 - 如果我们有模式$R$和由非平凡依赖$\alpha \rightarrow \beta$导致的一个BCNF冲突，我们把$R$分解为
   - $R_1=(\alpha\cup\beta)$
-  - $R_2=(R-(\beta - \alpha))$
+  - $R_2=R-R_1+\alpha$
 
 ![分解模式为BCNF示例](<images/Chapter8 Relational Database Design/image-5.png>)
 

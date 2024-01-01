@@ -59,13 +59,13 @@ copyright: 转载请注明出处
 
 - 设 $K \subseteq R$，(其中 $R$ 是一个关系模式，由多个属性组成)。
 
-- 如果 $K$ 的值足以唯一标识每个可能的关系 $r(R)$ 中的元组，则 $K$ 是 $R$ 的超键(superkey)。
+- 如果 $K$ 的值足以唯一标识每个可能的关系 $r(R)$ 中的元组，则 $K$ 是 $R$ 的`超键(superkey)`。
   - 例如，$\{ID\}$ 和 $\{ID, name\}$都是 $instructor$ 关系的超键。
 
-- 如果 $K$ 是最小的超键，则 $K$ 是候选键(candidate key)。
+- 如果 $K$ 是最小的超键，则 $K$ 是`候选键(candidate key)`。
   - 例如，$\{ID\}$ 是 $Instructor$ 的候选键。
 
-- 其中一个候选键被选为主键(primary key)。
+- 其中一个候选键被选为`主键(primary key)`。
   - 哪一个是主键？
 
 - 外键约束(Foreign key)：一个关系中的值必须出现在另一个关系中。
