@@ -3,7 +3,7 @@ home: true
 layout: BlogHome
 icon: home
 title: 博客主页
-heroImage: /logo.svg
+heroImage: /KissingCat.jpg
 heroText: Chi
 heroFullScreen: true
 tagline: EveryBody dies but not everybody lives

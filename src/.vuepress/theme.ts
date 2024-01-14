@@ -10,8 +10,8 @@ export default hopeTheme({
   },
 
   iconAssets: "iconfont",
-
-  logo: "/logo.svg",
+  favicon: "/KissingCat.jpg",
+  logo: "/KissingCat.jpg",
 
   repo: "Chiichen/Chiichen.github.io",
   docsBranch: "master",
@@ -20,23 +20,23 @@ export default hopeTheme({
   blog: {
     medias: {
       BiliBili: "https://space.bilibili.com/8427907?spm_id_from=333.1007.0.0",
-      Discord: "https://example.com",
+      // Discord: "https://example.com",
       Email: "chiichen@qq.com",
-      Facebook: "https://example.com",
+      // Facebook: "https://example.com",
       GitHub: "https://github.com/Chiichen",
       Gmail: "kejian2531693734@gmail.com",
-      Instagram: "https://example.com",
-      Lines: "https://example.com",
-      Linkedin: "https://example.com",
-      Pinterest: "https://example.com",
-      QQ: "https://example.com",
-      Reddit: "https://example.com",
+      // Instagram: "https://example.com",
+      // Lines: "https://example.com",
+      // Linkedin: "https://example.com",
+      // Pinterest: "https://example.com",
+      // QQ: "https://example.com",
+      // Reddit: "https://example.com",
       Steam: "https://steamcommunity.com/profiles/76561198280284334/",
-      Twitter: "https://example.com",
-      Wechat: "https://example.com",
-      Weibo: "https://example.com",
-      Whatsapp: "https://example.com",
-      Youtube: "https://example.com",
+      // Twitter: "https://example.com",
+      // Wechat: "https://example.com",
+      // Weibo: "https://example.com",
+      // Whatsapp: "https://example.com",
+      // Youtube: "https://example.com",
       Zhihu: "https://www.zhihu.com/people/hacker.fucker",
     },
   },
@@ -54,7 +54,7 @@ export default hopeTheme({
       displayFooter: true,
 
       blog: {
-        description: "A FrontEnd programmer",
+        description: "Programmer",
         intro: "/en/intro.html",
       },
 
@@ -78,8 +78,9 @@ export default hopeTheme({
       displayFooter: true,
 
       blog: {
-        description: "一个前端开发者",
+        description: "Programmer",
         intro: "/intro.html",
+        roundAvatar: true,
       },
 
       // page meta
