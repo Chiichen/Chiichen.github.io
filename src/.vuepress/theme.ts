@@ -73,7 +73,7 @@ export default hopeTheme({
       // sidebar
       sidebar: zhSidebar,
 
-      footer: "默认页脚",
+      footer: "闪耀的群星也有黯淡之时",
 
       displayFooter: true,
 
