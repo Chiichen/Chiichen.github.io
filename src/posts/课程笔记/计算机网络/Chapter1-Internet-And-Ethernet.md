@@ -1,4 +1,23 @@
-#笔记/计算机网络 
+---
+title: Chapter1 Internet And Ethernet
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-06-10
+category:
+  - 课程笔记
+tag:
+  - 计算机网络
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 ## 网络模型
 
 ![[网络基础模型]]
@@ -10,24 +29,29 @@
 ### 问题
 
 #### 效率问题
+
 - 简单的网络中没有统一管理，所有设备都要建立点对点连接后才能通信，造成严重的链路堵塞
 - 解决办法：Packets Switching（数据包交换网络），利用交换机
 
 #### 置信问题
+
 - 在传输过程中可能造成的包数据丢失、数据包交换过程中可能造成的包异常复制等
 - 解决办法：TCP协议
 
 #### 地址问题
+
 - 不同层需要不同的地址，传输层需要端口号，网络层需要IP地址，数据链路层需要MAC地址
 - 解决办法：IP协议(国际互联协议)
 
 #### 路由问题
+
 - 从A到B有巨量的路径可选，网络设备怎么选择传输路径，来达成全局最优
 - 解决办法：Routing Protocol(路由协议)
 
 ## 协议
 
 ### 协议栈(协议分层)
+
 ![[协议栈]]
 
 #### 应用层
@@ -72,30 +96,35 @@ OSI模型还额外添加了表示层和会话层。表示层的作用是使得�
 
 - Link、Network、Transport层都会各自向信息添加协议头(proctol header)
 
-
 ## 电路交换(circuit switching)
+
 - 最早的交换网络，主要用于电话通信网中
 - 先建立端到端的稳定连接，再进行通信，直到通信结束才释放
 - 基本能占满带宽，保证传输速率，但是互联网中的信息大都是突发传输的(burst)，这种交换方式极大地浪费通信资源
 - 有两种实现，分频复用(FDM)和分时复用(TDM):
- - FDM是将一个信道的频带分为多个子信道，每个子信道都能并行传输一路数据
- - TDM是将一个信道分为多个时隙(slot)，每个时隙传输一路数据，一个frame完成一轮
+- FDM是将一个信道的频带分为多个子信道，每个子信道都能并行传输一路数据
+- TDM是将一个信道分为多个时隙(slot)，每个时隙传输一路数据，一个frame完成一轮
 
 ## 包交换(packet switching)
+
 - 数据被分割为若干个包进行传输，经过数据链路和包交换器
 - 一个包在链路中的传输是满速传输的
 - 每个包都必须被包交换器完全接受并缓存，而且要检测其接受者，再把它发送给其他交换器
 - 包交换器是多路设备，并且对每条链路都有输入输出缓存
 - 一个包会被以队列的方式存储在交换器的缓存中
 - 在交换器中发生的存储转发会带来
+
  1. 延迟
  2. 丢包
+
 - 有两种类型：路由和链路层交换器
 
 ### 包交换的定量分析
 
 #### 节点延迟
+
 $$d_{nodal}=d_{proc}+d_{queue}+d_{trans}+d_{prop}$$
+
 - 节点处理延迟(Nodal processing delay)：节点检查位错误和选择输出链路的时间
 - 队列延迟(Queuing delay)：在交换器队列中等待的延迟，取决于路由的堵塞成都
 - 传输延迟(Transmission delay)：$R=link \;bandwidth(bps)$$L=packet \;length(bits)$$L/R=time \;to\; send\; bits\; to\; link$
@@ -103,19 +132,22 @@ $$d_{nodal}=d_{proc}+d_{queue}+d_{trans}+d_{prop}$$
 - 总延迟就是所有$nodal$的延迟之和
 
 #### 流量强度(traffic intensity)与队列延迟
+
 - $R=link\;bandwidth(bps)$
 - $L=packet\;length(bits)$
 - $a=average\;packet\;arrival\;rate$
 - $Traffic\; Intensity = La/R$
-- $La/R\approx 0:平均队列延迟较小$
-- $La/R\rightarrow 1：队列延迟逐渐变大$
+- $La/R\approx 0:\text{平均队列延迟较小}$
+- $La/R\rightarrow 1：\text{队列延迟逐渐变大}$
 
 #### 丢包
+
 - 队列(又名缓冲区)只有有限的空间
 - 到达一个满的队列的包会被丢弃，又称为丢包
 - 丢弃的包可能会被前一个节点重传，也有可能被源终端重传，或者不重传
 
 #### 吞吐量
+
 - sender和receiver之间传输的比率($R\;bits/time \;unit$)
 - 瞬时(instantaneous)吞吐量：某一时刻的比率
 - 平均吞吐量：一段时间内的比率

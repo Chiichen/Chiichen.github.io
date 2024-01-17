@@ -1,4 +1,23 @@
-#笔记/计算机网络 
+---
+title: Chapter3 Transport Layer
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-06-14
+category:
+  - 课程笔记
+tag:
+  - 计算机网络
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 
 ## 多路复用与多路分解
 
@@ -16,13 +35,15 @@
 
 - TCP socket 是由一个四元组(源IP地址，源端口，目的IP地址，目的端口)来唯一确定，因此不同于 UDP，服务器程序会为有相同目的IP地址，目的端口，不同的源IP地址，源端口的连接开启一个新的进程和一个新的socket
 
-
 ## UDP(User Datagram Protocol)
+
 - 由程序解决重传等问题
 - 在简单的请求——响应操作中使用UDP，例如DNS服务，发送一个包含主机名的DNS请求，返回一个IP地址的响应
 - 对于某些需要自定义阻塞控制、重传方法的场景下也会使用UDP，例如一些实时视音频
 - 无须建立连接，无连接状态(不需要维护连接状态)，packet的header开销小(UDP-8字节，TCP-20字节)
+
 ### UDP 报头
+
 - 源端口(Source Port)：
 - 目标端口(Destination Port)：
 - 长度(Length)：整个UDP报文的长度(报头加上数据)
@@ -30,9 +51,11 @@
 ![[UDP Header.png]]
 
 ### 校验和(Checksum)
+
 - 需要对首部、数据、加上伪首部进行计算校验和：包括4字节的源IP地址和4字节的目的地址，1字节的全0，1字节的17(UDP协议号)和两字节的UDP长度。如果数据不为偶数个字节，要补上全0字节，计算后删除。
 - 对所有16位的字进行求和再反码，在每次求和过程中出现的溢出要进行回卷(wrap around)
 - 例如：
+
 $$\begin{array}{c}
 1100\;0000\;0000\;0000\\
 1000\;0000\;0000\;0000\\
@@ -51,14 +74,11 @@ $$\begin{array}{c}
 > [!note] 注意差错检测的适用范围
 > 在UDP中实现的是传输层的差错检测，外面后面会看到链路层的差错检测CRC。而且它对发生在内存中的位错误无能为力(因为已经被unpackaged和repackage了)
 
-
-
 #### 性质
 
 1. 无连接的数据传输
 2. 独立数据报：所有发送的数据没有顺序，如果要排序只能在应用层进行数据排序
 3. 不可靠：没有确认，没有检测丢失的机制，没有流量控制(可能导致缓冲区溢出而丢失数据)，但是可以在应用程序中选择重新请求数据
-
 
 ## RDT(Reliable Data Transfer)
 - 其不同版本（rdt1.0, rdt2.0等）介绍了运输层实现可靠数据传输的各种组件：序号、计时器、ACK、重传等。rdt是一个理解tcp协议的一个很好基石。 其他层的可靠传输协议，也可以藉由rdt思想演化。RDT 协议通过调用 UDP 协议的 seed_to 及 recv_from 函数进行数据包的发送和接收,在此基础上通过实现检验和,报文序列号,确认重传等机制为上层提供一条虚拟的可靠数据信道。
@@ -89,7 +109,6 @@ $$\begin{array}{c}
 ![[rdt2.2 sender.png]]
 ![[rdt2,2 receiver.png]]
 - rdt 2.1和rdt 2.2 的细微差距在于，接收方此时必须包括一个由ACK报文所确认的序号(在make_pkt()中包括参数ACK 0, 或ACK 1实现)，发送方此时必须检查接收到的ACK报文中被确认的分组序号(在isACK()中包括参数0或1来实现)。
-
 
 #### 经具有比特差错的丢包信道的RDT: rdt3.0
 
@@ -128,7 +147,7 @@ $$\begin{array}{c}
 \end{array}$$
 ![[GBN序号空间.png]]
 - 随着协议的进行，窗口在序号空间内滑动，因此N被称为窗口长度(window size)，GBN协议也被称为滑动窗口协议(sliding-window protocol)
-- 如果分组序号的字段是$k$位的，即序号范围是$[0,2^k-1]$，那么所有涉及序号的运算都要模$2^k$，也就是把序号空间当成环来处理。rdt3.0的序号空间是$[0,1]$，TCP中为$[0,2^{32}-1]$ 
+- 如果分组序号的字段是$k$位的，即序号范围是$[0,2^k-1]$，那么所有涉及序号的运算都要模$2^k$，也就是把序号空间当成环来处理。rdt3.0的序号空间是$[0,1]$，TCP中为$[0,2^{32}-1]$
 
 ![[GBN操作.png]]
 
@@ -168,13 +187,9 @@ $$\begin{array}{c}
 
 ![[SR操作.png]]
 
-
 - 对SR协议来说，接收方和发送方的窗口并不相同，因此接收方行为的第二步十分重要，以SR序号空间的图为例，对于可能出现的ACK丢失行为，如果不对之前已经收到的send_base 处的重传packet进行ACK响应，那么发送方的的窗口将永远不会向前滑动。
 
 - 在SR协议中，窗口大小必须小于等于序号空间的一半，否则在发送方全部接收到最开始发送的一批分组的ACK的情况下，序号已经开始了第一次循环使用，这会出现序号重复的问题。
-
-
-
 
 ## TCP(Transmission Control Protocol)
 - 被广泛使用的可靠的，端到端的(end-to-end)，双向的(birectional)，字节流(byte-stream)服务
@@ -275,7 +290,6 @@ $$\mathrm{DevRT}=(1-\beta)\cdot\mathrm{DevRT}+\beta\cdot|\mathrm{SampleRT}-\math
 - 初始的TimeoutInterval值为1秒。同时，当出现超时后，TimeoutInterval将加倍，以免即将被确认的后续报文段过早出现超时。然而只要收到报文段并更新EstimatedRTT，就将用一下公式计算TimeoutInterval。
 $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 
-
 ### 可靠传输
 
 #### 重传时机
@@ -284,7 +298,6 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 
 - TCP会为每个报文设置一个重传计时器，计时器的初始值为$$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 - 每当超时时间发生，触发重传时，会把下次的TimeoutInterval设置为当前的两倍
-
 
 ##### 快速重传
 
@@ -298,7 +311,6 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 - 一旦接收到3个相同的冗余ACK，就立刻执行快速重传，即在定时器过期前就重传丢失的报文段
 - 例如0~3被接收，随后分别收到5~6, 7~9, 9~10，分别发送3个ACK 4之后就触发了快速重传。
 
-
 #### 重传协议(Retransmission Strategies)
 - 基于滑动窗口的可靠传输
 - 使用累积ACK
@@ -309,18 +321,12 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
  2. Selective repeat：一个包的丢失只会引起丢失的包的重传
 - 尽管由于TCP所维护的序号特性看起来更像是GBN协议，然而由于有缓冲区的存在，又让其能以SR的方式工作。
 
-
-
-
 ### 流量控制(Flow control)
 - 指消除发送方使接收方缓存溢出的可能性。是一个速度匹配服务。而解决TCP发送方因为IP网络拥塞而被遏制的称为拥塞控制(Congestion Control)
 - 在TCP报头中，包含一个data sequence number(LastByteSent)，一个acknowledgment  sequence number(LastByteAcked)，还包含一个window字段来表示接收方的window的剩余大小，也就是说TCP接收器只会处理数据序列号等于$ACK\;number+window$的数据，也不允许发送方发送序列号超过$ACK\;number+window$的数据
 - 接收方为连接分配的接收缓存大小为$RcvBuffer$，接收窗口$rwnd$的大小随着应用程序不断取走数据，IP报文不断抵达不断变化
 ![[滑动窗口.png]]
 - TCP规范中要求：当主机 $B$ 的接收窗口为 $0$ 时，主机A继续发送只有一个字节数据的报文段。这些报文段将会被接收方确认。最终缓存将开始清空，并且确认报文里将包含一个非0的rwnd值。(为了防止rwnd=0时，双方都不再发送报文)
-
-
-
 
 #### Stop and wait
 - 在任何时间内至多有、一个包正在传输过程中
@@ -349,17 +355,17 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 - 维护三个变量：Send window size(SWS)，Last acknowledgement received(LAR)，Last segment sent(LSS)
 - 维护不等式$(LSS-LAR)\le SWS$成立
 - Window delay：例如SWS=3，现在发送了0、1、2，而1、2都发送了确认包，0还没有，在这种情况下，Window会被卡在0的位置而无法跨过
-- 至多可以发送信息到$LAR+window$ 
+- 至多可以发送信息到$LAR+window$
 
 ##### Receiver
 - 维护三个变量：Receive window size(RWS)，Last acceptable segment(LAS)，Last segment received(LSR)
-- 维护不等式$(LAS-LSR)\le RWS$ 
+- 维护不等式$(LAS-LSR)\le RWS$
 - 如果收到包$<LAS$ ：
  - 发送累计(cumulative)ACK：例如收到1、2、3、5，则发送ACK3，表示对3和其之前所有接收的包的确认，而不会确认5，又例如，发送1、2、3、4、5，成功接受了1、2、3后，发送ACK3，如果4丢包了，又收到5，则会再次发送ACK3而不是ACK5，因此Sender会因为超时重传第四个包，再次接收第四个包，然后传输ACK5。
  - 注意：TCP中的确认值不是当前收到的值，而且期待收到的下一个值，例如收到1、2、3，在TCP中的ACK字段应为4
 
 ##### RWS，SWS，Sequence Space
-- $RWS \ge 1,SWS \ge 1,RWS \le SWS$ 
+- $RWS \ge 1,SWS \ge 1,RWS \le SWS$
 - 如果$RWS=1$，就会产生$go\;back\;N$协议，例如$SWS=3，RWS=1$，先发送了0、1、2，接收方确认了0、1，继续发送了3、4，而2由于一些原因丢包了，由于接收方的缓冲区大小为1，无法缓冲后面发送的3、4，因此发送方需要重发2、3、4，而如果是$RWS=3$的情况，3、4能被缓冲区接收，因此只需要重传包2即可。因此一共需要$SWS+1$个序列号来给发送的数据包和确认包进行编号
 - 如果$RWS=SWS$则需要$2SWS$个序列号来对包进行编号
 - 一般情况下需要$RWS+SWS$个序列号进行包的编号
@@ -384,7 +390,6 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 
 ![[2发送有缓2.png]]
 
-
 #### 四个发送方和多个有限缓存及多跳路径
 
 ![[4主机.png]]
@@ -396,20 +401,18 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
   - 一是直接由路由器发送信息给发送端
   - 而是路由器在发送端发往接收端的packet种做标记，让接收端向发送端发送网络拥塞提示，这种方法需要经过一个完整的往返时间。
 
-
 ## TCP中的拥塞控制
 
 ### 如何限制速率
 - TCP发送方还追踪另一个*拥塞窗口*(Congestion window,cwnd) 变量，那么发送方要时刻满足：
 $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 - 为了与流量控制做区分，我们设$rwnd=\infty$ ，从而忽略接收窗口的限制
-- 因此在每个RTT的起始时刻，TCP的发送速率都被限制为$cwnd/RTT 字节/秒$ 
+- 因此在每个RTT的起始时刻，TCP的发送速率都被限制为$cwnd/RTT 字节/秒$
 
 ### 如何感知拥塞
 
 - 当在数据传输的过程种发生了拥塞，就会导致路径上的路由器缓存溢出，就会引起数据报的丢失。因此TCP发送端通过超时或者3个冗余ACK来判断丢包，进而认为路径上出现了拥塞。
 - 如果没有拥塞。那么TCP在收到确认后会增大它的窗口长度，TCP也被称为*自计时的(self-clocking)* 。
-
 
 ### 如何调整速率
 
@@ -431,10 +434,9 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
   3. 重新进入慢启动过程。
 - 当出现由三个冗余ACK指示的丢包时(快速重传)：
   1. 把ssthresh设置为cwnd的一半  
-  2. 把cwnd再设置为ssthresh的值(具体实现有些为ssthresh+3) 
+  2. 把cwnd再设置为ssthresh的值(具体实现有些为ssthresh+3)
   3. 重新进入拥塞避免阶段。
 - 如果在实现了快速恢复的算法中，第三步会进入快速恢复
-
 
 #### 快速恢复
 
@@ -468,18 +470,19 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 
 - traceroute是一个可以追踪途径的所有路由的命令
 - 具体方法为：```
-```cpp
-	int TTL = 1;
-	String desport = null(or some wrong port to rise a port unreachable);
-	ICMP icmp;
-	while(icmp!="port unreachable"){
-		SendUDP(TTL++,desport);
-		icmp = recieveICMP();
-		/*output*/
-	}
-```
-- 通过递增的TTL来表示第一跳、第二跳等经过的路由，并用port unreachable来表示抵达了终点
 
+```cpp
+ int TTL = 1;
+ String desport = null(or some wrong port to rise a port unreachable);
+ ICMP icmp;
+ while(icmp!="port unreachable"){
+  SendUDP(TTL++,desport);
+  icmp = recieveICMP();
+  /*output*/
+ }
+```
+
+- 通过递增的TTL来表示第一跳、第二跳等经过的路由，并用port unreachable来表示抵达了终点
 
 ## 端到端原则(end-to-end principle)
 - 指的是在网络端到端连接时应当遵守的原则
@@ -490,7 +493,3 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 
 #### 强端到端原则
 - 网络传输的工作是高效灵活地传输数据报，其他任何功能都应在通信端点的应用层实现而不是由网络或者中间节点(网关路由器)实现。
-
-
-
-
