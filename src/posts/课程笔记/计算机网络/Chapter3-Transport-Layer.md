@@ -24,11 +24,11 @@ copyright: 转载请注明出处
 - 在接收端，运输层检查运输层报文中的几个字段——源端口号和目标端口号。来将报文定向到某个特定的socket(注意，不是直接把数据发送到进程)的工作被称为多路分解(demultiplexing)。
 - 在源主机从不同socket中收集数据块，并为每个数据块封装上首部信息从而生成报文段，然后将报文段传递到网络层的工作称为多路复用(multiplexing)
 - 运输层和进程之间的数据交换是以socket为媒介实现的。
-- 端口号是一个16bit的数，大小为0~65535。0~1023范围的端口号被称为周知端口号(well-known port number)，通常是被保留用作例如HTTP、FTP等协议使用
+- 端口号是一个16bit的数，大小为0\~65535。0\~1023范围的端口号被称为周知端口号(well-known port number)，通常是被保留用作例如HTTP、FTP等协议使用
 
 ### 无连接的多路复用与多路分解
 
-- 在创建 UDP socket 时，需要目的IP和目的端口号，而运输层会自动为该 socket 分配一个未被使用的1024~65535的端口号作为源端口号。
+- 在创建 UDP socket 时，需要目的IP和目的端口号，而运输层会自动为该 socket 分配一个未被使用的1024\~65535的端口号作为源端口号。
 - 而一个 UDP socket 是由一个二元组(目的IP地址，目的端口号)来唯一标识的。如果两个 UDP 报文段有不同的源IP地址和源端口号，而有相同的目的IP地址和目的端口号，那么就会被相同的目的 socket 定向到相同的目的进程。
 
 ### 面向连接的多路复用与多路分解
@@ -48,7 +48,7 @@ copyright: 转载请注明出处
 - 目标端口(Destination Port)：
 - 长度(Length)：整个UDP报文的长度(报头加上数据)
 - 校验和(CheckSum)：可选的，如果不校验就是全零，UDP校验包括报文、数据和IP的源地址、目的地址、协议值(17表示UDP协议)，用来报文不被传输到错误的地址中
-![[UDP Header.png]]
+![UDP Header.png](<./images/Chapter3-Transport-Layer/UDP Header.png>)
 
 ### 校验和(Checksum)
 
@@ -69,10 +69,11 @@ $$\begin{array}{c}
 \end{array}$$
 - 把取反之后的值放进checksum中
 - 在接收方中，把所有的4个16位的字(包括校验和)相加，如果没有出错的话就是全为1，如果有一位为0，就说明出错了。
-![[UDP校验和.png]]
+![UDP校验和.png](<./images/Chapter3-Transport-Layer/UDP校验和.png>)
 
-> [!note] 注意差错检测的适用范围
-> 在UDP中实现的是传输层的差错检测，外面后面会看到链路层的差错检测CRC。而且它对发生在内存中的位错误无能为力(因为已经被unpackaged和repackage了)
+:::info 注意差错检测的适用范围
+在UDP中实现的是传输层的差错检测，外面后面会看到链路层的差错检测CRC。而且它对发生在内存中的位错误无能为力(因为已经被unpackaged和repackage了)
+:::
 
 #### 性质
 
@@ -82,12 +83,12 @@ $$\begin{array}{c}
 
 ## RDT(Reliable Data Transfer)
 - 其不同版本（rdt1.0, rdt2.0等）介绍了运输层实现可靠数据传输的各种组件：序号、计时器、ACK、重传等。rdt是一个理解tcp协议的一个很好基石。 其他层的可靠传输协议，也可以藉由rdt思想演化。RDT 协议通过调用 UDP 协议的 seed_to 及 recv_from 函数进行数据包的发送和接收,在此基础上通过实现检验和,报文序列号,确认重传等机制为上层提供一条虚拟的可靠数据信道。
-![[RDT思想.png]]
+![RDT思想.png](<./images/Chapter3-Transport-Layer/RDT思想.png>)
 
 ### 构造一个RDT Protocol
 
 #### 经完全可靠信道的RDT: rdt1.0
-![[rdt1.0.png]]
+![rdt1.0.png](<./images/Chapter3-Transport-Layer/rdt1.0.png>)
 - 而且假定接收方接受数据的速率和发送方发送数据的速率一样快，就不会有接收方要求发送方慢一点的问题。
 
 #### 经具有比特差错信道的RDT: rdt2.0
@@ -98,16 +99,16 @@ $$\begin{array}{c}
   2. 接收方反馈。例如ACK和NAK消息
   3. 重传方法。
 
-![[rdt2.0.png]]
+![rdt2.0.png](<./images/Chapter3-Transport-Layer/rdt2.0.png>)
 - 当发送方处于等待ACK或者NAK的状态时，它不能从上层获得更多的数据。就是说rdt_send()事件不可能出现，除非接收到ACK并离开该状态。也就是说在发送方确认接收方已经正确接收当前packet之前不会发送新的数据。因为这种行为，rdt2.0这样的协议被称为停等(stop-and-wait)协议
 - 而在这种协议中有致命的问题——ACK/NAK packet有可能受损！这样的话我们就无法得知是否正确接收packet。而如果直接重传 packet的话我们无法区分这个是重传的packet还是新的packet
 - 因此我们引入了序号来标识每个packet是新packet还是重传的packet
 
 #### 改进版rdt2.0: rdt2.1与rdt2.2
-![[rdt2.1 sender.png]]
-![[rdt2.1 receiver.png]]
-![[rdt2.2 sender.png]]
-![[rdt2,2 receiver.png]]
+![rdt2.1 sender.png](<./images/Chapter3-Transport-Layer/rdt2.1 sender.png>)
+![rdt2.1 receiver.png](<./images/Chapter3-Transport-Layer/rdt2.1 receiver.png>)
+![rdt2.2 sender.png](<./images/Chapter3-Transport-Layer/rdt2.2 sender.png>)
+![rdt2,2 receiver.png](<./images/Chapter3-Transport-Layer/rdt2,2 receiver.png>)
 - rdt 2.1和rdt 2.2 的细微差距在于，接收方此时必须包括一个由ACK报文所确认的序号(在make_pkt()中包括参数ACK 0, 或ACK 1实现)，发送方此时必须检查接收到的ACK报文中被确认的分组序号(在isACK()中包括参数0或1来实现)。
 
 #### 经具有比特差错的丢包信道的RDT: rdt3.0
@@ -118,17 +119,17 @@ $$\begin{array}{c}
   2. 响应定时器中断
   3. 终止定时器
 
-![[rdt 3.0 sender.png]]
-![[rdt3.0的运行.png]]
+![rdt 3.0 sender.png](<./images/Chapter3-Transport-Layer/rdt 3.0 sender.png>)
+![rdt3.0的运行.png](<./images/Chapter3-Transport-Layer/rdt3.0的运行.png>)
 - 由于分组序号总是在0与1之间交替，有时rdt3.0也被称为比特交替协议(alternating-bit protocol)
 
 ### 流水线RDT
 
 - 在停等协议里，对信道的使用率极低
-![[停等和流水线.png]]
+![停等和流水线.png](<./images/Chapter3-Transport-Layer/停等和流水线.png>)
 
 - 因此我们以流水线的方式——即在确认ACK抵达前就开始发送新的packet
-![[流水线与停等.png]]
+![流水线与停等.png](<./images/Chapter3-Transport-Layer/流水线与停等.png>)
 
 - 我们需要增加序号范围，因为每个运输中的packet都要有一个唯一的信号
 - 协议的发送方和接收方也要缓存多个分组。发送方最少要缓冲那些已发送但是未确认的packet，接收方要缓冲那些已经正确接收的packet
@@ -145,47 +146,47 @@ $$\begin{array}{c}
 [base,\;nextseqnum-1]段内对应已发送但未被确认的packet\\
 [nextseqnum,\;base+N-1]段内用于那些要被立即发送的pecket
 \end{array}$$
-![[GBN序号空间.png]]
+![GBN序号空间.png](<./images/Chapter3-Transport-Layer/GBN序号空间.png>)
 - 随着协议的进行，窗口在序号空间内滑动，因此N被称为窗口长度(window size)，GBN协议也被称为滑动窗口协议(sliding-window protocol)
 - 如果分组序号的字段是$k$位的，即序号范围是$[0,2^k-1]$，那么所有涉及序号的运算都要模$2^k$，也就是把序号空间当成环来处理。rdt3.0的序号空间是$[0,1]$，TCP中为$[0,2^{32}-1]$
 
-![[GBN操作.png]]
+![GBN操作.png](<./images/Chapter3-Transport-Layer/GBN操作.png>)
 
 #### GBN 行为
 
-##### 发送方
+##### GBN 行为——发送方
 
 - 上层的调用。当上层调用rdt send(）时，发送方首先检香发送窗口是否已满，即是否有 $N$ 个已发送但未被确认的分组。如果窗口未满，则产生一个分组并将其发送并相应地更新变量。如果窗口已满，发送方只需将数据返回给上层，隐式地指示上层该窗口已满。然后上层可能会过一会儿再试。在实际实现中，发送方更可能缓存（并不立刻发送）这些数据，或者使用同步机制（如二个信号量或标志）允许上层在仅当窗口不满时才调用rdt_send(）。
 - 收到一个ACK。在 GBN协议中，对序号为n的分组的确认采取累积确认（cumu lative acknowledgment）的方式，表明接收方已正确接收到序号为n的以前且包括 $n$在内的所有分组。相后讨论GBN接收方一端时，找们将再次研究这个主题
 - 超时事件。协议的名字“回退N步”来源于出现丢失和时延过长分组时发送方的行为。就像在停等协议中那样，定时器将再次用于恢复数据或确认分组的去失。如果出现超时，发送方里传所有已发送但还禾被确认过的分组。如果收到一个 $ACK,$ 但仍有已发送但未被确认的分组，则定时器被重新启动。如果没有已发送但未被确认的分组，停止该定时器。
 
-##### 接收方
+##### GBN 行为——接收方
 
 - 对按序抵达的packet进行接收确认，其他的都丢弃
-![[GBN sender&receiver.png]]
+![GBN sender&receiver.png](<./images/Chapter3-Transport-Layer/GBN sender&receiver.png>)
 
 ### Selective Repeat
 
 - 同样是用窗口长度N来限制未完成、未被确认的packet数量。
 - 不同的是SR的接收方会对失序的分组(即落在窗口内的非起始packet)进行接收并缓存。
-![[SR 序号空间.png]]
+![SR 序号空间.png](<./images/Chapter3-Transport-Layer/SR 序号空间.png>)
 
 #### SR行为
 
-##### 发送方
+##### SR行为——发送方
 
 1. 从上层收到数据。当从上层接收到数据后，,SR发送方检查下一个可用于该分组的序号。如果序号位于发送方的窗口内，则将数据打包并发送；否则就像在 GBN中一样，要么将数据缓存，要么将其返回给上层以便以后传输。
 2. 超时。定时器再次被用来防止丢失分组。然而，现在每个分组必须拥有其自己的逻辑定时器，因为超时发生后只能发送一个分组。可以使用单个硬件定时器模拟多个逻辑定时器的操作
 3. 收到ACK。如果收到ACK，倘若该分组序号在窗口内，则SR发送方将那个被确认的分组标记为已接收。如果该分组的序号等于 send_base，则窗口基序号向前移动到具有最小序号的未确认分组处。如果窗口移动了并且有序号落在窗口内的未发送分组，则发送这些分组
 
-##### 接收方
+##### SR行为——接收方
 
 1. 序号在$[rev\_base， rcv\_base +N-1]$内的分组被正确接收。在此情况下，收到的分组落在接收方的窗口内，一个选择ACK被回送给发送方。如果该分组以前没收到过，则缓存该分组。如果该分组的序号等于接收窗口的基序号（图3-23中的 $rcv_base$），则该分组以及以前缓存的序号连续的（起始于 $rcv\_base$ 的）分组交付给上层然后，接收窗口按向前移动分组的编号向上交付这些分组。举例子来说，考虑下图。当收到一个序号为$rcv\_base =2$的分组时，该分组及分组3、4、5可被交付给上层
 2. 序号在$[rcv\_base -N，rcv\_base -1]$内的分组被正确收到。在此情况下，必须产生一个 ACK，即使该分组是接收方以前已确认过的分组。
 
 3. 其他情况。忽略该分组。
 
-![[SR操作.png]]
+![SR操作.png](<./images/Chapter3-Transport-Layer/SR操作.png>)
 
 - 对SR协议来说，接收方和发送方的窗口并不相同，因此接收方行为的第二步十分重要，以SR序号空间的图为例，对于可能出现的ACK丢失行为，如果不对之前已经收到的send_base 处的重传packet进行ACK响应，那么发送方的的窗口将永远不会向前滑动。
 
@@ -222,20 +223,20 @@ TCP四次挥手是断开一个TCP连接时，需要客户端和服务端总共�
 这个过程可以拆除两条通道和释放资源。
 
 ### TCP 连接
-![[Tcp_state_diagram_new.svg]]
+![Tcp_state_diagram_new.svg](<./images/Chapter3-Transport-Layer/Tcp_state_diagram_new.svg>)
 #### 关闭流程
 1. 当一端调用$CLOSE$时，沿红色路径进入FIN WAIT 1状态，这会导致它向连接的另一端发送FIN数据包，这也是为什么被称为主动关闭器(Active Closer)，另一端接收到发送的FIN包，沿蓝色线进入CLOSE WAIT状态(此时主动关闭器已经关闭连接，无法再传输数据，但是被动关闭器中仍然可以继续传输数据)。
 2. 在FIN WAIT1阶段，有三种情况：
- 1. 被动关闭器确认FIN，但是不发送FIN，此时被动关闭器处于CLOSE WAIT状态，并且可以继续发送数据，主动关闭器进入FIN WAIT2，直到从另一端接收到FIN后，转换到TIME WAIT状态。
- 2. 被动关闭器也有可能接着就关闭它的这一侧，确认FIN，并且发送自己的FIN给另一侧，主动关闭器进入TIME WAIT阶段
- 3. 也有可能双方几乎同时主动关闭，并发送了FIN，此时两者都处于FIN WAIT1阶段，接收到彼此的FIN后，进入CLOSING阶段，然后确认FIN后就过渡到 TIME WAIT 阶段
+    - 被动关闭器确认FIN，但是不发送FIN，此时被动关闭器处于CLOSE WAIT状态，并且可以继续发送数据，主动关闭器进入FIN WAIT2，直到从另一端接收到FIN后，转换到TIME WAIT状态。
+    - 被动关闭器也有可能接着就关闭它的这一侧，确认FIN，并且发送自己的FIN给另一侧，主动关闭器进入TIME WAIT阶段
+    - 也有可能双方几乎同时主动关闭，并发送了FIN，此时两者都处于FIN WAIT1阶段，接收到彼此的FIN后，进入CLOSING阶段，然后确认FIN后就过渡到 TIME WAIT 阶段
 3. 主动关闭器将在TIME WAIT中保持一段时间，直到可以安全过渡到关闭为止
 4. 被动关闭器在可以关闭后，调用CLOSE并发送FIN，进入LAST ACK阶段。当被动关闭器发送的FIN被确认后，它将从LAST ACK到CLOSED状态
 
 - Client TCP：
-![[Client TCP.png]]
+![Client TCP.png](<./images/Chapter3-Transport-Layer/Client TCP.png>)
 - Server TCP：
-![[Server TCP.png]]
+![Server TCP.png](<./images/Chapter3-Transport-Layer/Server TCP.png>)
 
 #### TCP传输性质
 
@@ -267,7 +268,7 @@ TCP四次挥手是断开一个TCP连接时，需要客户端和服务端总共�
 - 紧急指针(Urgent Pointer)：在TCP协议中，紧急指针是发送端向接收端发送紧急数据的方法。当发送端TCP协议栈得知有紧急数据要发送时，将发送端紧急模式置为1，同时将紧急指针的值(为紧急数据的后一位或者最后一位)记录在发送端紧急指针处，含有未发送字节到紧急字节之间数据的报文都会将URG位置为1，设置紧急指针的值。 当读取到紧急指针所指向的位置之前，TCP的接收进程都处于紧急状态。进入紧急模式后，不论数据是否正确传输(数据流可能因为流量控制而中止)，紧急通知(URG位)都会被正常传输
 - 实践中，PSH、URG和紧急数据指针都没有被使用
 - 窗口大小(Window Size)：指明接收方还有多少缓冲区空间接受数据。
-![[TCP Header.png]]
+![TCP Header.png](<./images/Chapter3-Transport-Layer/TCP Header.png>)
 
 ### 往返时间的估计与超时
 
@@ -325,7 +326,7 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 - 指消除发送方使接收方缓存溢出的可能性。是一个速度匹配服务。而解决TCP发送方因为IP网络拥塞而被遏制的称为拥塞控制(Congestion Control)
 - 在TCP报头中，包含一个data sequence number(LastByteSent)，一个acknowledgment  sequence number(LastByteAcked)，还包含一个window字段来表示接收方的window的剩余大小，也就是说TCP接收器只会处理数据序列号等于$ACK\;number+window$的数据，也不允许发送方发送序列号超过$ACK\;number+window$的数据
 - 接收方为连接分配的接收缓存大小为$RcvBuffer$，接收窗口$rwnd$的大小随着应用程序不断取走数据，IP报文不断抵达不断变化
-![[滑动窗口.png]]
+![滑动窗口.png](<./images/Chapter3-Transport-Layer/滑动窗口.png>)
 - TCP规范中要求：当主机 $B$ 的接收窗口为 $0$ 时，主机A继续发送只有一个字节数据的报文段。这些报文段将会被接收方确认。最终缓存将开始清空，并且确认报文里将包含一个非0的rwnd值。(为了防止rwnd=0时，双方都不再发送报文)
 
 #### Stop and wait
@@ -378,22 +379,22 @@ $$TimeoutInterval=EstimatedRTT+4 \cdot DevRTT$$
 
 #### 两个发送方和无限大缓存路由器
 
-![[无限大缓存2.png]]
+![无限大缓存2.png](<./images/Chapter3-Transport-Layer/无限大缓存2.png>)
 
-![[无限大缓存1.png]]
+![无限大缓存1.png](<./images/Chapter3-Transport-Layer/无限大缓存1.png>)
 - 如图所示当链路吞吐量接近带宽上限时，带来了巨大的排队时延
 
 #### 两个发送方和一个有限缓存的路由器
 
-![[2发送有缓1.png]]
+![2发送有缓1.png](<./images/Chapter3-Transport-Layer/2发送有缓1.png>)
 - 由于存在重传的packet，因此$\lambda'_{in}$  (含有初始数据和重传数据)被称为*供给载荷(offered load)*。
 
-![[2发送有缓2.png]]
+![2发送有缓2.png](<./images/Chapter3-Transport-Layer/2发送有缓2.png>)
 
 #### 四个发送方和多个有限缓存及多跳路径
 
-![[4主机.png]]
-![[4主机图2.png]]
+![4主机.png](<./images/Chapter3-Transport-Layer/4主机.png>)
+![4主机图2.png](<./images/Chapter3-Transport-Layer/4主机图2.png>)
 ### 拥塞控制方法
 
 - 端到端拥塞控制。在这种方法中，网络层没有为拥塞控制提供显式支持，需要我们观测网络状态，例如TCP的超时或者3次冗余确认而得知。
@@ -417,13 +418,13 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 ### 如何调整速率
 
 #### 慢启动
-![[慢启动.png]]
+![慢启动.png](<./images/Chapter3-Transport-Layer/慢启动.png>)
 - 当一个TCP连接开始时，cwnd的值设为一个MSS(最大报文长度)，这使得初始发送速率大约为MSS/RTT。而在收到一个ACK后窗口增加一个MSS，发送两个报文，再确认，再增加2个MSS。每过一个RTT，发送速率就翻倍。
 - 结束慢启动的方式：
   - 当一个丢包发生后，TCP发送方将cwnd置为1，并且重新开始慢启动。并把第二个状态变量ssthresh("慢启动阈值"的缩写)置为cwnd/2。
   - 二是当ssthresh被设值后，当cwnd到达或超过ssthresh的值时，结束慢启动，转到拥塞避免模式
   - 三是检测到3个冗余ACK，TCP执行快速重传，并进入快速恢复状态。
-![[慢启动FSM.png]]
+![慢启动FSM.png](<./images/Chapter3-Transport-Layer/慢启动FSM.png>)
 
 #### 拥塞避免
 
@@ -445,7 +446,7 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 3. 当收到新的数据包的ACK时，把cwnd设置为第一步中的ssthresh的值。原因是因为该ACK确认了新的数据，说明从重复ACK时的数据都已收到，该恢复过程已经结束，可以回到恢复之前的状态了，也即再次进入拥塞避免状态。
 - 快速恢复不是每个TCP实现里都有的
 
-![[快速恢复.png]]
+![快速恢复.png](<./images/Chapter3-Transport-Layer/快速恢复.png>)
 ## ICMP(Internet Control Message Protocol)
 
 ### 网络层运转
@@ -457,19 +458,19 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 ### 运作方式
 
 - 当一个IP datagram产生异常，需要回传消息的时候，会按以下方法产生一个ICMP报文
- 1. 把IP datagram的IP header和IP datagram的有效负载(data部分)的前八个字节作为ICMP message，也就是ICMP的有效负载
- 2. 然后产生一个ICMP header，包括：
-- 类型（Type）：8位，表示ICMP报文类型，如请求回显（Echo Request）和回显应答（Echo Reply）等。
-- 代码（Code）：8位，表示ICMP报文类型的子类型，如请求回显的代码为0，回显应答的代码为0。
-- 校验和（Checksum）：16位，用于检验ICMP报文的完整性。
-- 标识符（Identifier）：16位，用于标识发送的ICMP报文。
-- 序号（Sequence Number）：16位，用于标识发送的ICMP报文序列号。
- 3. 然后再封装进一个新的IP datagram中，设置源和目标IP地址，protocol为1表示ICMP
+  1. 把IP datagram的IP header和IP datagram的有效负载(data部分)的前八个字节作为ICMP message，也就是ICMP的有效负载
+  2. 然后产生一个ICMP header，包括：
+      - 类型（Type）：8位，表示ICMP报文类型，如请求回显（Echo Request）和回显应答（Echo Reply）等。
+      - 代码（Code）：8位，表示ICMP报文类型的子类型，如请求回显的代码为0，回显应答的代码为0。
+      - 校验和（Checksum）：16位，用于检验ICMP报文的完整性。
+      - 标识符（Identifier）：16位，用于标识发送的ICMP报文。
+      - 序号（Sequence Number）：16位，用于标识发送的ICMP报文序列号。
+  3. 然后再封装进一个新的IP datagram中，设置源和目标IP地址，protocol为1表示ICMP
 
 ### Traceroute实现方法
 
 - traceroute是一个可以追踪途径的所有路由的命令
-- 具体方法为：```
+- 具体方法为：
 
 ```cpp
  int TTL = 1;
@@ -488,8 +489,8 @@ $$LastByteSent-LastByteAcked\le min\{cwnd,rwnd\}$$
 - 指的是在网络端到端连接时应当遵守的原则
 - 端到端连接指的是例如两机之间用TCP或UDP等协议建立起来的通信连接
 
-#### 弱端到端原则
+### 弱端到端原则
 - 在网络传输中可以实现功能以保证网络更高效的传输，例如压缩、重传等
 
-#### 强端到端原则
+### 强端到端原则
 - 网络传输的工作是高效灵活地传输数据报，其他任何功能都应在通信端点的应用层实现而不是由网络或者中间节点(网关路由器)实现。

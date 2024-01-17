@@ -23,7 +23,7 @@ copyright: 转载请注明出处
 
 ### 输入端口处理和基于目的地转发
 
-![[输入端口处理.png]]
+![输入端口处理.png](<./images/Chapter4-Net-Layer/输入端口处理.png>)
 
 #### 最长前缀匹配(Longest Prefix Match LPM)
 
@@ -46,25 +46,25 @@ copyright: 转载请注明出处
 
 - 交换也就是转发(forward)，即从一个输入端口把数据转发到一个输出端口中，有许多实现方法
 
-![[交换方法.png]]
+![交换方法.png](<./images/Chapter4-Net-Layer/交换方法.png>)
 
 - 还有的会使用并行的方法，例如有N个并行的交换结构，在输入端口把packet分为K个块，通过N个交换结构中的K个把这些块发送到输出端口中，最后再在输出端口进行组装。
 
 ### 输出端口处理
 
-![[输出端口处理.png]]
+![输出端口处理.png](<./images/Chapter4-Net-Layer/输出端口处理.png>)
 
 ### 排队产生
 
-##### 输入排队
+#### 输入排队
 
 - 图示被称为线路前部(Head-Of-Line, HOL)阻塞，即虽然输出端口空闲，但是它被位于线路前部的一个packet所阻塞
-![[HOL阻塞.png]]
+![HOL阻塞.png](<./images/Chapter4-Net-Layer/HOL阻塞.png>)
 
-##### 输出排队
+#### 输出排队
 
 - 当输出端口没有足够内存来缓存一个新到的packet时，就必须做出决定：要么丢弃到达的分组（采用一种称为弃尾(drop-tail)的策略），要么删除一个或多个已排队的packet来腾出位置。这些策略被称为主动队列管理(Active Queue Management, AQM)算法。随机早期检测(Random Early Detection, RED)算法是广泛使用的算法。
-![[输出端口排队.png]]
+![输出端口排队.png](<./images/Chapter4-Net-Layer/输出端口排队.png>)
 - 输出端口需要进行分组调度(packet scheduler)来从这个队列中取出一个packet进行传输
 - 缓存的数量(B)应当由以下公式给出(C为链路的容量)：
 
@@ -83,7 +83,7 @@ B=RTT\cdot C/\sqrt{N}(大量TCP流，N条)
 
 ### IPv4数据报格式
 
-![[IPv4数据包格式.png]]
+![IPv4数据包格式.png](<./images/Chapter4-Net-Layer/IPv4数据包格式.png>)
 - 版本（号）。这4比特规定了数数据报的 $IP$ 协议版本。通过查有欣本号，路由器能够确定如何解释 $IP$ 数据报的剩余部分。不同的 $IP$ 版本使用不同的数据报格式IPv4的数据报格式如图 4-16所示。新版本的IP（IPv6）的数据报格式将在后面讨论。
 - 首部长度。因为一个 $IPv4$ 数据报可包含一些可变数量的选项（这些选项包括在IPv4数据报首部中），故需要用这4比特来确定 $lP$ 数据报中载荷（例如在这个数据报中被封装的运输层报文段）实际开始的地方。大多数IP数据报不包含选项所以一般的 $IP$ 数据报具有20字节的首部。
 
@@ -151,19 +151,19 @@ B=RTT\cdot C/\sqrt{N}(大量TCP流，N条)
   2. DHCP服务器提供。DHCP服务器收到一个 DHCP发现报文时，用DHCP提供报文（DHCP offer message）向客户做出响应，该报文向该子网的所有节点广播，仍然使用IP广播地址255.255. 255.255（你也许要思考一下这个服务器为何也必须采用广播）。因为在于网中可能存在几个 DHCP服务器，该客户也许会发现它处于能在几个提供者之间进行选择的优越位置。每台服务器提供的报文包含有收到的发现报文的事务ID、向客户推荐的IP地址、网络掩码以及IP 地址租用期（ad-dress lease time），即 IP地址有效的时间量。服务器租用期通常设置为几小时或几天。
   3. DHCP请求。新到达的客户从一个或多个服务器提供中选择一个，并向选中的服务器提供用DHCP请求报文(DHCP request message)进行响应，回显配置的参数
   4. DHCP ACK。服务器用DHCP ACK报文(DHCP ACK message)对DHCP请求报文进行响应，证实所要求的参数。
-![[DHCP过程.png]]
+![DHCP过程.png](<./images/Chapter4-Net-Layer/DHCP过程.png>)
 
 - DHCP无法支持移动性的连接，因为每当连到一个新子网就要获取一个新的IP地址，之前的TCP连接也就无法维持了。
 
 ### 网络地址转换(NAT)
 
-![[NAT.png]]
+![NAT.png](<./images/Chapter4-Net-Layer/NAT.png>)
 
 - 如上图，局域网内10.0.0.1的3345端口发出请求，经过NAT后，把源端口号修改为5001，源IP地址修改为路由器的IP地址138.76.29.7，这样一来，通过保存这个映射表(NAT 转换表)，就可以实现NAT的功能
 
 ### IPv6
 
-![[IPv6 header.png]]
+![IPv6 header.png](<./images/Chapter4-Net-Layer/IPv6 header.png>)
 
 #### 主要变化
 
@@ -184,19 +184,19 @@ B=RTT\cdot C/\sqrt{N}(大量TCP流，N条)
 ### 运作方式
 
 - 当一个IP datagram产生异常，需要回传消息的时候，会按以下方法产生一个ICMP报文
- 1. 把IP datagram的IP header和IP datagram的有效负载(data部分)的前八个字节作为ICMP message，也就是ICMP的有效负载
- 2. 然后产生一个ICMP header，包括：
-- 类型（Type）：8位，表示ICMP报文类型，如请求回显（Echo Request）和回显应答（Echo Reply）等。
-- 代码（Code）：8位，表示ICMP报文类型的子类型，如请求回显的代码为0，回显应答的代码为0。
-- 校验和（Checksum）：16位，用于检验ICMP报文的完整性。
-- 标识符（Identifier）：16位，用于标识发送的ICMP报文。
-- 序号（Sequence Number）：16位，用于标识发送的ICMP报文序列号。
- 3. 然后再封装进一个新的IP datagram中，设置源和目标IP地址，protocol为1表示ICMP
+  1. 把IP datagram的IP header和IP datagram的有效负载(data部分)的前八个字节作为ICMP message，也就是ICMP的有效负载
+  2. 然后产生一个ICMP header，包括：
+      - 类型（Type）：8位，表示ICMP报文类型，如请求回显（Echo Request）和回显应答（Echo Reply）等。
+      - 代码（Code）：8位，表示ICMP报文类型的子类型，如请求回显的代码为0，回显应答的代码为0。
+      - 校验和（Checksum）：16位，用于检验ICMP报文的完整性。
+      - 标识符（Identifier）：16位，用于标识发送的ICMP报文。
+      - 序号（Sequence Number）：16位，用于标识发送的ICMP报文序列号。
+  3. 然后再封装进一个新的IP datagram中，设置源和目标IP地址，protocol为1表示ICMP
 
 ### Traceroute实现方法
 
 - traceroute是一个可以追踪途径的所有路由的命令
-- 具体方法为：```
+- 具体方法为：
 
 ```cpp
  int TTL = 1;
@@ -229,21 +229,21 @@ B=RTT\cdot C/\sqrt{N}(大量TCP流，N条)
 
 #### 负载敏感vs迟钝
 
-- 负载敏感算法 load-sensitive algorithm) 中，链路开销会动态地变化以反映出底层链路的 当前拥塞水平 如果当前拥塞的一条链路与高开销相联系，则路由选择算法趋向于绕开该 拥塞链路来选择路由 而早期的 ARPAnet 路由选择算法就是负载敏感的 , 所以遇到了许多难题。
-- 当今的因特网路由选择算法（如 RIP OSPF BGP) 都是负载迟钝的 (load-insensitive) , 因为某条链路的开销不明确地反映其当 前（或最近）的拥塞水平。
+- 负载敏感算法 (load-sensitive algorithm) 中，链路开销会动态地变化以反映出底层链路的 当前拥塞水平 如果当前拥塞的一条链路与高开销相联系，则路由选择算法趋向于绕开该 拥塞链路来选择路由 而早期的 ARPAnet 路由选择算法就是负载敏感的 , 所以遇到了许多难题。
+- 当今的因特网路由选择算法(如 RIP OSPF BGP) 都是负载迟钝的 (load-insensitive) , 因为某条链路的开销不明确地反映其当 前（或最近）的拥塞水平。
 
 ### 链路状态路由选择算法(LS)
 
 - 实际上就是Dijkstra算法：
-![[LS算法.png]]
+![LS算法.png](<./images/Chapter4-Net-Layer/LS算法.png>)
 - 其中：
   - $D(v)$：到算法的本次迭代，从源节点到目的节点$v$的最低开销路径的开销
   - $p(v)$：从源到$v$沿着当前最低开销路径的前一个节点
   - $N'$：节点子集；如果源到$v$的最低开销路径已确定，则$v在N'$中。
 
 - 例如：
-![[LS算法示例图1.png]]
-![[LS算法示例图2.png]]
+![LS算法示例图1.png](<./images/Chapter4-Net-Layer/LS算法示例图1.png>)
+![LS算法示例图2.png](<./images/Chapter4-Net-Layer/LS算法示例图2.png>)
 
 - 线性查找下有$O(n^2)$的时间复杂度，用最小堆维护$N'$则有指数查找时间，总的时间复杂度就为$O(nlogn)$
 
@@ -265,8 +265,8 @@ $$D_{x}(y)=min_{v}\{c(x,v)+D_{v}(y)\}对 \text{N} 中的每个节点$$
 
 如果节点 $x$ 的距离向量因这个更新步骤而改变，节点x接下来将向它的每个邻居发送其更新后的距离向量，这继而让所有邻居更新它们自己的距离向量。令人惊奇的是，只要所有的节点继续以异步方式交换它们的距离向量，每个开销估计 $D_x$ （y）收敛到$d_x(y)$,$d_{x}\left(y\right)$为从节点$x$到节点 $y$ 的实际最低开销路径的开销
 
-![[DV算法.png]]
-![[DV算法示例.png]]
+![DV算法.png](<./images/Chapter4-Net-Layer/DV算法.png>)
+![DV算法示例.png](<./images/Chapter4-Net-Layer/DV算法示例.png>)
 
 ## 自治系统(Autonomous System, AS)
 
@@ -300,16 +300,16 @@ $$D_{x}(y)=min_{v}\{c(x,v)+D_{v}(y)\}对 \text{N} 中的每个节点$$
 
 - 位于AS边缘的被称为网关路由器(gateway router)，否则就是一台内部路由器(internal router)
 - 在BGP中，每对路由器通过使用179端口的半永久TCP连接交换路由选择信息，称为BGP 连接。跨越两个AS的BGP连接被称为外部BGP(eBGP)，在相同AS中的两台路由器之间的BGP会话称为内部BGP(iBGP)连接。
-![[eBGP和iBGP连接.png]]
+![eBGP和iBGP连接.png](<./images/Chapter4-Net-Layer/eBGP和iBGP连接.png>)
 
-- 为了传播可达性信息，使用了iBCP和 eBGP会话。再次考虑向ASI和 AS2中的所有路由器通告前缀 $x$ 的可达性信息。在这个过程中，网关路由器 $3a$ 先向网关路由器 $2c$ 发送一个eBGP报文“AS3$x^{\text{''}}$。网关路由器2c然后向AS2 中的所有其他路由器（包括网关路由器2a）发送iBGP报文“"AS3 x”。网关路由器2a接下来向网关路由器 $1c$ 发送一个eBCF报文“AS2 AS3 x”。最后，网关路由器 $1c$ 使用iBGP向AS1中的所有路由器发送报文“"AS2 AS3 x”。在这个过程完成后，在AS1和AS2中的每个路由器都知道了x的存在并且也都知道了通往x的AS路径
+- 为了传播可达性信息，使用了iBCP和 eBGP会话。再次考虑向ASI和 AS2中的所有路由器通告前缀 $x$ 的可达性信息。在这个过程中，网关路由器 $3a$ 先向网关路由器 $2c$ 发送一个eBGP报文“AS3x”。网关路由器2c然后向AS2 中的所有其他路由器（包括网关路由器2a）发送iBGP报文“"AS3 x”。网关路由器2a接下来向网关路由器 $1c$ 发送一个eBCF报文“AS2 AS3 x”。最后，网关路由器 $1c$ 使用iBGP向AS1中的所有路由器发送报文“"AS2 AS3 x”。在这个过程完成后，在AS1和AS2中的每个路由器都知道了x的存在并且也都知道了通往x的AS路径
 
 #### 确定最好的路由
 
 - 当路由器通过 BGP 连接通告前缀时，它在前缀中包括一些 BGP 属性(BGP attribute)。用 BGP 术语来说，前缀及其属性被称为路由。两个较为重要的属性是 AS-PATH 和 NEXT-HOP。
 - AS- PATH属性包含了通告已经通过的 $AS$ 的列表，如我们在前面的例子中所见。为了生成AS-PATH的值，当一个前缀通过某AS时，该AS将其ASN加人AS-PATH中的现有列表。例如，在下图中，从 AS1到子网x有两条路：其中一条使用AS- PATH“AS2 AS3”；而另一条使用AS-PATH“AS3”。BGP路由器还使用AS-PATH属性来检测和防止通告环路；特别是，如果一台路由器在路径列表中看到了包含它自己的AS，它将拒绝该通告。
 - 在 $\mathrm{AS}$ 间和 $AS$ 内部路由选择协议之间提供关键链路方面，NEXT- PATH属性具有敏感而重要的作用。NEXT-HOP是AS-PATH起始的路由器接口的IP地址。为了深人理解该属性，找们冉次参考图5-10。如图5-10中所指示的那样，对于从AS1通过AS2到x的路由“AS2 AS3 $x$，其属性NEXT-HOP是路由器 $2a$ 左边接口的IP地址。对于从AS1绕过AS2到x的路由“AS3 x”，其NEXT- HOP属性是路由器3d最左边接口的 $IP$ 地址。总的说来,在这个假想的例子中，AS1中的每台路由器都知道了到前缀x的两台BGP路由。
-![[NEXTHOP.png]]
+![NEXTHOP.png](<./images/Chapter4-Net-Layer/NEXTHOP.png>)
 
 #### BGP路由选择算法
 
@@ -321,7 +321,7 @@ $$D_{x}(y)=min_{v}\{c(x,v)+D_{v}(y)\}对 \text{N} 中的每个节点$$
 ##### 路由器选择算法
 
 - 实践中BGP使用这种算法。对于任何给定的目的地前缀，进入BGP的路由选择算法的输入是到某前缀的所有路由的集合。如果仅有一条这样的路由，BGP则显然选择该路由。如果有多条，就顺序调用以下规则来消除路由，直到只剩下一条路由：
-  1. 路由被指派一个本地偏好 $(local \;preference )$ 值作为其属性之一（除了AS- PATH和NEXT-HOP以外)。一条路由的本地偏好可能由该路由器设置或可能由在相同AS中的另一台路由器学习到。本地偏好属性的值是一种策略决定，它完全取决于该 $AS$ 的网络管理员（随后将更为详细地讨论BGP策略问题)具有最高本地偏好值的路由将被选择。
+  1. 路由被指派一个本地偏好 $(local \;preference )$ 值作为其属性之一(除了AS- PATH和NEXT-HOP以外)。一条路由的本地偏好可能由该路由器设置或可能由在相同AS中的另一台路由器学习到。本地偏好属性的值是一种策略决定，它完全取决于该 $AS$ 的网络管理员(随后将更为详细地讨论BGP策略问题)具有最高本地偏好值的路由将被选择。
   2. 从余下的路由中（所有都具有相同的最高本地偏好值），将选择具有最短ASPATH的路由。如果该规则是路由选择的唯一规则，则BGP将使用距离向量算法决定路径，其中距离测度使用 $\mathrm{AS}$ 跳的跳数而不是路由器跳的跳数。
   3. 从余下的路由中（所有都具有相同的最高本地偏好值和相同的 $AS- PATH$ 长度）,使用热土豆路由选择，即选择具有最靠近NEXT-HOP路由器的路由。
   4. 如果仍留下多条路由该路由器使用BGP标识符来选择路由
