@@ -1,5 +1,23 @@
-
-## 目录
+---
+title: Chapter5 IO
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-06-06
+category:
+  - 课程笔记
+tag:
+  - 操作系统
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 
 ## I/O 硬件
 

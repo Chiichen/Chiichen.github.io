@@ -1,13 +1,23 @@
-
-## 目录
-
-1. 资源
-2. 死锁的介绍
-3. 鸵鸟算法
-4. 死锁检测和恢复
-5. 死锁避免(动态)
-6. 死锁预防(静态)
-7. 其它
+---
+title: Chapter6 Deadlocks
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-04-24
+category:
+  - 课程笔记
+tag:
+  - 操作系统
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 
 ## 资源
 

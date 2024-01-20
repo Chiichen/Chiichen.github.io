@@ -1,5 +1,23 @@
-# 笔记/操作系统
-
+---
+title: Chapter1 Introdction
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-03-21
+category:
+  - 课程笔记
+tag:
+  - 操作系统
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 ## 目录
 
 1. 什么是操作系统

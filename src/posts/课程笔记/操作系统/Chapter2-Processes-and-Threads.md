@@ -1,13 +1,25 @@
+---
+title: Chapter2 Processes and Threads
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-04-03
+category:
+  - 课程笔记
+tag:
+  - 操作系统
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 
-## 目录
-
-- 2.1 进程(Processes)
-- 2.2 线程(Threads)
-- 2.3 进程间通信(IPC Interprocess communication)(重点&难点)
-- 2.4 典型进程间通信问题(Classical IPc problems)
-- 2.5 进程间的调度(Scheduling)
-
-## 2.1 进程
+## 进程
 
 - 顺序执行：单道程序系统中，一个具有独立功能的程序独占处理器直到最终结束的过程称为程序的顺序执行
 - 顺序性：程序的结构是顺序执行的(可能有switch或者loop)
@@ -68,7 +80,7 @@
 - Running：正在使用CPU
 - Ready：可运行的(处于ready queue中)
 - Blocked：没有外部事件发生时无法运行(例如等待某个按键被按下)
-<!-- ![进程状态转换](<images/Chapter2 -Processes-and-Threads/进程状态转换>) -->
+<!-- ![进程状态转换](<images/Chapter2-Processes-and-Threads/进程状态转换>) -->
 - New和Exit状态
 - Suspend(挂起):
 - Blocked suspend state
@@ -114,7 +126,7 @@
 - 操作系统维护一个process table，每个实体(entry)是一个PCB
 - PCB table的大小决定了系统的并行度
 - 有两种实现方式，链表实现和索引实现
-![PCB两种实现.png](<images/Chapter2 -Processes-and-Threads/PCB两种实现.png>)
+![PCB两种实现.png](<images/Chapter2-Processes-and-Threads/PCB两种实现.png>)
 
 ## 2.2 线程(Thread)
 
@@ -158,7 +170,7 @@
 - 完全存在于用户空间，内核不知道线程的存在
 - 完全由用户空间进行管理，能实现快速的创建和管理
 - 问题：假如内核是单线程的，如果用户进程的某个线程执行了一个blocked的系统调用时，会导致整个进程都blocked
-![Userspace Implementation.png](<images/Chapter2 -Processes-and-Threads/Userspace Implementation.png>)
+![Userspace Implementation.png](<images/Chapter2-Processes-and-Threads/Userspace Implementation.png>)
 
 #### 内核空间的实现
 
@@ -168,18 +180,18 @@
 - 线程的切换需要内核
 - 调度的基本单位是线程
 - 缺点是高消耗
-![Kernel Impletation.png](<images/Chapter2 -Processes-and-Threads/Kernel Impletation.png>)
+![Kernel Impletation.png](<images/Chapter2-Processes-and-Threads/Kernel Impletation.png>)
 
 #### 混合实现
 
-![Hybrid Implementation.png](<images/Chapter2 -Processes-and-Threads/Hybrid Implementation.png>)
+![Hybrid Implementation.png](<images/Chapter2-Processes-and-Threads/Hybrid Implementation.png>)
 
 - 可能是由用户空间的一个或多个线程对应内核空间中的一个线程。
 
 #### Pop-up
 
 - 常用于分布式系统中
-![Pop-Up Threads.png](<images/Chapter2 -Processes-and-Threads/Pop-Up Threads.png>)
+![Pop-Up Threads.png](<images/Chapter2-Processes-and-Threads/Pop-Up Threads.png>)
 
 ### Thread vs Process
 
@@ -471,7 +483,7 @@ V(plate)
 
 ### 壁垒(barrier)
 
-![壁垒.png](<images/Chapter2 -Processes-and-Threads/壁垒.png>)
+![壁垒.png](<images/Chapter2-Processes-and-Threads/壁垒.png>)
 
 - 使用方法：
   1. 进程抵达壁垒
@@ -484,7 +496,7 @@ V(plate)
 
 #### 哲学家就餐
 
-![哲学家就餐.png](<images/Chapter2 -Processes-and-Threads/哲学家就餐.png>)
+![哲学家就餐.png](<images/Chapter2-Processes-and-Threads/哲学家就餐.png>)
 
 - 假设有五位哲学家围坐在一张圆形餐桌旁，做以下两件事情之一：吃饭，或者思考。吃东西的时候，他们就停止思考，思考的时候也停止吃东西。餐桌上有五碗意大利面，每位哲学家之间各有一支餐叉。因为用一支餐叉很难吃到意大利面，所以假设哲学家必须用两支餐叉吃东西。他们只能使用自己左右手边的那两支餐叉。哲学家就餐问题有时也用米饭和五根筷子而不是意大利面和餐叉来描述，因为吃米饭必须用两根筷子。
 
@@ -752,10 +764,10 @@ void writer(void)
 
 ##### 用户级/内核级线程调度
 
-![用户级线程调度.png](<images/Chapter2 -Processes-and-Threads/用户级线程调度.png>)
+![用户级线程调度.png](<images/Chapter2-Processes-and-Threads/用户级线程调度.png>)
 
 - 在用户级线程调度中，进程由内核调度器选取，而线程只能在同进程的线程内选取调度。
 
-![内核级线程调度.png](<images/Chapter2 -Processes-and-Threads/内核级线程调度.png>)
+![内核级线程调度.png](<images/Chapter2-Processes-and-Threads/内核级线程调度.png>)
 
 - 而在内核级线程中，线程是调度的最小单位，因此可以选取任意线程进行调度。

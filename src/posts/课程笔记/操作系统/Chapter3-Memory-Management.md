@@ -1,11 +1,23 @@
-
-## 目录
-
-1. No Memory Abstraction
-2. A Memory Abstraction: Address Space
-3. Virtual Memory
-4. Page Replacement Algorithm
-5. Segmentation
+---
+title: Chapter3 Memory Management
+# cover: /assets/images/cover1.jpg
+icon: page
+# This control sidebar order
+order: 1
+author: ChiChen
+date: 2023-05-04
+category:
+  - 课程笔记
+tag:
+  - 操作系统
+# this page is sticky in article list
+sticky: false
+# this page will appear in starred articles
+star: false
+footer: 
+isOriginal: true
+copyright: 转载请注明出处
+---
 
 ## No Memory Abstraction
 
