@@ -33,6 +33,11 @@ export const zhNavbar = navbar([
             icon: "page",
             link: "Debug杂谈/记一次 GP Debug 的心路历程.md",
           },
+          {
+            text: "高级语言的编译：链接及装载过程介绍",
+            icon: "page",
+            link: "编程杂谈/高级语言的编译-链接及装载过程介绍"
+          }
         ],
       },
       {
@@ -64,13 +69,13 @@ export const zhNavbar = navbar([
           { text: "数据库笔记", icon: "edit", link: "Chapter1 Introduction" }
         ],
       },
-     {
+      {
         text: "大学物理",
         icon: "edit",
         prefix: "大物/",
         children: [
           { text: "电磁学公式汇总", icon: "edit", link: "电磁学公式" },
         ],
-      },    ]
+      },]
   },
 ]);
