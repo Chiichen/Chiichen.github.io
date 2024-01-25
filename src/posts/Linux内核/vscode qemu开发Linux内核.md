@@ -31,7 +31,11 @@ copyright: 转载请注明出处
 ```bash
 cd /linux
 export ARCH=x86
-make CC=clang x86_64_defconfig
+make  x86_64_defconfig 
+# 如果想要更好的clangd补全就用clang编译(make CC=clang x86_64_defconfig ) ，但是clang在部分模块可能需要特殊的编译选
+# 项才能编译，所以还是推荐用默认的gcc编译，尽管
+# 这样clangd的效果会差一点
+
 # ./scripts/config --file .config -e CONFIG_NUMA_BALANCE CONFIG_NUMA_BALANCING_DEFAULT_ENABLED CONFIG_NUMA
 # Todo 还有一些nuuma_balance相关设置项要打开，不然后面要在编译时手动选择Y
 ```
