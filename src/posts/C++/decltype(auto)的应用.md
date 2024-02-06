@@ -99,6 +99,13 @@ decltype(auto) fun6(){return (value);}
 - 不能对decltype(auto)进行修饰,比如加上const或&等
 - 不能对返回语句是花括号初始化器列表推导，如auto fun7() return {1};
 
+:::info 关于auto与decltype(auto)以及return a与return (a)的区别
+
+- `auto`默认为永不推断为引用，而`decltype(auto)`会根据实际情况可能推断为引用
+- 在使用`auto`为返回值时，`return a` 和 `return (a)`没区别(a为一个标识符，)
+- 而在用decltype(auto)为返回值时，`return a`的返回类型就是标识符`a`的声明类型(假设为`int a`)即为`int`，而`(a)`是一个表达式，因此会把这个左值推断为引用类型，即为`int& a`，因此如果返回值改为`(a++)`，这是个右值，因此类型推导为`int`
+:::
+
 ## 在模板中的应用
 
 ### 普通函数内实用简写
@@ -211,3 +218,129 @@ TNonTypeDecltypeAuto<a1> t8; // int
 extern int g_value;
 TNonTypeDecltypeAuto<(g_value)> t9;// int&
 ```
+
+### 模板auto综合类型擦除应用
+
+我们来看一应用，算是比较综合，体会一下auto的妙用，可以更加通用，不用显式传入类型，做到类型擦除。这里用到了成员对象指针和对应用法，不太了解的可以参考文章[C++中几种原生指针（普通指针，成员指针，函数指针）](https://zhuanlan.zhihu.com/p/361462790)
+
+```cpp
+struct OneTestStruct
+{
+    int value;
+};
+
+// 辅助模板，获取class的类型
+template<typename>
+struct PMClassHelper;
+
+// 特化
+template<typename ClassType,typename MemberType>
+struct PMClassHelper<MemberType ClassType::*>
+{
+    using Type = ClassType;
+};
+
+// 模板别名
+// 给一个成员对象指针，提取出类型
+template<typename PM>
+using PMClassType = typename PMClassHelper<PM>::Type;
+
+template<auto PMD>
+struct CounterHandle
+{
+    CounterHandle(PMClassType<decltype(PMD)>& _c) :c(_c) {}
+    void increase() { ++(c.*PMD); }
+
+    PMClassType<decltype(PMD)>& c;
+};
+// 应用
+OneTestStruct one{ 100 };
+CounterHandle<&OneTestStruct::value> h(one);
+h.increase();
+```
+
+辅助模板`PMClassHelper`用于给一个成员对象指针PM作模板参数（形式如：T1 T2::\*），推断出指针对应类的类型ClassType，以及成员对象类型MemberType；`CounterHandle`模板类使用auto PMD作参数，是一个非类型的模板形参，当为成员对象指针时实例化时，decltype(PMD)能推出其指针类型T1 T2::\*；然后用PMClassType相当于萃取出T2的具体类型，也就是_c所对应类。结构看到这里，基本发现有个很重要设计点，就是类型擦除。
+
+再看一下`CounterHandle`设计，其成员c是一个引用类型，在构造函数里面初始化，不产生拷贝，保证一定性能，通过auto与decltype的联合设计，可以不显示声明类型，可以做到类型擦除。在increase函数，调用成员对象指针自增，可以统一出一个接口，也可以进行特化处理，这都是模板编程的常用手段。
+
+我们再看一下，不用auto,要么用`template<typename T1,T1 v> struct CounterHandleOld`定义时不显式，但需要在实例化时显式声明`CounterHandleOld<int OneTestStruct::*,&OneTestStruct::value>` ,要么`template<int OneTestStruct::*v> struct CounterHandleOld2`显式定义，更不好的设计，但实例化可以隐式`CounterHandleOld2<&OneTestStruct::value>`。
+
+```cpp
+template<typename T1,T1 v>
+struct CounterHandleOld
+{
+  CounterHandleOld(PMClassType<T1>& _c)
+    :c(_c) {}
+  void increase() { ++(c.*v); }
+
+  PMClassType<T1>& c;
+};
+
+template<int OneTestStruct::*v>
+struct CounterHandleOld2
+{
+  CounterHandleOld2(PMClassType<decltype(v)>& _c)
+    :c(_c) {}
+  void increase() { ++(c.*v); }
+
+  PMClassType<decltype(v)>& c;
+};
+
+// 应用
+CounterHandleOld<int OneTestStruct::*,
+          &OneTestStruct::value> h1(one);
+h1.increase();
+CounterHandleOld2<&OneTestStruct::value> h2(one);
+h2.increase();
+```
+
+## 在泛型lambda中应用
+
+可以用auto代替难以书写的lambda表达式类型，这是最常用的
+
+```cpp
+auto alam1= [](int x)->int {return x; };
+```
+
+泛型lambda表达式：
+对于形参中为auto的参数，该lambda为泛型lambda表达式。
+
+```cpp
+auto alam2 = [](auto a, auto&& b) { return a < b; };
+bool b = alam2(100, 100.1f);
+
+auto alam3 = []<class T>(T a, auto&& b) { return a < b; };
+
+template<typename F,typename ... Params>
+void MyInvoke(F f,Params... ps)
+{
+    f(ps...);
+}
+MyInvoke([]
+      (auto x, auto y)
+      {std::cout << x + y << std::endl; },
+      100, 101);
+```
+
+## 结构化绑定、
+
+这一小部分也是C++17引入，将指定的名称绑到指定对象上，算是已有对象的别名，和引用相似，但不一定为引用类型。先看一下代码：
+
+```cpp
+struct  stBindType
+{
+    bool bValid;
+    int iValue;
+};
+stBindType st{true,100};
+auto [b, N] = st;
+auto& [br, Nr] = st;
+```
+
+第一处：创建一个对象e，将st内容复制到e，期中b指代e的bValid，N指代e的iValue
+第二处：直接br指代st的bValid，Nr指代st的iValue
+结构化绑定，这一块我用的不多，其它不再讨论。
+
+## 参考
+
+基本内容搬运自[谈谈C++的auto，decltype(auto)及在模板中的应用](https://zhuanlan.zhihu.com/p/404831186)
