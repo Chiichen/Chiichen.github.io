@@ -7,9 +7,9 @@ order: 1
 author: ChiChen
 date: 2024-02-25
 category:
-  - 杂谈
+  - DragonOS
 tag:
-  - 杂谈/编程杂谈
+  - DragonOS
 # this page is sticky in article list
 sticky: false
 # this page will appear in starred articles
