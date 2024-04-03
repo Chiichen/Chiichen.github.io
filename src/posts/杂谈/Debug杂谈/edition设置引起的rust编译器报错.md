@@ -9,6 +9,7 @@ author: ChiChen
 date: 2023-11-15
 category:
     - 杂谈
+    - Debug杂谈
     - Rust
 tag:
     - Rust
