@@ -21,10 +21,10 @@ export default hopeTheme({
     medias: {
       BiliBili: "https://space.bilibili.com/8427907?spm_id_from=333.1007.0.0",
       // Discord: "https://example.com",
-      Email: "chiichen@qq.com",
+      Email: "'mailto:chiichen@qq.com",
       // Facebook: "https://example.com",
       GitHub: "https://github.com/Chiichen",
-      Gmail: "kejian2531693734@gmail.com",
+      Gmail: "'mailto:kejian2531693734@gmail.com",
       // Instagram: "https://example.com",
       // Lines: "https://example.com",
       // Linkedin: "https://example.com",
