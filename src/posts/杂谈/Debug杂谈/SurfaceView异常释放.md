@@ -33,3 +33,56 @@ Bug 的出现首先要从 Andoird 的刷新原理开始讲起(无特别说明，
 ### Bug 出现的背景
 
 在切换 Surface View 时，在 Rust 层通过 `ANativeWindowReelase` 方法释放指针后，在 `OnSurfaceCreated` 方法返回时出现段错误，调用栈顶层是 `incRef` ，递增引用计数。看起来是因为需要被递增引用计数的指针被释放了引起的，可是按道理在 `Surface View` 被摧毁后不应该还会递增这个引用计数
+
+```cpp
+void RefBase::incStrong(const void* id) const
+{
+    weakref_impl* const refs = mRefs;
+    refs->incWeak(id);
+
+    refs->addStrongRef(id);
+    const int32_t c = refs->mStrong.fetch_add(1, std::memory_order_relaxed);  //!!Fault Here
+    ALOG_ASSERT(c > 0, "incStrong() called on %p after last strong ref", refs);
+#if PRINT_REFS
+    ALOGD("incStrong of %p from %p: cnt=%d\n", this, id, c);
+#endif
+    if (c != INITIAL_STRONG_VALUE)  {
+        return;
+    }
+
+    check_not_on_stack(this);
+
+    int32_t old __unused = refs->mStrong.fetch_sub(INITIAL_STRONG_VALUE, std::memory_order_relaxed);
+    // A decStrong() must still happen after us.
+    ALOG_ASSERT(old > INITIAL_STRONG_VALUE, "0x%x too small", old);
+    refs->mBase->onFirstRef();
+}
+```
+
+```armasm
+android::RefBase::incStrong(void const*) const:
+	ldr    x8, [x0, #0x8]
+	add    x9, x8, #0x4
+	ldxr   w10, [x9]                  //!! Fault Here
+	add    w10, w10, #0x1
+	stxr   w11, w10, [x9]
+	cbnz   w11, 0xdd18                ; <+8>
+	ldxr   w9, [x8]
+	add    w10, w9, #0x1
+	stxr   w11, w10, [x8]
+	cbnz   w11, 0xdd28                ; <+24>
+	mov    w10, #0x10000000           ; =268435456
+	cmp    w9, w10
+	b.ne   0xdd68                     ; <+88>
+	mov    w9, #-0x10000000           ; =-268435456
+	ldxr   w10, [x8]
+	add    w10, w10, w9
+	stxr   w11, w10, [x8]
+	cbnz   w11, 0xdd48                ; <+56>
+	ldr    x0, [x8, #0x8]
+	ldr    x8, [x0]
+	ldr    x1, [x8, #0x10]
+	br     x1
+	ret
+```
+
