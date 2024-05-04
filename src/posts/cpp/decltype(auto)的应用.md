@@ -1,7 +1,6 @@
 ---
-title: 记一次 GP Debug 的心路历程
+title: decltype(auto)的应用
 # cover: /assets/images/cover1.jpg
-
 icon: page
 order: 1
 author: ChiChen
