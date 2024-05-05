@@ -1,5 +1,5 @@
 ---
-title: 技术分享
+title: 编程技术
 icon: lightbulb
 index: false
 ---
