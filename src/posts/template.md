@@ -5,11 +5,11 @@ icon: page
 # This control sidebar order
 order: 1
 author: ChiChen
-date: 2023/10/24
+date: 2023-10-24
 category:
-  - none
+  - category1
 tag:
-    - none
+  - tag1
 # this page is sticky in article list
 sticky: false
 # this page will appear in starred articles

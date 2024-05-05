@@ -5,7 +5,7 @@ icon: page
 # This control sidebar order
 order: 1
 author: ChiChen
-date: 2023/11/03
+date: 2023-11-03
 category:
   - 笔记
   - 编译器

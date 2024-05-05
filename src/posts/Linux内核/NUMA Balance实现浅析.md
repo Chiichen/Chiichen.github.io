@@ -5,7 +5,7 @@ icon: page
 # This control sidebar order
 order: 1
 author: ChiChen
-date: 2023/10/24
+date: 2023-10-24
 category:
     - 笔记
     - Linux 内核

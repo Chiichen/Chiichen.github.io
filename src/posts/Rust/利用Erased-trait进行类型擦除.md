@@ -5,7 +5,7 @@ icon: page
 # This control sidebar order
 order: 1
 author: ChiChen
-date: 2024/04/30
+date: 2024-04-30
 category:
   - 笔记
   - Rust
