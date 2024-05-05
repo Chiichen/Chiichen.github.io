@@ -1,5 +1,5 @@
 ---
-title: 技术分享
+title: 软件项目管理
 icon: lightbulb
 index: false
 ---

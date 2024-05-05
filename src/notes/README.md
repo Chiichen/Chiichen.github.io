@@ -1,5 +1,5 @@
 ---
-title: 技术分享
+title: 学习笔记
 icon: lightbulb
 index: false
 ---

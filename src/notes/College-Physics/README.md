@@ -1,5 +1,5 @@
 ---
-title: 技术分享
+title: 大学物理
 icon: lightbulb
 index: false
 ---

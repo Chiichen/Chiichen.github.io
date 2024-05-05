@@ -1,5 +1,5 @@
 ---
-title: 技术分享
+title: 推导过程
 icon: lightbulb
 index: false
 ---
