@@ -56,25 +56,25 @@ export const zhNavbar = navbar([
       {
         text: "编译原理",
         icon: "edit",
-        prefix: "编译原理/",
+        prefix: "Compile-Principles/",
         children: [
-          { text: "编译原理笔记", icon: "edit", link: "Chapter0 前言" },
+          { text: "编译原理笔记", icon: "edit", link: "Chapter0-Introduce" },
         ],
       },
       {
         text: "数据库",
         icon: "edit",
-        prefix: "数据库/",
+        prefix: "database/",
         children: [
-          { text: "数据库笔记", icon: "edit", link: "Chapter1 Introduction" }
+          { text: "数据库笔记", icon: "edit", link: "Chapter1-Introduction" }
         ],
       },
       {
         text: "大学物理",
         icon: "edit",
-        prefix: "大物/",
+        prefix: "College-Physics/",
         children: [
-          { text: "电磁学公式汇总", icon: "edit", link: "电磁学公式" },
+          { text: "电磁学公式汇总", icon: "edit", link: "Electromagnetic-Formula" },
         ],
       },]
   },
