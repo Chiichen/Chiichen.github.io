@@ -1,4 +1,5 @@
 import { defineUserConfig } from "vuepress";
+import { viteBundler } from '@vuepress/bundler-vite'
 import { docsearchPlugin } from "@vuepress/plugin-docsearch";
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import theme from "./theme.js";
@@ -6,6 +7,10 @@ import { getDirname, path } from '@vuepress/utils'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 const __dirname = getDirname(import.meta.url)
 export default defineUserConfig({
+  bundler: viteBundler({
+    viteOptions: {},
+    vuePluginOptions: {},
+  }),
   head: [
     /*************** start 添加谷歌统计 ***********/
     [
