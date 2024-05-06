@@ -69,4 +69,4 @@ copyright: 转载请注明出处
 
 ## What Parts Make Up a Software Product?
 
-![alt text](image/Chapter1-Basic-Concepts-of-Software-Testing/image.png)
+![alt text](images/Chapter1-Basic-Concepts-of-Software-Testing/image.png)
