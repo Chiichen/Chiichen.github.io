@@ -117,6 +117,7 @@ export default hopeTheme({
       codetabs: true,
       figure: true,
       gfm: true,
+      alert: true,
       imgLazyload: true,
       imgSize: true,
       include: true,
