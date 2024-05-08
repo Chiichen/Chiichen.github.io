@@ -134,3 +134,57 @@ copyright: 转载请注明出处
 ![Decision table](images/Chapter2-Software-Testing-technology/image-4.png)
 5. 化简，合并相似规则
 ![Reduced Decision table](images/Chapter2-Software-Testing-technology/image-5.png)
+
+#### 随机测试(Random Testing)
+
+- 测试数据是使用随机数生成器生成的。
+- 该分布可以是均匀的，或者被选择为在统计意义上模拟程序在实际使用中将接收的输入类型。
+- 如果规范写得清楚且详尽，那么应该可以找到可能的输入值的集合。
+- 目标是根据每个输入参数的分布实现其可能值的“合理”覆盖。 这可以通过启发式方式确定（例如，使用 10 个随机值），或者基于根据覆盖范围内所需的置信度确定的统计样本大小。
+- 每个测试用例都由一组（随机）输入值表示，每个输入值对应一个参数。
+- 然后，测量的测试故障率可以指示使用中的预期故障率
+
+#### 错误估测(Error Guessing)
+
+- 这是一种基于直觉和经验的临时方法(ad-hoc approach)。
+- 通过选择性地使用一些测试数据，例如`null ptr`、空字符串，0值，NaN等
+- 目标是覆盖尽可能多的值，根据测试人员的经验，这些值可能会暴露代码中的错误
+
+#### 场景测试(Scenario Testing)
+
+- 场景测试是一种软件测试技术，它使用场景（即推测性故事）来帮助测试人员解决复杂的问题或测试系统。
+
+![Basic Flow and Alternative Flow](images/Chapter2-Software-Testing-technology/image-6.png)
+
+- 基本流程(basic flow):最简单的贯穿用例的路径，即没有任何错误，程序直接从头到尾的流程。大多数用户最常用的操作流程，反映了软件的主要功能和流程。 一项业务只有一个基础流，并且基础流只有一个起点和一个终点。
+- 替代流程(alternative flow):从基础流程开始，在特定条件下执行，然后重新加入基础流程（例如替代流程1和3），或者源自另一个替代流（例如替代流2），用例也可以终止而不添加到基础中流（例如替代流 2 和 4），反映各种异常和错误情况。
+
+##### 场景测试的步骤
+
+1. 根据规范，描述被测软件的基本流程和替代流程。
+2. 构建不同的场景，满足测试完整性、无冗余的要求。
+3. 针对每个场景设计相应的测试用例。
+4. 重新检查所有生成的测试用例，删除多余的测试用例。 确定测试用例后，确定每个测试用例的测试数据值。
+
+#### 顺序值测试(Sequence and value testing)
+
+- 值的序列对于软件保存状态很重要。
+- 对特定输入值的响应可能会根据状态而变化，并且状态取决于先前的值序列。
+- 分析序列的常规方法是使用状态图来识别软件可以处于的状态，以及每个状态下对每个输入（“事件”）的响应（“操作”）。
+![state Diagram](images/Chapter2-Software-Testing-technology/image-7.png)
+
+- 状态:系统实体生命周期中的抽象情况（例如，对象的内容）
+- 过渡:允许的二态序列。 由事件引起
+- 活动:输入或时间间隔
+- 动作:事件之后的输出
+- 守卫:与事件关联的谓词表达式，声明转换为触发态的布尔限制
+
+![state of diagram](images/Chapter2-Software-Testing-technology/image-8.png)
+![Statechart for traffic light](images/Chapter2-Software-Testing-technology/image-9.png)
+
+- 测试用例 = 输入事件序列
+- 全部事件覆盖(All events coverage)：测试套件（test suite）中包含状态机的每个事件，即每个事件至少是某个测试用例的一部分。
+- 全部状态覆盖(All states coverage)：在测试过程中，通过测试套件中的某个测试用例至少激活一次状态机中的每个状态。
+- 全部转换覆盖(All transitions coverage)：每个转换至少被一次测试用例激活。
+- 全部路径覆盖(All path coverage)：从入口到退出状态的所有可能路径都被测试用例覆盖。由于图中没有退出状态，因此需要识别从入口到每个状态的所有路径。
+- 全部循环覆盖(All circuits coverage)：在图中，从同一个状态开始和结束的所有路径都被测试用例覆盖。
