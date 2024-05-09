@@ -106,9 +106,9 @@ copyright: 转载请注明出处
 
 - 前面介绍的等价划分和边界值分析都侧重于考虑输入条件，但没有考虑输入条件之间的联系和组合。
 - 考虑输入条件的组合可能会导致一些新的情况，但检查输入条件的组合并不是一件容易的事，即使所有输入条件都被划分为等价的类，它们之间的组合仍然相当多。因此，有必要考虑以适合描述多个条件的组合并相应地生成多个动作的形式来设计测试用例。这需要使用因果图(又称石川馨图/鱼骨图)
-![Symbol of Cause-Effect Graphs](images/Chapter2-Software-Testing-technology/image-1.png)
+![Symbol of Cause-Effect Graphs](images/Chapter2-Software-Testing-Technology/image-1.png)
 - 还有一些约束符号
-![Restriction-Symbols](images/Chapter2-Software-Testing-technology/image-2.png)
+![Restriction-Symbols](images/Chapter2-Software-Testing-Technology/image-2.png)
 - 因果图方法的最终结果是判定表(Decision table)，因此因果图的使用顺序是：
   1. 通过分析规格说明，为每个原因(输入)和结果(输出)分配标识符
   2. 根据关系画出因果图
@@ -128,12 +128,12 @@ copyright: 转载请注明出处
 
 1. 确定规则的个数：这里有3个条件，每个条件有两个取值，故应有$2\times 2\times 2=8$种规则。
 2. 列出所有的条件茬和动作茬：
-![example-1](images/Chapter2-Software-Testing-technology/image-3.png)
+![example-1](images/Chapter2-Software-Testing-Technology/image-3.png)
 3. 填入条件项。可从最后1行条件项开始，逐行向上填满。
 4. 填入动作桩和动作顶。这样便得到形如图的初始判定表。
-![Decision table](images/Chapter2-Software-Testing-technology/image-4.png)
+![Decision table](images/Chapter2-Software-Testing-Technology/image-4.png)
 5. 化简，合并相似规则
-![Reduced Decision table](images/Chapter2-Software-Testing-technology/image-5.png)
+![Reduced Decision table](images/Chapter2-Software-Testing-Technology/image-5.png)
 
 #### 随机测试(Random Testing)
 
@@ -154,7 +154,7 @@ copyright: 转载请注明出处
 
 - 场景测试是一种软件测试技术，它使用场景（即推测性故事）来帮助测试人员解决复杂的问题或测试系统。
 
-![Basic Flow and Alternative Flow](images/Chapter2-Software-Testing-technology/image-6.png)
+![Basic Flow and Alternative Flow](images/Chapter2-Software-Testing-Technology/image-6.png)
 
 - 基本流程(basic flow):最简单的贯穿用例的路径，即没有任何错误，程序直接从头到尾的流程。大多数用户最常用的操作流程，反映了软件的主要功能和流程。 一项业务只有一个基础流，并且基础流只有一个起点和一个终点。
 - 替代流程(alternative flow):从基础流程开始，在特定条件下执行，然后重新加入基础流程（例如替代流程1和3），或者源自另一个替代流（例如替代流2），用例也可以终止而不添加到基础中流（例如替代流 2 和 4），反映各种异常和错误情况。
@@ -171,7 +171,7 @@ copyright: 转载请注明出处
 - 值的序列对于软件保存状态很重要。
 - 对特定输入值的响应可能会根据状态而变化，并且状态取决于先前的值序列。
 - 分析序列的常规方法是使用状态图来识别软件可以处于的状态，以及每个状态下对每个输入（“事件”）的响应（“操作”）。
-![state Diagram](images/Chapter2-Software-Testing-technology/image-7.png)
+![state Diagram](images/Chapter2-Software-Testing-Technology/image-7.png)
 
 - 状态:系统实体生命周期中的抽象情况（例如，对象的内容）
 - 过渡:允许的二态序列。 由事件引起
@@ -179,8 +179,8 @@ copyright: 转载请注明出处
 - 动作:事件之后的输出
 - 守卫:与事件关联的谓词表达式，声明转换为触发态的布尔限制
 
-![state of diagram](images/Chapter2-Software-Testing-technology/image-8.png)
-![Statechart for traffic light](images/Chapter2-Software-Testing-technology/image-9.png)
+![state of diagram](images/Chapter2-Software-Testing-Technology/image-8.png)
+![Statechart for traffic light](images/Chapter2-Software-Testing-Technology/image-9.png)
 
 - 测试用例 = 输入事件序列
 - 全部事件覆盖(All events coverage)：测试套件（test suite）中包含状态机的每个事件，即每个事件至少是某个测试用例的一部分。
