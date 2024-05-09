@@ -9,7 +9,7 @@ export default hopeTheme({
     name: "Chiichen",
   },
 
-  iconAssets: "iconfont",
+  iconAssets: "fontawesome",
   favicon: "/KissingCat.jpg",
   logo: "/KissingCat.jpg",
 
