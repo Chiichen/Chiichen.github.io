@@ -207,7 +207,7 @@ copyright: 转载请注明出处
 
 ### 逻辑驱动测试(Logic-Driven Testing)
 
-![例1](images/Chapter2-Software-Testing-technology/image-10.png)
+![例1](images/Chapter2-Software-Testing-Technology/image-10.png)
 
 - 这里，我们记$x\gt 3,\;z\lt 10,\; x==4, \;y\lt5$分别为$T_1,\;T_2,\;T_3,\;T_4$
 
@@ -291,14 +291,14 @@ $$
 
 #### 控制流图
 
-![Control Flow Graph Symbols](images/Chapter2-Software-Testing-technology/image-11.png)
+![Control Flow Graph Symbols](images/Chapter2-Software-Testing-Technology/image-11.png)
 
 - 流图只有二种图形符号，图中的每一个圆称为流图的结点，代表一条或多条语句。流图中的箭头称为边或连接，代表控制流。
 - 任何过程设计都要被翻译成控制流图。
 - 在将程序流程图简化成控制流图时，应注意：
   - 在选择或多分支结构中，分支的汇聚处应有一个汇聚结点。
   - 边和结点圈定的区域叫做区域，当对区域计数时，图形外的区域也应记为一个区域。
-![Control Flow Gragh](images/Chapter2-Software-Testing-technology/image-12.png)
+![Control Flow Gragh](images/Chapter2-Software-Testing-Technology/image-12.png)
 - 如果判断中的条件表达式是由一个或多个逻辑运算符 (OR,  AND, NAND,  NOR)  连接的复合条件表达式，则需要改为一系列只有单条件的嵌套的判断。
   - 例如下列代码和对于图
 
@@ -310,4 +310,4 @@ if (a||b){
 }
 ```
 
-![Nested Statement](images/Chapter2-Software-Testing-technology/image-13.png)
+![Nested Statement](images/Chapter2-Software-Testing-Technology/image-13.png)
