@@ -1,5 +1,5 @@
 ---
-title: 第3章 软件测试管理
+title: 第4章 软件测试管理
 # cover: /assets/images/cover1.jpg
 icon: page
 # This control sidebar order
