@@ -246,6 +246,7 @@ copyright: 转载请注明出处
   - 谁负责设置和改变缺陷的状态？
   - 使用分配和估计修复日期跟踪缺陷修复。
   - 跟踪测试人员所有权，尽快完成回归测试。
+![缺陷跟踪](images/Chapter4-Software-Testing-Management/image-8.png)
 
 - 关键转移
 
