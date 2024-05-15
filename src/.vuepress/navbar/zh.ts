@@ -64,7 +64,7 @@ export const zhNavbar = navbar([
       {
         text: "数据库",
         icon: "edit",
-        prefix: "database/",
+        prefix: "Database/",
         children: [
           { text: "数据库笔记", icon: "edit", link: "Chapter1-Introduction" }
         ],
