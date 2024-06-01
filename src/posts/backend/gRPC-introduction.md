@@ -5,7 +5,7 @@ icon: page
 # This control sidebar order
 order: 1
 author: ChiChen
-date: 2023-11-29
+date: 2024-06-01
 category:
   - 笔记
   - 后端
@@ -43,7 +43,6 @@ go mod init app-gateway
 ### 安装依赖项
 
 ```bash
-go get -u github.com/gin-gonic/gin
 go get -u google.golang.org/grpc
 sudo apt install protobuf-compiler # 安装 protobuf 编译器
 go install github.com/golang/protobuf/protoc-gen-go@latest # 安装go编译插件
@@ -60,17 +59,20 @@ sudo cp -r $GOPATH/bin/protoc-gen-go /usr/bin # 或者把 $GOPATH/bin 添加到 
 
 ```bash
 .
-├── Makefile
-├── README.md
 ├── go.mod
 ├── go.sum
-├── src
-│   ├── cmd
-│   ├── controller
-│   └── proto
-│       └── message.proto
-└── workflows
-    └── docker-image.yml
+└── src
+    ├── cmd
+    │   ├── client
+    │   │   └── client.go
+    │   └── server
+    │       └── server.go
+    ├── proto
+    │   ├── message.pb.go
+    │   └── message.proto
+    └── server
+        └── server.go
+
 ```
 
 `message.proto`就是我们的proto文件，有如下内容
@@ -89,27 +91,36 @@ service MessageService {
     rpc ReceiveMessage (ReceiveMessageRequest) returns (ReceiveMessageResponse);
 }
 
+enum SendMessageStatus{
+    Success=0;
+    MessageExist=1;
+    Failed=2;
+}
+
 message SendMessageRequest {
-    string content = 1;
+    uint64 id=1;
+    string content=2;
 }
 
 message SendMessageResponse {
-    string status = 1;
+    SendMessageStatus status=1;
 }
 
 message ReceiveMessageRequest {
-    string id = 1;
+    uint64 id=1;
 }
 
 message ReceiveMessageResponse {
-    string content = 1;
+    string content=1;
 }
+
+```
+
 
 :::info Highlight
 vscode中可以使用插件`vscode-proto3`获得高亮提示
 :::
 
-```
 
 ### 编译proto文件
 
@@ -137,6 +148,7 @@ protoc -I ./src/proto/ --go_out=plugins=grpc:./src/proto ./src/proto/message.pro
 
 - -I 指定代码输出目录，忽略服务定义的包名，否则会根据包名创建目录
 - --go_out 指定代码输出目录，格式：--go_out=plugins=grpc:目录名
+- plugins=grpc表示启用rpc，并且指定是grpc
 - 命令最后面的参数是proto协议文件 编译成功后在proto目录生成了helloworld.pb.go文件，里面包含了，我们的服务和接口定义。
 
 :::
@@ -149,82 +161,117 @@ protoc -I ./src/proto/ --go_out=plugins=grpc:./src/proto ./src/proto/message.pro
 package server
 
 import (
- "app-gateway/src/proto"
- "context"
+	"context"
+	"fmt"
+	"grpc-demo/src/proto"
+	"log"
 )
 
-type MessageServer struct{}
+type MessageServer struct {
+	contentMap map[int64]string
+}
 
 func (s *MessageServer) SendMessage(ctx context.Context, req *proto.SendMessageRequest) (*proto.SendMessageResponse, error) {
- // 在这里实现消息发送逻辑
- return &proto.SendMessageResponse{Status: "Success"}, nil
+	log.Printf("Sending %s", req)
+	_, ok := s.contentMap[int64(req.Id)]
+	if ok {
+		return &proto.SendMessageResponse{Status: proto.SendMessageStatus_MessageExist}, nil
+	} else {
+		s.contentMap[int64(req.Id)] = req.Content
+	}
+  // 以上可以替换成自己的逻辑
+	return &proto.SendMessageResponse{Status: proto.SendMessageStatus_Success}, nil
 }
 
 func (s *MessageServer) ReceiveMessage(ctx context.Context, req *proto.ReceiveMessageRequest) (*proto.ReceiveMessageResponse, error) {
- // 在这里实现消息接收逻辑
- return &proto.ReceiveMessageResponse{Content: "Hello, gRPC!"}, nil
+	log.Printf("Receiving %s", req)
+	v, ok := s.contentMap[int64(req.Id)]
+	if ok {
+		return &proto.ReceiveMessageResponse{Content: v}, nil
+	} else {
+		return &proto.ReceiveMessageResponse{Content: "No Message"}, fmt.Errorf("No Message for id %d", req.Id)
+	}
+  // 以上可以替换成自己的逻辑
+}
+
+func NewMessageServer() *MessageServer {
+	return &MessageServer{contentMap: map[int64]string{}}
 }
 
 ```
 
-## 实现HTTP服务
+### 实现 Server
 
-在项目/src/cmd目录下创建一个名为 main.go 的文件。这个文件将使用 Gin 实现 HTTP 服务，并调用 gRPC 服务。
+我们还需要一个server来承载grpc
 
 ```go
+// src/cmd/server.go
 package main
 
 import (
- "app-gateway/src/proto"
- "log"
- "net/http"
+	"fmt"
+	"log"
+	"net"
 
- "github.com/gin-gonic/gin"
- "google.golang.org/grpc"
+	pb "grpc-demo/src/proto"
+	"grpc-demo/src/server"
+
+	"google.golang.org/grpc"
 )
 
+const port = 8080
+
 func main() {
- r := gin.Default()
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	var opts []grpc.ServerOption
+	grpcServer := grpc.NewServer(opts...)
+	pb.RegisterMessageServiceServer(grpcServer, server.NewMessageServer())
+	grpcServer.Serve(lis)
+}
+```
 
- r.POST("/send", func(c *gin.Context) {
-  content := c.PostForm("content")
+### 实现 Client
+```go
+// src/cmd/client
+package main
 
-  conn, err := grpc.Dial(":50051", grpc.WithInsecure())
-  if err != nil {
-   log.Fatalf("did not connect: %v", err)
-  }
-  defer conn.Close()
+import (
+	"context"
+	"log"
 
-  client := proto.NewMessageServiceClient(conn)
-  res, err := client.SendMessage(c, &proto.SendMessageRequest{Content: content})
-  if err != nil {
-   c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-   return
-  }
+	"google.golang.org/grpc"
 
-  c.JSON(http.StatusOK, gin.H{"status": res.Status})
- })
+	pb "grpc-demo/src/proto"
+)
 
- r.GET("/receive/:id", func(c *gin.Context) {
-  id := c.Param("id")
+const PORT = "8080"
 
-  conn, err := grpc.Dial(":50051", grpc.WithInsecure())
-  if err != nil {
-   log.Fatalf("did not connect: %v", err)
-  }
-  defer conn.Close()
+func main() {
+	conn, err := grpc.NewClient(":"+PORT, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("grpc.Dial err: %v", err)
+	}
+	defer conn.Close()
 
-  client := proto.NewMessageServiceClient(conn)
-  res, err := client.ReceiveMessage(c, &proto.ReceiveMessageRequest{Id: id})
-  if err != nil {
-   c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-   return
-  }
-
-  c.JSON(http.StatusOK, gin.H{"content": res.Content})
- })
-
- r.Run(":8080")
+	client := pb.NewMessageServiceClient(conn)
+	resp, err := client.SendMessage(context.Background(), &pb.SendMessageRequest{
+		Id:      0,
+		Content: "Client sending content",
+	})
+	log.Printf("Seding resp: %s", resp.String())
+	if err != nil {
+		log.Fatalf("client.send err: %v", err)
+	}
+	receiveResp, err := client.ReceiveMessage(context.Background(), &pb.ReceiveMessageRequest{
+		Id: 0,
+	})
+	if err != nil {
+		log.Fatalf("client.receive err: %v", err)
+	}
+	log.Printf("Receive resp: %s", receiveResp.String())
 }
 
 ```
@@ -234,16 +281,11 @@ func main() {
 首先，启动 gRPC 服务：
 
 ```bash
-go run src/server/server.go
+go run src/cmd/server.go
 ```
 
-然后，启动 Gin HTTP 服务：
+然后，启动 gRPC 客户端:
 
 ```bash
-go run src/cmd/main.go
+go run src/cmd/client.go
 ```
-
-## 参考资料
-
-- [GO-GRPC使用教程](https://zhuanlan.zhihu.com/p/411317961)
-- [使用 Gin 和 gRPC 实现后端消息发送和接收接口 ｜ 青训营](https://juejin.cn/post/7270831230077173818)
