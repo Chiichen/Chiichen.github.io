@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@vuepress/client':
-    specifier: 2.0.0-rc.11
-    version: 2.0.0-rc.11
+    specifier: 2.0.0-rc.13
+    version: 2.0.0-rc.13
   '@vuepress/plugin-docsearch':
     specifier: 2.0.0-rc.26
     version: 2.0.0-rc.26(@algolia/client-search@4.23.3)(search-insights@2.13.0)(vuepress@2.0.0-rc.9)
@@ -1562,11 +1562,11 @@ packages:
       - typescript
     dev: true
 
-  /@vuepress/client@2.0.0-rc.11:
-    resolution: {integrity: sha512-GJAmb2qzYqDoZ6xkn6sTnT12Wm/hYpDsmQOgjg5YN7uL2o26GBgC19daAVR7CLOyoZZoTNjxCax4sKcgUaUb/g==}
+  /@vuepress/client@2.0.0-rc.13:
+    resolution: {integrity: sha512-kFHVyroAFZ+/ZVaItjIXOZA6r+ympWN+C+0yZYVkMpzyDVFdZrl9WazqhwHBIUj0/sA+NLq2o2EvoqvAPa1lFg==}
     dependencies:
       '@vue/devtools-api': 6.6.1
-      '@vuepress/shared': 2.0.0-rc.11
+      '@vuepress/shared': 2.0.0-rc.13
       vue: 3.4.27
       vue-router: 4.3.2(vue@3.4.27)
     transitivePeerDependencies:
@@ -1932,12 +1932,6 @@ packages:
       vuepress: 2.0.0-rc.9(@vuepress/bundler-vite@2.0.0-rc.9)(vue@3.4.26)
     transitivePeerDependencies:
       - typescript
-    dev: true
-
-  /@vuepress/shared@2.0.0-rc.11:
-    resolution: {integrity: sha512-CRKGztAyzCDwdhg/UuOehNIlVm2SHSja9n5YR/zRfaMk9c3W552VQvWjlCSIfE8657q4UTcLdKQ8sOCHUiAWKA==}
-    dependencies:
-      '@mdit-vue/types': 2.1.0
     dev: true
 
   /@vuepress/shared@2.0.0-rc.13:
