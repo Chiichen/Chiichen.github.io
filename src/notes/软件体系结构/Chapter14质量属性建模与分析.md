@@ -4,7 +4,7 @@ title: Chapter14 质量属性建模与分析
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-16
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -36,11 +36,11 @@ copyright: 转载请注明出处
 
 - 参数：事件的到达速率、选择的排队规则、选择的调度算法、网络拓扑、网络带宽、选择的路由算法、事件的服务时间
 
-#### MVC分配建模(Allocation Model for MVC)
+#### MVC 分配建模(Allocation Model for MVC)
 
 ![Allocation Model](images/Chapter14质量属性建模与分析/image-1.png)
 
-#### MVC队列建模
+#### MVC 队列建模
 
 ![A queuing model of performance for MVC](images/Chapter14质量属性建模与分析/image-2.png)
 
@@ -68,7 +68,7 @@ $$
   - 主动冗余（热备份）
   - 被动冗余（温备份）
   - 备用（冷备份）。
-![Redundancy tactics, as applied to a broker pattern](images/Chapter14质量属性建模与分析/image-3.png)
+    ![Redundancy tactics, as applied to a broker pattern](images/Chapter14质量属性建模与分析/image-3.png)
 
 ### 实验和原型
 

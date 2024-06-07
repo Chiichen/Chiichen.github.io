@@ -4,7 +4,7 @@ title: Chapter5 可用性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-13
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -41,10 +41,11 @@ copyright: 转载请注明出处
 :::info 故障(Fault) vs 失败(Failure)？
 
 - 失败发生在系统不再按照其规范提供服务时
+
   - 此故障可以被系统的参与者观察到。
 
 - 故障（或故障的组合）有可能导致失败。
-:::
+  :::
 
 可用性策略使系统能够忍受故障，以便服务保持符合其规格说明。这些策略可以防止故障导致失败，或至少限制故障的影响，并使修复成为可能。
 
@@ -58,12 +59,12 @@ copyright: 转载请注明出处
   - 进程定期在其监视器中重置看门狗计时器，
   - 将心跳消息与其他控制消息捆绑在一起，减少开销。
 - "ping"和"heartbeat"之间的区别是什么？
-  - 谁发起健康检查？ping是检查者主动发信息，heartbeat 是被检查者发信息
+  - 谁发起健康检查？ping 是检查者主动发信息，heartbeat 是被检查者发信息
 - 时间戳(Timestamp)：用于检测分布式消息传递系统中的事件顺序错误。
 - 条件监控(Condition Monitoring)：检查进程或设备中的条件，或验证设计过程中的假设。
   - 例如，在数据存储和传输中使用校验和(checksum)。
 - 投票(Voting)：这种策略的常见实现是三重模块冗余(Triple Modular Redundancy TMR)。
-![Voting component](images/Chapter5可用性/image-1.png)
+  ![Voting component](images/Chapter5可用性/image-1.png)
 
 ### 从故障中恢复(准备和修复)(Recover from Faults (Preparation & Repair))
 

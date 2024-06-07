@@ -4,7 +4,7 @@ title: Chapter2 Introduction to Relational Model
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-27
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -27,8 +27,8 @@ copyright: 转载请注明出处
 
 - 每个属性允许的值集合称为属性的域(domain)。
 - 属性值（通常）要求是原子(atomic)的，即不可分割的。
-- 特殊值null是每个域的成员。
-- null值在许多操作的定义中引起了复杂性。
+- 特殊值 null 是每个域的成员。
+- null 值在许多操作的定义中引起了复杂性。
 
 ### 关系模式和实例(Relation Schema and Instance)
 
@@ -53,19 +53,22 @@ copyright: 转载请注明出处
 - 一个数据库由多个关系组成。
 - 关于一个大学的信息被分解成不同的部分。
 - 不好的设计：$univ(instructor-ID，\\name，dept\_name，salary，student\_Id，...)$导致了信息的重复（例如，两个学生有相同的教师）和需要使用空值（例如，表示没有指导教师的学生）。
-- 规范化理论（第7章）处理如何设计“好”的关系模式。
+- 规范化理论（第 7 章）处理如何设计“好”的关系模式。
 
 ## 键(Key)
 
 - 设 $K \subseteq R$，(其中 $R$ 是一个关系模式，由多个属性组成)。
 
 - 如果 $K$ 的值足以唯一标识每个可能的关系 $r(R)$ 中的元组，则 $K$ 是 $R$ 的`超键(superkey)`。
+
   - 例如，$\{ID\}$ 和 $\{ID, name\}$都是 $instructor$ 关系的超键。
 
 - 如果 $K$ 是最小的超键，则 $K$ 是`候选键(candidate key)`。
+
   - 例如，$\{ID\}$ 是 $Instructor$ 的候选键。
 
 - 其中一个候选键被选为`主键(primary key)`。
+
   - 哪一个是主键？
 
 - 外键约束(Foreign key)：一个关系中的值必须出现在另一个关系中。
@@ -80,12 +83,12 @@ copyright: 转载请注明出处
   - 元组关系演算（Tuple relational calculus）
   - 域关系演算（Domain relational calculus）
 - 关系操作符（Relational operators）
-![Selection of tuples](<images/Chapter2 Introduction to Relational Model/image-1.png>)
-![ Selection of Columns (Attributes)](<images/Chapter2 Introduction to Relational Model/image-2.png>)
-![Joining two relations – Cartesian Product](<images/Chapter2 Introduction to Relational Model/image-3.png>)
-![ Union of two relations](<images/Chapter2 Introduction to Relational Model/image-4.png>)
-![Set difference of two relations](<images/Chapter2 Introduction to Relational Model/image-5.png>)
-![ Set Intersection of two relations](<images/Chapter2 Introduction to Relational Model/image-6.png>)
+  ![Selection of tuples](<images/Chapter2 Introduction to Relational Model/image-1.png>)
+  ![ Selection of Columns (Attributes)](<images/Chapter2 Introduction to Relational Model/image-2.png>)
+  ![Joining two relations – Cartesian Product](<images/Chapter2 Introduction to Relational Model/image-3.png>)
+  ![ Union of two relations](<images/Chapter2 Introduction to Relational Model/image-4.png>)
+  ![Set difference of two relations](<images/Chapter2 Introduction to Relational Model/image-5.png>)
+  ![ Set Intersection of two relations](<images/Chapter2 Introduction to Relational Model/image-6.png>)
 
 :::info 合并两个关系 - 自然连接
 

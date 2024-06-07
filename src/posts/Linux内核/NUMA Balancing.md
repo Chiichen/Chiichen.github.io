@@ -5,11 +5,11 @@ title: NUMA Balancing
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-17
 category:
-    - 笔记
-    - Linux 内核
+  - 笔记
+  - Linux 内核
 tag:
   - Linux 内核
   - NUMA
@@ -17,9 +17,7 @@ sticky: false
 star: false
 footer:
 copyright: 转载请注明出处
-
 ---
-
 
 ## [numa_balancing in kernel doc](https://www.kernel.org/doc/Documentation/sysctl/kernel.txt)
 
@@ -44,20 +42,21 @@ numa_balancing_scan_delay_ms, numa_balancing_scan_period_max_ms,
 numa_balancing_scan_size_mb, and numa_balancing_settle_count sysctls.
 
 ---
->numa_balancing_scan_period_min_ms, numa_balancing_scan_delay_ms,
-numa_balancing_scan_period_max_ms, numa_balancing_scan_size_mb
+
+> numa_balancing_scan_period_min_ms, numa_balancing_scan_delay_ms,
+> numa_balancing_scan_period_max_ms, numa_balancing_scan_size_mb
 
 Automatic NUMA balancing scans tasks address space and unmaps pages to
 detect if pages are properly placed or if the data should be migrated to a
-memory node local to where the task is running.  Every `scan delay` the task
+memory node local to where the task is running. Every `scan delay` the task
 scans the next `scan size` number of pages in its address space. When the
 end of the address space is reached the scanner restarts from the beginning.
 
 In combination, the `scan delay` and `scan size` determine the scan rate.
-When `scan delay` decreases, the scan rate increases.  The scan delay and
+When `scan delay` decreases, the scan rate increases. The scan delay and
 hence the scan rate of every task is adaptive and depends on historical
 behaviour. If pages are properly placed then the scan delay increases,
-otherwise the scan delay decreases.  The `scan size` is not adaptive but
+otherwise the scan delay decreases. The `scan size` is not adaptive but
 the higher the `scan size`, the higher the scan rate.
 
 Higher scan rates incur higher system overhead as page faults must be

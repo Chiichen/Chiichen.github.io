@@ -4,7 +4,7 @@ title: Chapter2 为什么软件架构重要
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-13
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -30,7 +30,7 @@ copyright: 转载请注明出处
 
 ## 推理和管理变更
 
-- 典型软件系统的总成本中，大约80％发生在初始部署之后：
+- 典型软件系统的总成本中，大约 80％发生在初始部署之后：
   - 适应新功能
   - 适应新环境
   - 修复错误等等。
@@ -65,7 +65,7 @@ copyright: 转载请注明出处
   - 系统是否依赖于操作系统或硬件的特定功能？
   - 信息在系统中的流动是否加密？
 
-//TODO中间几点暂略
+//TODO 中间几点暂略
 
 ## 总结
 

@@ -110,12 +110,12 @@ export default defineUserConfig({
   locales: {
     "/": {
       lang: "zh-CN",
-      title: "ChiChen's Blog",
+      title: "Chiichen's Blog",
       description: "博客杂谈",
     },
     "/en/": {
       lang: "en-US",
-      title: "ChiChen's Blog",
+      title: "Chiichen's Blog",
       description: "A blog of mine",
 
     },

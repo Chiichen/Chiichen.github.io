@@ -4,7 +4,7 @@ title: 利用Erased-trait进行类型擦除
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2024-04-30
 category:
   - 笔记

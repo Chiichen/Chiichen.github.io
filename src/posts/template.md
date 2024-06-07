@@ -4,7 +4,7 @@ title: template
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-24
 category:
   - category1
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 article: false

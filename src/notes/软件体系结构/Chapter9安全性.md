@@ -4,7 +4,7 @@ title: Chapter9 安全性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-16
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -26,14 +26,14 @@ copyright: 转载请注明出处
 - 攻击可以采取不同形式：
   - 未经授权的尝试访问/修改数据或服务
   - 旨在拒绝合法用户的服务
-- 安全具有三个主要特征，即CIA：
+- 安全具有三个主要特征，即 CIA：
 - 保密性(Confidentiality)是数据或服务受到未经授权访问的保护性质。
   - 例如，黑客无法在政府计算机上访问您的个人所得税申报表。
 - 完整性(Integrity)是数据或服务不受未经授权操纵的性质。
   - 例如，您的成绩自从教师分配以来没有被更改。
 - 可用性(Availability)是系统能够供合法使用的性质。
   - 例如，拒绝服务攻击阻止您从在线书店订购一本书。
-- 支持CIA的其他特征包括：
+- 支持 CIA 的其他特征包括：
   - 身份验证验证交易参与方的身份，并检查他们是否真实身份与其所声称的一致。
   - 授权授予用户执行任务的权限。
 
@@ -48,17 +48,17 @@ copyright: 转载请注明出处
 
 :::info DOS(Deny of Service Attack)
 
-- Ping of Death（死亡之Ping）是一种利用发送异常大的ICMP回显请求（Ping）来攻击目标系统的方法，超出系统处理能力导致系统崩溃或变得不稳定。
-- UDP Flood（UDP洪泛）是通过发送大量伪造的UDP数据包来占用目标系统的网络带宽和资源，导致系统无法正常处理合法的网络请求。
-- TCP SYN（TCP半开连接）攻击是通过发送大量伪造的TCP连接请求（SYN包）来消耗目标系统的资源，使其无法建立新的有效连接，从而导致服务不可用。
+- Ping of Death（死亡之 Ping）是一种利用发送异常大的 ICMP 回显请求（Ping）来攻击目标系统的方法，超出系统处理能力导致系统崩溃或变得不稳定。
+- UDP Flood（UDP 洪泛）是通过发送大量伪造的 UDP 数据包来占用目标系统的网络带宽和资源，导致系统无法正常处理合法的网络请求。
+- TCP SYN（TCP 半开连接）攻击是通过发送大量伪造的 TCP 连接请求（SYN 包）来消耗目标系统的资源，使其无法建立新的有效连接，从而导致服务不可用。
 
 :::
 
 - 验证消息完整性(Verify Message Integrity): 使用校验和或哈希值等技术来验证消息、资源文件、部署文件和配置文件的完整性。
-![Checksum](images/Chapter9安全性/image-1.png)
+  ![Checksum](images/Chapter9安全性/image-1.png)
 
 - 检测消息延迟: 通过检查传递消息所需的时间，可以检测到可疑的时间行为，即中间人攻击。
-![man-in-the-middle attack](images/Chapter9安全性/image-2.png)
+  ![man-in-the-middle attack](images/Chapter9安全性/image-2.png)
 
 ### 抵御攻击(Resist Attacks)
 

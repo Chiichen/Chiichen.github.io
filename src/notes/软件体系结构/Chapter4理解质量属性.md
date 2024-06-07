@@ -4,7 +4,7 @@ title: Chapter4 理解质量属性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-13
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -60,12 +60,13 @@ copyright: 转载请注明出处
 
 - 我们使用一种通用形式，将所有质量属性需求都指定为场景。
 - 我们对质量属性场景的表示包括以下几个部分：
-    1. 刺激（Stimulus）。刺激是一种在到达系统时需要产生响应的条件。
-    2. 刺激源（Source of stimulus）。刺激源是某个实体（人、计算机系统或其他执行器），它产生了刺激。
-    3. 响应（Response）。响应是作为刺激到达后所进行的活动。
-    4. 响应度量（Response measure）。当响应发生时，应该以某种方式进行度量，以便对需求进行测试。
-    5. 环境（Environment）。刺激发生在特定条件下。系统可能处于超负荷状态、正常运行状态或其他相关状态。
-    6. 构件（Artifact）。这可以是一组系统、整个系统或其中的某个部分。某个构件被刺激。
+
+  1. 刺激（Stimulus）。刺激是一种在到达系统时需要产生响应的条件。
+  2. 刺激源（Source of stimulus）。刺激源是某个实体（人、计算机系统或其他执行器），它产生了刺激。
+  3. 响应（Response）。响应是作为刺激到达后所进行的活动。
+  4. 响应度量（Response measure）。当响应发生时，应该以某种方式进行度量，以便对需求进行测试。
+  5. 环境（Environment）。刺激发生在特定条件下。系统可能处于超负荷状态、正常运行状态或其他相关状态。
+  6. 构件（Artifact）。这可以是一组系统、整个系统或其中的某个部分。某个构件被刺激。
 
 - `通用的质量属性场景(General quality attribute scenarios)`与具体的系统无关，可能适用于任何系统。
 - `具体的质量属性场景(Concrete quality attribute scenarios)`则针对具体考虑的系统而定。
@@ -100,13 +101,13 @@ copyright: 转载请注明出处
 
 - 架构设计是一种系统化的设计决策方法。
 - 我们将设计决策分为以下几类：
-    1. 职责分配(Allocation of responsibilities)
-    2. 协调模型(Coordination model)
-    3. 数据模型(Data model)
-    4. 资源管理(Management of resources)
-    5. 架构元素之间的映射(Mapping among architectural elements)
-    6. 绑定时间决策(Binding time decisions)
-    7. 技术选择(Choice of technology)
+  1. 职责分配(Allocation of responsibilities)
+  2. 协调模型(Coordination model)
+  3. 数据模型(Data model)
+  4. 资源管理(Management of resources)
+  5. 架构元素之间的映射(Mapping among architectural elements)
+  6. 绑定时间决策(Binding time decisions)
+  7. 技术选择(Choice of technology)
 
 ##### 职责分配
 
@@ -167,23 +168,23 @@ copyright: 转载请注明出处
 ## 总结
 
 - 系统的需求可以分为三类：
-    1. 功能需求。通过在设计中包含适当的职责来满足这些需求。
-    2. 质量属性需求。通过架构的结构和行为来满足这些需求。
-    3. 约束条件。约束条件是已经确定的设计决策。
+  1. 功能需求。通过在设计中包含适当的职责来满足这些需求。
+  2. 质量属性需求。通过架构的结构和行为来满足这些需求。
+  3. 约束条件。约束条件是已经确定的设计决策。
 - 为了表达质量属性需求，我们使用质量属性场景。场景的组成部分包括：
-    1. 刺激源。
-    2. 刺激。
-    3. 环境。
-    4. 构件。
-    5. 响应。
-    6. 响应度量。
+  1. 刺激源。
+  2. 刺激。
+  3. 环境。
+  4. 构件。
+  5. 响应。
+  6. 响应度量。
 - 架构策略是影响质量属性响应的设计决策。策略的重点是单个质量属性响应。
 - 架构模式可以被看作是策略的“包装”。
 - 架构设计决策的七个类别包括：
-    1. 职责分配
-    2. 协调模型
-    3. 数据模型
-    4. 资源管理
-    5. 架构元素之间的映射
-    6. 绑定时间决策
-    7. 技术选择
+  1. 职责分配
+  2. 协调模型
+  3. 数据模型
+  4. 资源管理
+  5. 架构元素之间的映射
+  6. 绑定时间决策
+  7. 技术选择

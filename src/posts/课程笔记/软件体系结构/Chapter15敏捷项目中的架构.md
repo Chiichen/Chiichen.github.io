@@ -4,7 +4,7 @@ title: Chapter15 敏捷项目中的架构
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-18
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -47,15 +47,15 @@ copyright: 转载请注明出处
   - 架构的`前期设计工作(Up-front design work)`和前期风险识别(up-front risk identification)、规划和解决工作
   - 由于修复缺陷和处理修改请求而进行的`重工作(Rework)`
 - 直观地说，这两者之间需要权衡。
-- Boehm和Turner为三个假设项目将这两个值相互对比绘制了图表：
-  - 一个项目的规模为10千源代码行（KSLOC）
-  - 一个项目的规模为100千源代码行（KSLOC）
-  - 一个项目的规模为1,000千源代码行（KSLOC）
-![Architecture effort vs. rework](images/Chapter15敏捷项目中的架构/image.png)
+- Boehm 和 Turner 为三个假设项目将这两个值相互对比绘制了图表：
+  - 一个项目的规模为 10 千源代码行（KSLOC）
+  - 一个项目的规模为 100 千源代码行（KSLOC）
+  - 一个项目的规模为 1,000 千源代码行（KSLOC）
+    ![Architecture effort vs. rework](images/Chapter15敏捷项目中的架构/image.png)
 - 这些线条显示每个项目都有一个最佳点。
-  - 对于10千源代码行（KSLOC）的项目，最佳点位于最左边。在小型项目中花费过多时间进行前期工作是一种浪费。
-  - 对于100千源代码行（KSLOC）的项目，最佳点位于项目进度的约20％左右。
-  - 对于1,000千源代码行（KSLOC）的项目，最佳点位于项目进度的约40％左右。
+  - 对于 10 千源代码行（KSLOC）的项目，最佳点位于最左边。在小型项目中花费过多时间进行前期工作是一种浪费。
+  - 对于 100 千源代码行（KSLOC）的项目，最佳点位于项目进度的约 20％左右。
+  - 对于 1,000 千源代码行（KSLOC）的项目，最佳点位于项目进度的约 40％左右。
 - 如果没有架构指导，单靠敏捷原则无法应对这种复杂性。
 
 ## 敏捷架构师建议
@@ -77,4 +77,4 @@ copyright: 转载请注明出处
 - 敏捷过程通常应用于小到中型项目，较少用于大型项目
 - 大规模成功的项目需要敏捷和架构的结合
 - 敏捷架构师采取中间立场，提出一个初始架构并开始实施，直到技术债务变得过大，此时需要进行重构
-- Boehm和Turner发现项目存在一个“最佳点”，在这个点上，前期架构规划会带来回报。
+- Boehm 和 Turner 发现项目存在一个“最佳点”，在这个点上，前期架构规划会带来回报。

@@ -4,7 +4,7 @@ title: Chapter6 互操作性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-14
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -46,13 +46,13 @@ copyright: 转载请注明出处
   - 服务将其响应发送给另一个系统。
   - 服务向任何感兴趣的方发送广播响应。
 
-:::info SOAP和REST
+:::info SOAP 和 REST
 
-- 两种技术选项，用于实现基于Web的应用程序之间的互操作性。
-- SOAP在SOA系统中与一组协议一起使用。
-  - 服务描述和发现，例如WSDL、UDDI。
-  - 服务组合，例如BPEL。
-- SOAP更复杂，用于交换带有结构化数据的消息，而REST更简单，用于小型消息。
+- 两种技术选项，用于实现基于 Web 的应用程序之间的互操作性。
+- SOAP 在 SOA 系统中与一组协议一起使用。
+  - 服务描述和发现，例如 WSDL、UDDI。
+  - 服务组合，例如 BPEL。
+- SOAP 更复杂，用于交换带有结构化数据的消息，而 REST 更简单，用于小型消息。
 
 :::
 
@@ -70,10 +70,10 @@ copyright: 转载请注明出处
 
 - 服务发现(Service Discovery)：通过搜索来定位一个服务
 - 有许多服务发现机制：
-  - 用于Web服务的UDDI
-  - 用于Java对象的Jini
+  - 用于 Web 服务的 UDDI
+  - 用于 Java 对象的 Jini
   - 通用即插即用（Universal plug-and-play，UPnP）中使用的简单服务发现协议（SSDP）
-  - DNS服务发现（DNS-SD）
+  - DNS 服务发现（DNS-SD）
   - 蓝牙服务发现协议（SDP）
 
 :::info 服务发现的必要条件
@@ -90,7 +90,7 @@ copyright: 转载请注明出处
   - 向每个实体询问并等待回答
   - 示例
     - 在位置区域进行寻呼以找到移动终端
-    - DHCP发现：客户端在本地子网上进行广播，以找到可用的服务器以获取IP地址
+    - DHCP 发现：客户端在本地子网上进行广播，以找到可用的服务器以获取 IP 地址
   - 对于搜索者来说，高效且资源消耗较少
   - 对于被搜索的实体来说，资源消耗较低
   - 但对于环境来说，会造成干扰和资源消耗。
@@ -117,11 +117,11 @@ copyright: 转载请注明出处
   - 被搜索的实体向注册表注册
   - 搜索者可以通过注册表获取信息并找到被搜索的实体
 - 示例
-  - 服务提供者在UDDI注册表中注册其Web服务，可以被服务请求者搜索和找到
+  - 服务提供者在 UDDI 注册表中注册其 Web 服务，可以被服务请求者搜索和找到
 - 这种方法对搜索者和被搜索者的资源消耗较低，对环境的干扰也较少，但前提是注册表必须可用、可靠和正确。
-![Searching Method Registration](images/Chapter6互操作性/image-1.png)
+  ![Searching Method Registration](images/Chapter6互操作性/image-1.png)
 
-:::info Web服务与架构
+:::info Web 服务与架构
 
 - 它描述了可以在任何网络（例如互联网）上找到和调用的计算功能。
 - 它代表了一个自描述、自包含的应用程序。
@@ -131,15 +131,16 @@ copyright: 转载请注明出处
 ![Web Service Architecture](images/Chapter6互操作性/image-3.png)
 :::
 
-#### UDDI注册表(UDDI Registries)
+#### UDDI 注册表(UDDI Registries)
 
-- UDDI注册表网络类似于域名系统（DNS）的网络结构。
-- 所有的UDDI注册表之间交换信息。
+- UDDI 注册表网络类似于域名系统（DNS）的网络结构。
+- 所有的 UDDI 注册表之间交换信息。
 - 访问一个注册表可以获取所有注册表中包含的信息。
 
 ### 管理接口(Manage Interface)
 
 - 编排（Orchestrate）：使用控制机制来协调、管理和顺序执行服务的调用。
+
   - 当系统需要以复杂的方式相互交互以完成复杂任务时，使用编排。
   - 编排可以协调多个服务的执行顺序，确保它们按照特定的逻辑和时间顺序进行调用。
 

@@ -4,7 +4,7 @@ title: Chapter1 Introduction
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-30
 category:
   - 课程笔记
@@ -14,10 +14,11 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
+
 ## Database Management System (DBMS)
 
 - DBMS 包括：
@@ -31,6 +32,7 @@ copyright: 转载请注明出处
 - 访问数据困难：需要编写新程序来执行每项新任务
 - 数据隔离——多个文件和格式
 - 完整性问题 ：
+
   - 完整性约束（例如，帐户余额 > 0）被“隐藏”在程序代码中，而不是明确声明
   - 很难添加新的约束或更改现有的约束
 
@@ -55,9 +57,9 @@ copyright: 转载请注明出处
 
 ```go
   type instructor = record{
-     ID : string;  
-     name : string;  
-     dept_name : string;  
+     ID : string; 
+     name : string; 
+     dept_name : string; 
      salary : int;
   }
 ```
@@ -114,7 +116,7 @@ where instructor.ID = '22222
 1. 允许嵌入 SQL 的语言扩展 应用程序接口（例如 ODBC/JDBC）
 2. 允许将 SQL 查询发送到数据库
 
-将在第3、4、5章做详细介绍
+将在第 3、4、5 章做详细介绍
 
 ## Data Definition Language (DDL)
 
@@ -123,18 +125,18 @@ where instructor.ID = '22222
 例如：
 
 ```sql
-create table instructor ( 
+create table instructor (
 ID             char(5),
 name           varchar(20),
 dept_name      varchar(20),
 salary         numeric(8,2))
 ```
 
-- DDL编译器生成一组存储在数据字典中的表模板
+- DDL 编译器生成一组存储在数据字典中的表模板
 - 数据字典包含元数据（即有关数据的数据）
   - 数据库架构
   - 完整性约束
-    - 主键（唯一标识讲师的ID）
+    - 主键（唯一标识讲师的 ID）
     - 引用完整性（SQL 中的引用约束）
       - 例如 任何讲师元组中的 dept_name 值必须出现在部门关系中
 - 授权
@@ -163,7 +165,7 @@ salary         numeric(8,2))
 
 ## Query Processing
 
-1. SQL翻译
+1. SQL 翻译
 2. 优化
 3. 执行
 
@@ -198,7 +200,7 @@ salary         numeric(8,2))
 数据库系统的架构很大程度上取决于运行数据库的操作系统的架构
 
 - 集中
-- CS架构(Client-Server)
+- CS 架构(Client-Server)
 - 并行（多处理器）
 - 分布式
 

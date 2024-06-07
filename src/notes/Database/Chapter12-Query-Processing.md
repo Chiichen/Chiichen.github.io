@@ -4,7 +4,7 @@ title: Chapter12 Query Processing
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-31
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -24,7 +24,7 @@ copyright: 转载请注明出处
 1. 语法分析与翻译
 2. 优化
 3. 执行
-![Basic Steps in Query Processing](<images/Chapter12 Query Processing/image.png>)
+   ![Basic Steps in Query Processing](<images/Chapter12 Query Processing/image.png>)
 
 ### 语法分析与翻译
 
@@ -38,9 +38,9 @@ copyright: 转载请注明出处
 ### 优化
 
 - 关系代数表达式可能有许多等价的表达式。
-例如，$\sigma_{salary<75000}(\Pi_{salary}(instructor))$等价于 $\Pi_{salary}(\sigma_{salary<75000}(instructor))$。
+  例如，$\sigma_{salary<75000}(\Pi_{salary}(instructor))$等价于 $\Pi_{salary}(\sigma_{salary<75000}(instructor))$。
 - 每个关系代数操作可以使用多种不同的算法进行执行。相应地，关系代数表达式可以以多种方式进行执行。指定详细执行策略的注释表达式称为`执行计划或计算计划(evaluation-plan)`。
-- 例如，可以使用薪水索引来查找薪水小于75000的讲师，或者执行完整的关系扫描并丢弃薪水大于等于75000的讲师。
+- 例如，可以使用薪水索引来查找薪水小于 75000 的讲师，或者执行完整的关系扫描并丢弃薪水大于等于 75000 的讲师。
 - `查询优化(Query Optimization)`：在所有等价的执行计划中选择成本最低的计划。
 - 成本是使用数据库目录中的统计信息进行估算的。
 - 例如，每个关系中的元组数量、元组大小等。
@@ -48,64 +48,64 @@ copyright: 转载请注明出处
 ## 衡量查询开销
 
 - 成本通常以回答查询所需的总耗时来衡量。
-  - 许多因素会影响时间成本，包括磁盘访问、CPU或网络通信。
+  - 许多因素会影响时间成本，包括磁盘访问、CPU 或网络通信。
 - 通常，磁盘访问是主要的成本，并且相对容易估计。通过考虑以下因素进行测量：
-  - 寻道次数 * 平均寻道成本
-  - 读取的块数 * 平均块读取成本
-  - 写入的块数 * 平均块写入成本
+  - 寻道次数 \* 平均寻道成本
+  - 读取的块数 \* 平均块读取成本
+  - 写入的块数 \* 平均块写入成本
   - 写入块的成本大于读取块的成本，因为在写入后需要将数据读回来以确保写入成功。
 - 为简单起见，我们只使用磁盘的块传输数量和寻道次数作为成本度量。
   - $t_T$ - 传输一个块的时间
   - $t_S$ - 一个寻道的时间
-  - 成本为b个块传输加上S次寻道的时间：$b\times t_T+S\times t_S$
-- 为简单起见，我们忽略了CPU成本。实际系统会考虑CPU成本。
+  - 成本为 b 个块传输加上 S 次寻道的时间：$b\times t_T+S\times t_S$
+- 为简单起见，我们忽略了 CPU 成本。实际系统会考虑 CPU 成本。
 - 我们在成本公式中不包括将输出写入磁盘的成本。
-- 通过使用额外的缓冲空间，可以减少磁盘IO的次数。
+- 通过使用额外的缓冲空间，可以减少磁盘 IO 的次数。
   - 在最好的情况下，所有数据都可以读入缓冲区，不需要再次访问磁盘。
   - 在最坏的情况下，我们假设缓冲区只能容纳少量的数据块，大约每个关系一个数据块。
   - 通常我们假设最坏情况。
 
 ## 选择操作
 
-|| 算法 | 开销 | 原因 |
-|---| --- | --- | --- |
-| A1 |线性搜索 |$t_s + b_r \times t_T$ | 一次初始搜索加上$b_r$个块传输,$b_r$表示在文件中的块数量|
-|A1|线性搜索，码属性等值比较。|平均情形 $t_s+(b_r/2)\times t_T$|因为最多一条记录满足条件，所以只要找到所需的记录，扫描就可以终止。在最坏的情况下，仍需要$b_r$个块传输。|
-| A2 | $B^+$树主索引，码属性等值比较|$(h_i+1)\times(t_T+t_s)$ | (其中$h_i$表示索引的高度)。索引查找穿越树的高度，再加上一次I/O来取记录；每个这样的I/O操作需要一次搜索和一次块传输。 |
-|A3|$B^+$树主索引,非码属性等值比较|$h_i\times(t_T+t_s)+b\times t_T$|树的每层一次搜索，第一个块一次搜索。$b$是包含具有指定搜索码记录的块数。假定这些块是顺序存储（因为是主索引）的叶子块并且不需要额外搜索。|
-| A4 | $B^+$树辅助索引，码属性等值比较|$(h_i + 1) \times (t_T+t_s)$ | 这种情形和主索引相似 |
-| A4 | $B^+$树辅助索引，非码属性等值比较|$(h_i + n) \times (t_T+t_s)$ |(其中$n$是所取记录数)。索引查找的代价和A3相似，但是每条记录可能在不同的块上，这需要每条记录一次搜索。如果$n$值比较大，代价可能会非常高。 |
-| A5 | $B^+$树主索引，比较|$h_i\times(t_T+t_s)+b\times t_T$|和A3，非码属性等值比较情形一样 |
-| A6 |$B^+$树辅助索引，比较|$(h_i+n) \times(t_T+t_s)$| 和A4，非码属性等值比较情形一样 |  
+|     | 算法                              | 开销                             | 原因                                                                                                                                       |
+| --- | --------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| A1  | 线性搜索                          | $t_s + b_r \times t_T$           | 一次初始搜索加上$b_r$个块传输,$b_r$表示在文件中的块数量                                                                                    |
+| A1  | 线性搜索，码属性等值比较。        | 平均情形 $t_s+(b_r/2)\times t_T$ | 因为最多一条记录满足条件，所以只要找到所需的记录，扫描就可以终止。在最坏的情况下，仍需要$b_r$个块传输。                                    |
+| A2  | $B^+$树主索引，码属性等值比较     | $(h_i+1)\times(t_T+t_s)$         | (其中$h_i$表示索引的高度)。索引查找穿越树的高度，再加上一次 I/O 来取记录；每个这样的 I/O 操作需要一次搜索和一次块传输。                    |
+| A3  | $B^+$树主索引,非码属性等值比较    | $h_i\times(t_T+t_s)+b\times t_T$ | 树的每层一次搜索，第一个块一次搜索。$b$是包含具有指定搜索码记录的块数。假定这些块是顺序存储（因为是主索引）的叶子块并且不需要额外搜索。    |
+| A4  | $B^+$树辅助索引，码属性等值比较   | $(h_i + 1) \times (t_T+t_s)$     | 这种情形和主索引相似                                                                                                                       |
+| A4  | $B^+$树辅助索引，非码属性等值比较 | $(h_i + n) \times (t_T+t_s)$     | (其中$n$是所取记录数)。索引查找的代价和 A3 相似，但是每条记录可能在不同的块上，这需要每条记录一次搜索。如果$n$值比较大，代价可能会非常高。 |
+| A5  | $B^+$树主索引，比较               | $h_i\times(t_T+t_s)+b\times t_T$ | 和 A3，非码属性等值比较情形一样                                                                                                            |
+| A6  | $B^+$树辅助索引，比较             | $(h_i+n) \times(t_T+t_s)$        | 和 A4，非码属性等值比较情形一样                                                                                                            |
 
 ### A1（线性搜索）
 
 - 算法 A1（线性搜索）：扫描每个文件块，并测试所有记录以确定它们是否满足选择条件。
-  - 成本估计 = $b_r$块传输 + 1次寻道
+  - 成本估计 = $b_r$块传输 + 1 次寻道
     - 其中$b_r$表示包含来自关系$r$的记录的块数。
   - 如果选择条件是基于关键属性，可以在找到记录后停止搜索。
-    - 成本 = $(b_r/2)$  块传输 + 1次寻道
+    - 成本 = $(b_r/2)$ 块传输 + 1 次寻道
   - 无论选择条件如何、记录在文件中的排序如何、是否有索引可用，都可以使用线性搜索。
 - 注意：二分搜索通常没有意义，因为数据不是连续存储的，除非有可用的索引，而且二分搜索需要比索引搜索更多的寻道次数。
 
 ### A2（主索引，基于关键字的相等性）
 
-- 示例查询：select *from instructor where ID="007"，其中ID是一个主索引；
+- 示例查询：select \*from instructor where ID="007"，其中 ID 是一个主索引；
 - 索引访问成本：$h* (t_T + t_S)$
 - 文件访问成本：$1 *(t_T + t_S)$
 - 总成本 = $(h + 1)* (t_T + t_S)$
 
 ### A3（主索引，非关键字的相等性）
 
-- 示例查询：select * from instructor where name="Einstein"，其中name是一个主索引；
+- 示例查询：select \* from instructor where name="Einstein"，其中 name 是一个主索引；
 - 检索多个记录。
 - 记录将位于连续的块上。
-- 令b为包含匹配记录的块数。
+- 令 b 为包含匹配记录的块数。
 
-||index|file|
-|---|---|---|
-|seek|h|1|
-|transfer|h|b|
+|          | index | file |
+| -------- | ----- | ---- |
+| seek     | h     | 1    |
+| transfer | h     | b    |
 
 - 访问索引树的开销：$h\times (t_T+t_S)$
 - 访问记录的开销:$t_S + t_T\times b$，因为主索引必定顺序存储
@@ -113,7 +113,7 @@ copyright: 转载请注明出处
 
 ### A4（辅助索引，非关键字的相等性）
 
-- 示例查询：select *from instructor where name="Einstein"，其中ID是主索引，name是辅助索引。
+- 示例查询：select \*from instructor where name="Einstein"，其中 ID 是主索引，name 是辅助索引。
   - 索引访问成本：$h* (t_T + t_S)$
   - 文件访问成本：$n *(t_T + t_S)$
   - 匹配的记录可能位于不同的块上。
@@ -121,25 +121,25 @@ copyright: 转载请注明出处
 - 可能非常昂贵。
 - 若在候选键上，则等值为 Cost = $(h + 1)* (t_T+ t_S)$
 
-||index|file|
-|---|---|---|
-|seek|h|n|
-|transfer|h|n|
+|          | index | file |
+| -------- | ----- | ---- |
+| seek     | h     | n    |
+| transfer | h     | n    |
 
 ### A5（主索引，比较）
 
 - 对于形如$\sigma_{A\le V}(r)$和$\sigma_{A\ge V}(r)$的查询，我们可以用线性搜索的方法，也可以用以下的方法来使用索引
-- 示例查询：select *from instructor where ID <= "9999"，ID 是主索引。
+- 示例查询：select \*from instructor where ID <= "9999"，ID 是主索引。
   - 算法：对于 $\sigma_{A\le V}(r)$，不使用索引。顺序扫描关系直到找到第一个 $> v$ 的元组。
-- 示例查询：select* from instructor where ID >= "9999"，ID 是主索引。
+- 示例查询：select\* from instructor where ID >= "9999"，ID 是主索引。
   - 算法：对于 $\sigma_{A\ge V}(r)$，使用索引找到第一个元组$\ge v$，然后从这里开始线性扫描
 
 ### A6（辅助索引，比较）
 
-- 示例查询：select *from instructor where name >= "Einstein"，其中ID是主索引，name是辅助索引。
+- 示例查询：select \*from instructor where name >= "Einstein"，其中 ID 是主索引，name 是辅助索引。
   - 算法：对于 $\sigma _{A \geq V}(r)$，使用索引找到第一个$\ge v$ 的索引条目，并从那里开始顺序扫描索引，以找到指向记录的指针。
 - 示例查询：
-select* from instructor where name <= "Einstein"，其中ID是主索引，name是辅助索引。
+  select\* from instructor where name <= "Einstein"，其中 ID 是主索引，name 是辅助索引。
   - 算法：对于 $\sigma _{A \leq V}(r)$，仅扫描索引的叶子页面，找到指向记录的指针，直到找到第一个$>v$ 的条目。
 - 在任一情况下，获取所指向的记录
   - 每个记录需要一个 I/O 操作
@@ -154,15 +154,14 @@ select* from instructor where name <= "Einstein"，其中ID是主索引，name�
 ### 步骤
 
 1. 第一阶段,建立多个排好序的归并段(run)。每个归并段都是排序过的,但仅包含关系中的部分记录。
-![归并排序第一阶段](<images/Chapter12 Query Processing/image-8.png>)
-2. 第二阶段,对归并段进行归并。暂时假定归并段的总数$N$小于$M$,这样我们可以为每个归并段文件分配一个块,此外剩下的空间还应能容纳存放结果的一一个块。归并阶段的工作流程如下:
-    - 为$N$个归并段文件$R_i$,各分配一个内存缓冲块,并分别读人一个数据块;
-![归并排序第二阶段](<images/Chapter12 Query Processing/image-9.png>)
+   ![归并排序第一阶段](<images/Chapter12 Query Processing/image-8.png>)
+2. 第二阶段,对归并段进行归并。暂时假定归并段的总数$N$小于$M$,这样我们可以为每个归并段文件分配一个块,此外剩下的空间还应能容纳存放结果的一一个块。归并阶段的工作流程如下: - 为$N$个归并段文件$R_i$,各分配一个内存缓冲块,并分别读人一个数据块;
+   ![归并排序第二阶段](<images/Chapter12 Query Processing/image-9.png>)
 
-- 归并阶段的输出是已排序的关系。输出文件也被缓冲以减少写磁盘次数。上面的归并算法是对标准内存排序归并算法中的二路归并算法的推广;由于该算法对N个归并段进行归并,因此它称为`N路归并(N-way merge)`。
+- 归并阶段的输出是已排序的关系。输出文件也被缓冲以减少写磁盘次数。上面的归并算法是对标准内存排序归并算法中的二路归并算法的推广;由于该算法对 N 个归并段进行归并,因此它称为`N路归并(N-way merge)`。
 
-- 一般而言,若关系比内存大得多,则在第一阶段可能产生M个甚至更多的归并段,并且在归并阶段为每个归并段分配一个块是不可能的。在这种情况下,归并操作需要分多趟进行。由于内存足以容纳$M-1$个缓冲块,因此每趟归并可以用$M-1$个归并段作为输入。
-- 最初那趟归并过程如下:头$M-1$个归并段如前第2点所描述进行归并得到一个归并段作为下一趟的输入。接下来的$M-1$个归并段类似地进行归并,如此下去,直到所有的初始归并段都处理过为止。
+- 一般而言,若关系比内存大得多,则在第一阶段可能产生 M 个甚至更多的归并段,并且在归并阶段为每个归并段分配一个块是不可能的。在这种情况下,归并操作需要分多趟进行。由于内存足以容纳$M-1$个缓冲块,因此每趟归并可以用$M-1$个归并段作为输入。
+- 最初那趟归并过程如下:头$M-1$个归并段如前第 2 点所描述进行归并得到一个归并段作为下一趟的输入。接下来的$M-1$个归并段类似地进行归并,如此下去,直到所有的初始归并段都处理过为止。
 - 此时,归并段的数目减少到原来的$1/(M-1)$,如果归并后的归并段数目仍大于等于$M$,则以上一趟归并创建的归并段作为输入进行下一趟归并。每一趟归并段的数目均减少为原来的$1/(M-1)$。如有需要归并过程将不断重复,直到归并段数目小于$M$,此时作最后一趟归并,得到排序的输出结果。
 
 ![使用归并排序的外排序](<images/Chapter12 Query Processing/image-10.png>)
@@ -177,13 +176,13 @@ select* from instructor where name <= "Einstein"，其中ID是主索引，name�
   - 首先，最后一趟可以只产生排序结果而不写入磁盘。
   - 其次,可能存在在某一趟中既没有读人又没有写出的归并段，例如,某一趟有$M$个归并段需归并,其中$M-1$个被读入并归并,而另一个归并段在该趟归并中却未被访问。忽略这种特殊情况(相对少)所节约的读写次数
 - 则关系外排序的磁盘块传输的总数：
-$$b_r(2\lceil \log_{M-1}(b_r/M)\rceil+1)$$
+  $$b_r(2\lceil \log_{M-1}(b_r/M)\rceil+1)$$
 - 归并阶段，如果每次从一个归并段读取$b_b$块数据(也就是说吧$b_b$个缓冲块分配给每个归并段)，则每一趟归并需要$\lceil b_r/b_b\rceil$次磁盘搜索以读取数据
 - 如果考虑到磁盘在写回块的间隔中的磁头移动，那么就需要为每趟归并加上总共$2\lceil b_r/b_b\rceil$次磁盘搜索
 - 假设输出阶段也分配了$b_b$个块，每一趟可以归并$\lfloor M/b_b\rfloor-1$个归并段，则磁盘搜索的总次数为：
-$$2\lceil b_r/M\rceil + \lceil b_r/b_b\rceil(2\lceil \log_{\lfloor M/b_b\rfloor -1}(b_r/M)\rceil -1)$$
-- 英文版教程P549页公式如下，它近似了一部分结果
-$$2\lceil b_r/M\rceil + \lceil b_r/b_b\rceil(2\lceil \log_{M-1}(b_r/M)\rceil -1)$$
+  $$2\lceil b_r/M\rceil + \lceil b_r/b_b\rceil(2\lceil \log_{\lfloor M/b_b\rfloor -1}(b_r/M)\rceil -1)$$
+- 英文版教程 P549 页公式如下，它近似了一部分结果
+  $$2\lceil b_r/M\rceil + \lceil b_r/b_b\rceil(2\lceil \log_{M-1}(b_r/M)\rceil -1)$$
 
 ## 连接操作(Join Operation)
 
@@ -215,8 +214,8 @@ $$
 - 其中，$r$ 被称为连接的外部关系(outer relation)，$s$ 被称为连接的内部关系(inner relation)。
 - 嵌套循环连接不需要索引，可以与任何类型的连接条件一起使用。
 - 由于它检查两个关系中的每个元组对，所以开销较高。
-![嵌套循环连接(Nested-loop join) - 1](<images/Chapter12 Query Processing/image-1.png>)
-![嵌套循环连接(Nested-loop join) - 2](<images/Chapter12 Query Processing/image-2.png>)
+  ![嵌套循环连接(Nested-loop join) - 1](<images/Chapter12 Query Processing/image-1.png>)
+  ![嵌套循环连接(Nested-loop join) - 2](<images/Chapter12 Query Processing/image-2.png>)
 
 #### 开销
 
@@ -225,17 +224,17 @@ $$
 
 - 如果内存只能存储关系的一块的话，是最差情况，预估为：
 
-|Worst case|r|s|
-|---|---|---|
-|transfers|$b_r$|$n_r\times b_s$|
-|seeks|$b_r$|$n_r$|
+| Worst case | r     | s               |
+| ---------- | ----- | --------------- |
+| transfers  | $b_r$ | $n_r\times b_s$ |
+| seeks      | $b_r$ | $n_r$           |
 
-- 如果比较小的关系$s$可以被整个塞进内存里，我们把它作为内关系的话，就是Best case
+- 如果比较小的关系$s$可以被整个塞进内存里，我们把它作为内关系的话，就是 Best case
 
-|Best case|r|s|
-|---|---|---|
-|transfers|$b_r$|$b_s$|
-|seeks|1|1|
+| Best case | r     | s     |
+| --------- | ----- | ----- |
+| transfers | $b_r$ | $b_s$ |
+| seeks     | 1     | 1     |
 
 ### 块嵌套循环连接（Block nested-loop join）
 
@@ -245,21 +244,21 @@ $$
       - 对于块$B_s$ 中的每个元组 $t_s$：
         - 检查元组 $(t_r, t_s)$ 是否满足连接条件 $\theta$，如果满足条件，则将 $t_r \cdot t_s$ 添加到结果中。
 - 其实就是在前者的基础上多了一个读块的过程
-![块嵌套循环连接（Block nested-loop join）](<images/Chapter12 Query Processing/image-3.png>)
+  ![块嵌套循环连接（Block nested-loop join）](<images/Chapter12 Query Processing/image-3.png>)
 
 - 如果内存只能存储关系的一块的话，是最差情况，预估为：
 
-|Worst case|r|s|
-|---|---|---|
-|transfers|$b_r$|$b_r\times b_s$|
-|seeks|$b_r$|$b_r$|
+| Worst case | r     | s               |
+| ---------- | ----- | --------------- |
+| transfers  | $b_r$ | $b_r\times b_s$ |
+| seeks      | $b_r$ | $b_r$           |
 
-- 如果比较小的关系$s$可以被整个塞进内存里，我们把它作为内关系的话，就是Best case
+- 如果比较小的关系$s$可以被整个塞进内存里，我们把它作为内关系的话，就是 Best case
 
-|Best case|r|s|
-|---|---|---|
-|transfers|$b_r$|$b_s$|
-|seeks|1|1|
+| Best case | r     | s     |
+| --------- | ----- | ----- |
+| transfers | $b_r$ | $b_s$ |
+| seeks     | 1     | 1     |
 
 - 显然，如果内存不能容纳任何一个关系，则使用较小的关系作为外层关系更有效。
 
@@ -271,7 +270,7 @@ $$
 - 如果等值连接属性形成内部关系的键，可以在第一次匹配时停止内部循环。
 - 交替正向和反向扫描内部循环，以利用缓冲区中剩余的块（使用最近最少使用（LRU）替换策略）。
 - 如果可用，使用内部关系的索引(下一部分)
-:::
+  :::
 
 ### 索引嵌套循环连接（Indexed nested-loop join）
 
@@ -291,10 +290,10 @@ select * from student, takes where student.ID = takes.ID
 
 ![索引嵌套循环连接（Indexed nested-loop join）](<images/Chapter12 Query Processing/image-4.png>)
 
-||$r$|$B^+ Tree  + s$|
-|---|---|---|
-|transfers|$b_r$|$n_r\times(h+1)$|
-|seeks|$b_r$|$n_r\times(h+1)$|
+|           | $r$   | $B^+ Tree  + s$  |
+| --------- | ----- | ---------------- |
+| transfers | $b_r$ | $n_r\times(h+1)$ |
+| seeks     | $b_r$ | $n_r\times(h+1)$ |
 
 - 最坏情况下：缓冲区只有一页的空间用于关系 $r$，对于 $r$ 中的每个元组，我们在关系 $s$ 上执行一次索引查找。
 
@@ -308,7 +307,7 @@ select * from student, takes where student.ID = takes.ID
 
 1. 对两个关系的连接属性进行排序（如果它们尚未按连接属性排序）。
 2. 合并排序后的关系以进行连接操作。
-连接步骤类似于排序-合并算法的合并阶段。
+   连接步骤类似于排序-合并算法的合并阶段。
 3. 主要区别在于处理连接属性中的重复值-必须匹配具有相同连接属性值的每个对。
 
 详细的算法请参考相关的书籍。
@@ -320,11 +319,11 @@ select * from student, takes where student.ID = takes.ID
 - 成本 = 排序成本 + 合并成本。
 - 对于拥有$b_b$块的大小的工作缓冲区的合并连接算法，开销为：
 
-||r|s|
-|---|---|---|
-|disk traverse|1|1|
-|transfers|$b_r$|$b_s$|
-|seeks|$b_r/b_b$|$b_s/b_b$|
+|               | r         | s         |
+| ------------- | --------- | --------- |
+| disk traverse | 1         | 1         |
+| transfers     | $b_r$     | $b_s$     |
+| seeks         | $b_r/b_b$ | $b_s/b_b$ |
 
 ### 哈希连接（Hash-join）
 
@@ -335,7 +334,7 @@ select * from student, takes where student.ID = takes.ID
   - 每个元组$t_r\in r$ 被放入分区 $r_i$，其中 $i=h(t_r[JoinAttrs])$。
 - $s_0,s_1,\ldots,s_n$表示 s 元组的分区。
 - 每个元组$t_s\in s$ 被放入分区 $s_i$，其中 $i=h(t_s[JoinAttrs])$。
-注意：在书中，$r_i$ 被表示为 $H_{ri}$，$s_i$被表示为 $H_{si}$，$n$ 被表示为 $n_h$。
+  注意：在书中，$r_i$ 被表示为 $H_{ri}$，$s_i$被表示为 $H_{si}$，$n$ 被表示为 $n_h$。
 
 ![哈希连接（Hash-join）](<images/Chapter12 Query Processing/image-6.png>)
 
@@ -343,11 +342,11 @@ select * from student, takes where student.ID = takes.ID
   - 满足连接条件的 $r$ 元组和 $s$ 元组将具有相同的连接属性值。
   - 如果该值被哈希到某个值 $i$，那么 $r$ 元组必须在 $r_i$ 中，而 $s$ 元组必须在 $s_i$ 中。
 - 计算 $r$ 和 $s$ 的哈希连接的步骤如下：
-    1. 使用哈希函数 $h$ 对关系 $s$ 进行分区。
-    2. 类似地，对关系 $r$ 进行分区。
-    3. 对于每个分区$i$：
-        1. 将 $s_i$ 加载到内存中，并使用连接属性构建一个内存中的哈希索引 $f$。这个哈希索引 $f$ 与 $h$ 不同。
-        2. 逐个从磁盘中读取 $r_i$中的元组 $t_r$。对于每个元组 $t_r$，使用内存中的哈希索引 $f$ 定位在 $s_i$ 中的匹配元组 $t_s$。输出它们属性的连接结果。
+  1. 使用哈希函数 $h$ 对关系 $s$ 进行分区。
+  2. 类似地，对关系 $r$ 进行分区。
+  3. 对于每个分区$i$：
+     1. 将 $s_i$ 加载到内存中，并使用连接属性构建一个内存中的哈希索引 $f$。这个哈希索引 $f$ 与 $h$ 不同。
+     2. 逐个从磁盘中读取 $r_i$中的元组 $t_r$。对于每个元组 $t_r$，使用内存中的哈希索引 $f$ 定位在 $s_i$ 中的匹配元组 $t_s$。输出它们属性的连接结果。
 - 关系 $s$ 称为`构建输入（build input）`，而 $r$ 称为`探测输入（probe input）`。
 
 - 选择的值 $n$（桶子个数）和哈希函数 $h$ 应该适合内存。
@@ -362,13 +361,13 @@ select * from student, takes where student.ID = takes.ID
 #### 哈希连接开销
 
 - 如果不需要进行递归分区：哈希连接的成本为 $3(b_r+b_s) \text{块传输}+2(\lceil b_r/ b_b \rceil+\lceil b_s/b_b\rceil)寻道$
-如果整个构建输入都可以放在主内存中，则不需要分区。
-成本估计将降至 $b_r+b_s\text{次块传输}+2\text{次寻道}$
+  如果整个构建输入都可以放在主内存中，则不需要分区。
+  成本估计将降至 $b_r+b_s\text{次块传输}+2\text{次寻道}$
 - 例如：$instructor \bowtie teaches$
-  - 假设内存大小为20个块，其中$b_{instructor} = 100$和$b_{teaches} = 400$。
-  - $instructor$将用作构建输入。将其分区为五个大小为20个块的分区，可以在一次遍历中完成。
-  - 类似地，将$teaches$分区为五个大小为80的分区，也可以在一次遍历中完成。
-  - 假设缓冲块为3，则总成本（忽略部分填充块的写入成本）为：
+  - 假设内存大小为 20 个块，其中$b_{instructor} = 100$和$b_{teaches} = 400$。
+  - $instructor$将用作构建输入。将其分区为五个大小为 20 个块的分区，可以在一次遍历中完成。
+  - 类似地，将$teaches$分区为五个大小为 80 的分区，也可以在一次遍历中完成。
+  - 假设缓冲块为 3，则总成本（忽略部分填充块的写入成本）为：
     $3(100 + 400) = 1500\text{个块传输} +
     2(\lceil 100/3\rceil + \lceil 400/3\rceil) = 336\text{次寻道}$。
 
@@ -385,10 +384,10 @@ select * from student, takes where student.ID = takes.ID
   - Select name
   - from instructor natural join department
   - Where building=“watson”
-![物化计算(Materialization evaluation)](<images/Chapter12 Query Processing/image-7.png>)
+    ![物化计算(Materialization evaluation)](<images/Chapter12 Query Processing/image-7.png>)
 - 这种方法经常是实用的
 - 会带来额外的开销，因为要把中间结果写磁盘
-- 双缓冲(double buffering)(即使用两个缓冲区,其中一个用于连续执行算法,另一个用于写出结果)允许CPU活动与I/O活动并行,从而提高算法执行速度。
+- 双缓冲(double buffering)(即使用两个缓冲区,其中一个用于连续执行算法,另一个用于写出结果)允许 CPU 活动与 I/O 活动并行,从而提高算法执行速度。
 
 ### 流水线(Pipelining)
 

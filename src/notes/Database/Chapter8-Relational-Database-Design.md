@@ -4,7 +4,7 @@ title: Chapter8 Relational Database Design
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-30
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -24,37 +24,37 @@ copyright: 转载请注明出处
 ![Example](<images/Chapter8 Relational Database Design/image-2.png>)
 
 - 如果分解后无法重建原始信息，那么就是有损分解(Lossy Decomposition)，反之则为无损分解(Lossless-Join Decomposition)
-![有损分解](<images/Chapter8 Relational Database Design/image.png>)
-![无损分解](<images/Chapter8 Relational Database Design/image-1.png>)
+  ![有损分解](<images/Chapter8 Relational Database Design/image.png>)
+  ![无损分解](<images/Chapter8 Relational Database Design/image-1.png>)
 - 所以我们需要一个理论来告诉我们怎么合理的分解关系。好的分解要做到：
   1. 无损分解
   2. 依赖保存
-- BCNF分解可以保证无损，3NF可以保证依赖保存，但是3NF无法保证没有冗余，因此需要在BCNF和3NF间权衡
+- BCNF 分解可以保证无损，3NF 可以保证依赖保存，但是 3NF 无法保证没有冗余，因此需要在 BCNF 和 3NF 间权衡
 
 ## 第一范式(First Normal Form)
 
 - 如果一个域的元素被认为是不可分割的单元，则该域是原子的。
 - 非原子域的示例：
   - 名称集合，复合属性
-  - 可以分解为部分的标识号，例如CS101
-- 如果关系模式R的所有属性的域都是原子的，则关系模式R符合第一范式。
+  - 可以分解为部分的标识号，例如 CS101
+- 如果关系模式 R 的所有属性的域都是原子的，则关系模式 R 符合第一范式。
 - 非原子值会使存储变得复杂，并鼓励数据的冗余（重复存储）。
   - 例如：每个客户都存储了一组账户，每个账户都存储了一组所有者。
-  - 我们假设所有关系都符合第一范式（并在第22章: 基于对象的数据库中重新讨论这一点）。
+  - 我们假设所有关系都符合第一范式（并在第 22 章: 基于对象的数据库中重新讨论这一点）。
 
 :::info 原子性
 
 - 原子性实际上是与域的元素如何使用相关的属性。
 - 例如，字符串通常被认为是不可分割的。
-- 假设学生被赋予类似SE0012或EE1127的字符串形式的学号。
+- 假设学生被赋予类似 SE0012 或 EE1127 的字符串形式的学号。
 - 如果提取前两个字符来确定学院，那么学号的域就不是原子的。
 - 这样做是一个坏主意：会导致信息被编码在应用程序而不是数据库中。
-:::
+  :::
 
 ## 第二范式(Second Normal Form)
 
 - 数据库表中不存在非关键字段对任一候选键的部分函数依赖，也即所有非关键字段都完全依赖于任意一组候选关键字。
-- 2NF的违例只会出现在候选键由超过一个字段构成的表中，因为对单关键字字段不存在部分依赖问题。
+- 2NF 的违例只会出现在候选键由超过一个字段构成的表中，因为对单关键字字段不存在部分依赖问题。
 
 :::info 例子
 
@@ -72,11 +72,11 @@ copyright: 转载请注明出处
 
 为了使关系模式满足第二范式，我们需要进行分解，将属性$\text{姓名}$、$\text{年龄}$和$\text{学分}$从主关系模式中分离出来，形成新的关系模式。最终的关系模式可能如下：
 
-关系模式1: $(\text{学号}, \text{课程名称}, \text{成绩})$
+关系模式 1: $(\text{学号}, \text{课程名称}, \text{成绩})$
 
-关系模式2: $(\text{课程名称}, \text{学分})$
+关系模式 2: $(\text{课程名称}, \text{学分})$
 
-关系模式3: $(\text{学号}, \text{姓名}, \text{年龄})$
+关系模式 3: $(\text{学号}, \text{姓名}, \text{年龄})$
 
 这样，每个关系模式都满足第二范式，并且保留了原始关系模式的函数依赖。
 
@@ -88,8 +88,8 @@ copyright: 转载请注明出处
 - 要求某个属性集合的值唯一确定另一个属性集合的值。
 - 函数依赖是对键的概念的一种推广。
 - 定义为：$\alpha \rightarrow \beta$等价于
-    1. $\alpha$是模式$(\alpha,\beta)$的`超码(super key)`
-    2. 属性$\alpha$的取值决定$\beta$的取值
+  1. $\alpha$是模式$(\alpha,\beta)$的`超码(super key)`
+  2. 属性$\alpha$的取值决定$\beta$的取值
 - 在函数依赖$\alpha \rightarrow \beta$中，如果$\beta \subseteq a$，我们就称它是`平凡(trivial)`的。因为对于任意的关系$R$它总是成立的。
   - 例如：$ID, name \rightarrow ID$ 是平凡的 $name \rightarrow name$ 也是平凡的
 - 在函数依赖$\alpha \rightarrow \beta$中，如果对于$\alpha$的任何一个真子集$\alpha '$，都有$\alpha '\nrightarrow\beta$那么就称$\beta$对$\alpha$有完全函数依赖
@@ -99,11 +99,12 @@ copyright: 转载请注明出处
 
 - 当且仅当 $K \rightarrow R$，$K$ 是关系模式 $R$ 的超键。
 - 当且仅当满足以下条件时，$K$ 是 $R$ 的候选键：
+
   - $K \rightarrow R$，并且
   - 对于任何 $\alpha \subset K$，都不满足 $\alpha \rightarrow R$。
 
 - 函数依赖允许我们表达无法使用超键来表示的约束。考虑以下模式：
-$$inst\_dept (ID, name, salary, dept\_name, building, budget)$$
+  $$inst\_dept (ID, name, salary, dept\_name, building, budget)$$
   - 我们期望以下函数依赖成立：
     $$
     \begin{array}{c}
@@ -146,7 +147,7 @@ $$\begin{aligned}&R_1\cap R_2\to R_1\\&R_1\cap R_2\to R_2\end{aligned}$$
 
 - $F^+$表示所有能从函数依赖$F$中推出的函数依赖闭包
 - 如果两个函数依赖集的闭包相等，那么我们就说这两个函数依赖集是等价的
-- 我们可以通过反复应用Armstrong公理（Armstrong's Axioms）来找到$F^+$，即$F$的闭包：
+- 我们可以通过反复应用 Armstrong 公理（Armstrong's Axioms）来找到$F^+$，即$F$的闭包：
   - 自反性：如果$\beta$是$\alpha$的子集，那么$\alpha \rightarrow \beta$。
   - 扩充性：如果$\alpha \rightarrow \beta$，那么对于任意$\gamma$，都有$\gamma\alpha \rightarrow \gamma\beta$。
   - 传递性：如果$\alpha \rightarrow \beta$，且$\beta \rightarrow \gamma$，那么$\alpha \rightarrow \gamma$。
@@ -155,25 +156,25 @@ $$\begin{aligned}&R_1\cap R_2\to R_1\\&R_1\cap R_2\to R_2\end{aligned}$$
   - 并集规则：如果$\alpha \rightarrow \beta$成立且$\alpha \rightarrow \gamma$成立，则$\alpha \rightarrow \beta\gamma$成立。
   - 分解规则：如果$\alpha \rightarrow \beta\gamma$成立，则$\alpha \rightarrow \beta$和$\alpha \rightarrow \gamma$成立。
   - 伪传递性规则：如果$\alpha \rightarrow \beta$成立且$\gamma\beta \rightarrow \delta$成立，则$\alpha\gamma \rightarrow \delta$成立。
-- 这些附加规则可以从Armstrong的公理推导出来，并且可以用于计算函数依赖的闭包。
-![函数依赖闭包计算示例](<images/Chapter8 Relational Database Design/image-3.png>)
+- 这些附加规则可以从 Armstrong 的公理推导出来，并且可以用于计算函数依赖的闭包。
+  ![函数依赖闭包计算示例](<images/Chapter8 Relational Database Design/image-3.png>)
 
 ### 属性集闭包(Closure of Attribute Sets)
 
 - 定义为：$\alpha^+=\{A\mid (\alpha \rightarrow A) \subseteq F^+\}$
 - 也就是通过函数依赖确定$\alpha$可以决定的所有属性
-![属性集闭包计算示例](<images/Chapter8 Relational Database Design/image-4.png>)
+  ![属性集闭包计算示例](<images/Chapter8 Relational Database Design/image-4.png>)
 
 #### 属性集闭包与函数依赖
 
 - 我们有关系：
-$$\alpha\rightarrow\beta\Leftrightarrow\beta\subseteq\alpha^{+}$$
+  $$\alpha\rightarrow\beta\Leftrightarrow\beta\subseteq\alpha^{+}$$
 - 因此可以通过计算属性集闭包来计算函数依赖
 
 #### 属性集闭包与超键
 
 - 我们有关系：
-$$\alpha\text{ is a superkey }\Leftrightarrow R\subseteq\alpha^{+}.$$
+  $$\alpha\text{ is a superkey }\Leftrightarrow R\subseteq\alpha^{+}.$$
 - 因此通过属性集可以确定$\alpha$是不是超键
 
 #### 属性集闭包与函数依赖闭包
@@ -212,7 +213,7 @@ $$\alpha\text{ is a superkey }\Leftrightarrow R\subseteq\alpha^{+}.$$
   - 直到$F$不再发生变化为止。
 - 需要注意的是，删除一些冗余属性后，可能会使并集规则再次适用，因此需要重新应用并集规则。
 - 通过执行上述步骤，最终得到的函数依赖集合$Fc$就是原函数依赖集合$F$的规范覆盖。
-![计算规范覆盖](<images/Chapter8 Relational Database Design/image-9.png>)
+  ![计算规范覆盖](<images/Chapter8 Relational Database Design/image-9.png>)
 
 ## 冗余属性(Extraneous Attributes)
 
@@ -227,21 +228,21 @@ $$\alpha\text{ is a superkey }\Leftrightarrow R\subseteq\alpha^{+}.$$
 ### 验证冗余属性
 
 - 要检查一个属性$x$对于给定的$\alpha x \rightarrow \beta$和$F$是否是冗余的，方法一很显然，既然$\alpha$能推出右侧式子，那$x$就是冗余的
-    1. 在$F$下计算$\alpha^+$
-    2. 验证$\alpha^+\supseteq \beta$
+  1. 在$F$下计算$\alpha^+$
+  2. 验证$\alpha^+\supseteq \beta$
 - 方法二，利用$F \Leftrightarrow (F - \{\alpha x \rightarrow \beta\}) \cup \{\alpha \rightarrow \beta\}$：
-    1. $F' = (F - \{\alpha x \rightarrow \beta\}) \cup \{\alpha \rightarrow \beta\}$
-    2. 在$F'$下计算$\alpha^+$
-    3. 验证$x\in \alpha^+$
+  1. $F' = (F - \{\alpha x \rightarrow \beta\}) \cup \{\alpha \rightarrow \beta\}$
+  2. 在$F'$下计算$\alpha^+$
+  3. 验证$x\in \alpha^+$
 
-## BCNF范式(Boyce-Codd Normal Form)
+## BCNF 范式(Boyce-Codd Normal Form)
 
-- 关系模式R在BCNF（Boyce-Codd范式）中，如果对于$R$中的存在的所有函数依赖关系$F$，形式为$\alpha \rightarrow \beta$，其中$\alpha \subseteq R$且$\beta \subseteq R$，至少满足以下条件之一：
+- 关系模式 R 在 BCNF（Boyce-Codd 范式）中，如果对于$R$中的存在的所有函数依赖关系$F$，形式为$\alpha \rightarrow \beta$，其中$\alpha \subseteq R$且$\beta \subseteq R$，至少满足以下条件之一：
   - $\alpha \subseteq \beta$
   - $\alpha$是$R$的超键
-- 换言之。BCNF意味着在关系模式中每一个决定因素都包含候选键，也就是说，只要属性或属性组A能够决定任何一个属性B，则A的子集中必须有候选键。BCNF范式排除了任何属性(不光是非主属性，2NF和3NF所限制的都是非主属性)对候选键的传递依赖与部分依赖。
+- 换言之。BCNF 意味着在关系模式中每一个决定因素都包含候选键，也就是说，只要属性或属性组 A 能够决定任何一个属性 B，则 A 的子集中必须有候选键。BCNF 范式排除了任何属性(不光是非主属性，2NF 和 3NF 所限制的都是非主属性)对候选键的传递依赖与部分依赖。
 
-- 示例中的关系模式不符合BCNF：
+- 示例中的关系模式不符合 BCNF：
 
 $$
 inst\_dept(ID，name，salary，dept\_name，building，budget)
@@ -250,6 +251,7 @@ $$
 因为$dept\_name\rightarrow (building,budget)$在$inst\_dept$上成立，但$dept\_name$不是超键。
 
 - 又例如：
+
   - 假设仓库管理关系表为$\text{StorehouseManage}(\text{仓库ID}, \text{存储物品ID}, \text{管理员ID}, \text{数量})$，且有一个管理员只在一个仓库工作；一个仓库可以存储多种物品。这个数据库表中存在如下决定关系：
 
   - $(\text{仓库ID}, \text{存储物品ID}) \rightarrow (\text{管理员ID}, \text{数量})$
@@ -262,35 +264,35 @@ $$
 
   - $(\text{管理员ID}) \rightarrow (\text{仓库ID})$
 
-  - 仓库ID是决定因素，但仓库ID不包含候选键。
-  - 同样的，管理员ID也是决定因素，但不包含候选键。
-  - 所以该表不满足BCNF。
+  - 仓库 ID 是决定因素，但仓库 ID 不包含候选键。
+  - 同样的，管理员 ID 也是决定因素，但不包含候选键。
+  - 所以该表不满足 BCNF。
 
-### 检查BCNF
+### 检查 BCNF
 
-- 如何检查非平凡依赖关系$\alpha \rightarrow \beta$是否符合BCNF？算法：
-    1. 计算函数依赖的闭包 $\alpha^+$。
-    2. 验证是否满足$R \subseteq \alpha^+$
+- 如何检查非平凡依赖关系$\alpha \rightarrow \beta$是否符合 BCNF？算法：
+  1. 计算函数依赖的闭包 $\alpha^+$。
+  2. 验证是否满足$R \subseteq \alpha^+$
 - 如何检查关系模式 $R$ 是否符合 BCNF？算法：
   - 对于每个非平凡函数依赖 $\alpha \rightarrow \beta$，根据上面的算法检查是否满足
 - 优点：
   - 不需要计算所有可能的函数依赖 $F^+$。
 
-### 分解模式为BCNF
+### 分解模式为 BCNF
 
-- 如果我们有模式$R$和由非平凡依赖$\alpha \rightarrow \beta$导致的一个BCNF冲突，我们把$R$分解为
+- 如果我们有模式$R$和由非平凡依赖$\alpha \rightarrow \beta$导致的一个 BCNF 冲突，我们把$R$分解为
   - $R_1=(\alpha\cup\beta)$
   - $R_2=R-R_1+\alpha$
 
 ![分解模式为BCNF示例](<images/Chapter8 Relational Database Design/image-5.png>)
 
-### BCNF与依赖保留(BCNF and Dependency Preservation)
+### BCNF 与依赖保留(BCNF and Dependency Preservation)
 
 ![BCNF与依赖保留例子](<images/Chapter8 Relational Database Design/image-6.png>)
 
 - 设$F_i$为仅包含属性在关系$R_i$上的依赖集$F \cup F^+$的子集。
 - 如果一个分解是依赖保持的（dependency preserving），则满足以下条件：
-$$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
+  $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 - 如果不满足上述条件，那么检查违反函数依赖的更新可能需要计算连接操作，这是非常昂贵的。换句话说，如果分解不是依赖保持的，那么在更新操作中检查函数依赖的违规可能需要进行昂贵的连接计算。
 
 ![示例](<images/Chapter8 Relational Database Design/image-7.png>)
@@ -309,13 +311,14 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 ## 第三范式(Third Normal Form)
 
 - 在第二范式的基础上，数据表中如果不存在非关键字段对任一候选关键字段的传递函数依赖则符合第三范式
-- 一个关系模式R在第三范式（3NF）中，如果对于F中的所有$\alpha \rightarrow \beta$，至少满足以下条件之一：
+- 一个关系模式 R 在第三范式（3NF）中，如果对于 F 中的所有$\alpha \rightarrow \beta$，至少满足以下条件之一：
   - $\alpha \subseteq \beta$
   - $\alpha$是$R$的超键
   - $\beta-\alpha$中的每个属性$A$都包含在$R$的候选键中（注意：每个属性可能在不同的候选键中）
-- 如果一个关系符合BCNF，那么它也符合3NF（因为在BCNF中，上述的前两个条件之一必须成立）。
-- 第三个条件是BCNF的最小放宽，以确保依赖性的保持（稍后会看到为什么）。
+- 如果一个关系符合 BCNF，那么它也符合 3NF（因为在 BCNF 中，上述的前两个条件之一必须成立）。
+- 第三个条件是 BCNF 的最小放宽，以确保依赖性的保持（稍后会看到为什么）。
 - 例子：
+
   - 表：$(\text{学号}, \text{姓名}, \text{年龄}, \text{所在学院}, \text{学院地点}, \text{学院电话})$
 
   - 该表中候选字段只有“学号”，于是“学号”做主键。由于主键是单一属性，所以不存在非主属性对主键的部分函数依赖的问题，所以必然满足第二范式。但是存在如下传递依赖：
@@ -327,12 +330,13 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 ### 检查第三范式
 
 - 给定关系模式$R$和函数依赖集合$F$，测试$R$是否符合第三范式（3NF）的算法如下：
-对于每个非平凡的函数依赖$\alpha \rightarrow \beta$：
+  对于每个非平凡的函数依赖$\alpha \rightarrow \beta$：
+
   - 检查$\alpha$是否是超键（superkey）：$\alpha^{+}\supseteq R$
   - 如果$\alpha$不是超键，则需要验证$\beta$中的每个属性是否包含在$R$的候选键中。
     - 这个测试相对来说更加昂贵，因为它涉及到候选键的查找。
 
-- 有趣的是，测试是否符合第三范式已被证明是NP困难问题的。然而，将关系分解为第三范式（稍后会进行描述）可以在多项式时间内完成。
+- 有趣的是，测试是否符合第三范式已被证明是 NP 困难问题的。然而，将关系分解为第三范式（稍后会进行描述）可以在多项式时间内完成。
 
 ### 分解为第三范式
 
@@ -344,11 +348,11 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 4. 如果没有模式$R_j$包含$R$的候选键，那么生成一个新的模式$R_{n+1}=\gamma_1$
 5. 输出$R_1,R_2,\ldots,R_{n+1}$(可选)
 
-- 为什么3NF是依赖保存的：因为每一个依赖$\alpha \rightarrow \beta$都有一个模式$(\alpha,\beta)$专门保存
-![分解为第三范式示例1-1](<images/Chapter8 Relational Database Design/image-10.png>)
-![分解为第三范式示例1-2](<images/Chapter8 Relational Database Design/image-11.png>)
-![分解为第三范式示例1-3](<images/Chapter8 Relational Database Design/image-12.png>)
-![分解为第三范式示例2](<images/Chapter8 Relational Database Design/image-13.png>)
+- 为什么 3NF 是依赖保存的：因为每一个依赖$\alpha \rightarrow \beta$都有一个模式$(\alpha,\beta)$专门保存
+  ![分解为第三范式示例1-1](<images/Chapter8 Relational Database Design/image-10.png>)
+  ![分解为第三范式示例1-2](<images/Chapter8 Relational Database Design/image-11.png>)
+  ![分解为第三范式示例1-3](<images/Chapter8 Relational Database Design/image-12.png>)
+  ![分解为第三范式示例2](<images/Chapter8 Relational Database Design/image-13.png>)
 
 :::info 3NF VS BCNF
 
@@ -357,17 +361,17 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
   - 分解是无损的，即通过连接分解后的关系能够恢复到原始关系。
   - 依赖关系得到保留，即分解后的每个关系仍然能够保持原始的函数依赖关系。
 
-- 总是可以将一个关系分解为一组符合BCNF（Boyce-Codd范式）的关系，满足以下条件：
+- 总是可以将一个关系分解为一组符合 BCNF（Boyce-Codd 范式）的关系，满足以下条件：
 
   - 分解是无损的，即通过连接分解后的关系能够恢复到原始关系。
   - 可能无法保留所有的依赖关系，即在分解后的关系中，可能无法保持原始的所有函数依赖关系。
 
-- 换句话说，对于3NF，我们可以找到一组关系进行分解，使得分解后的关系满足3NF并且保留依赖关系。而对于BCNF，我们可以找到一组关系进行分解，使得分解后的关系满足BCNF，但不一定能保留所有的依赖关系。
+- 换句话说，对于 3NF，我们可以找到一组关系进行分解，使得分解后的关系满足 3NF 并且保留依赖关系。而对于 BCNF，我们可以找到一组关系进行分解，使得分解后的关系满足 BCNF，但不一定能保留所有的依赖关系。
 
-||无损分解?|依赖保留？|移除冗余？|
-|---|---|---|---|
-|BCNF|Y|N|Y|
-|3NF|Y|Y|N|
+|      | 无损分解? | 依赖保留？ | 移除冗余？ |
+| ---- | --------- | ---------- | ---------- |
+| BCNF | Y         | N          | Y          |
+| 3NF  | Y         | Y          | N          |
 
 :::
 
@@ -378,14 +382,14 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 以下是一个示例，展示了第三范式中冗余可能导致的问题：
 假设关系模式为$R = (J, K, L)$，函数依赖集合为$F = \{JK \rightarrow L, L \rightarrow K\}$。
 
-| J   | K   | L   |
-|-----|-----|-----|
-| j1  | k1  | l1  |
-| j2  | k1  | l1  |
-| j3  | k1  | l2  |
-| null| k2  | null|
+| J    | K   | L    |
+| ---- | --- | ---- |
+| j1   | k1  | l1   |
+| j2   | k1  | l1   |
+| j3   | k1  | l2   |
+| null | k2  | null |
 
-在上述示例中，存在信息的重复（例如，l1与j1、k1之间的关系重复出现）。同时，为了表示没有对应值的关系，使用了空值（例如，表示j3、k2与l2之间没有对应值的关系）。
+在上述示例中，存在信息的重复（例如，l1 与 j1、k1 之间的关系重复出现）。同时，为了表示没有对应值的关系，使用了空值（例如，表示 j3、k2 与 l2 之间没有对应值的关系）。
 
 此外，如果没有单独的关系将教师与部门进行映射，可能需要使用空值来表示（例如，(i_ID, dept_name)中的记录，当没有对应的关系时）。
 
@@ -394,24 +398,24 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 ## 数据库设计
 
 - 关系数据库设计的目标是：
-  - 满足BCNF（Boyce-Codd范式）。
+  - 满足 BCNF（Boyce-Codd 范式）。
   - 保证无损连接。
   - 保持依赖关系。
 - 如果无法同时满足这些目标，我们需要接受以下之一：
   - 缺乏依赖关系的保持。
-  - 由于使用了3NF（第三范式）而导致的冗余。
-- 有趣的是，SQL并没有直接提供指定函数依赖关系的方法，除了超键（superkey）之外。虽然可以使用断言来指定函数依赖关系，但是这种方法在测试上是昂贵的，并且目前没有任何广泛使用的数据库支持它们。
-- 即使我们有一个保持依赖关系的分解，使用SQL也无法有效地测试左侧不是关键字的函数依赖关系。
+  - 由于使用了 3NF（第三范式）而导致的冗余。
+- 有趣的是，SQL 并没有直接提供指定函数依赖关系的方法，除了超键（superkey）之外。虽然可以使用断言来指定函数依赖关系，但是这种方法在测试上是昂贵的，并且目前没有任何广泛使用的数据库支持它们。
+- 即使我们有一个保持依赖关系的分解，使用 SQL 也无法有效地测试左侧不是关键字的函数依赖关系。
 
 ### 非规范化以提高性能
 
-可能希望为了提高性能而使用非规范化的模式，例如，显示课程ID和标题以及先决条件需要将课程表与先决条件表进行连接。
+可能希望为了提高性能而使用非规范化的模式，例如，显示课程 ID 和标题以及先决条件需要将课程表与先决条件表进行连接。
 
-- 备选方案1：使用包含课程属性和先决条件属性的非规范化关系，具有上述所有属性。
+- 备选方案 1：使用包含课程属性和先决条件属性的非规范化关系，具有上述所有属性。
   - 查找速度更快。
   - 更新时需要额外的空间和执行时间。
   - 程序员需要额外编码工作，并可能在额外的代码中出现错误。
-- 备选方案2：使用定义为"course prereq"的物化视图。
+- 备选方案 2：使用定义为"course prereq"的物化视图。
   - 利弊与上述相同，但程序员无需额外编码工作，并避免可能出现的错误。
 
 ## 第四范式(Fourth Normal Form)
@@ -421,11 +425,12 @@ $$(F_1 \cup F_2 \cup \ldots \cup F_n)^+ = F^+$$
 ![Why Fourth Normal Form - 3?](<images/Chapter8 Relational Database Design/image-16.png>)
 
 - 一个关系模式 $R$ 相对于函数依赖集合 $D$ 来说，如果对于 $D^+$ 中的所有形如 $\alpha \rightarrow \beta$ 的多值依赖，其中 $\alpha \subseteq R$ 且 $\beta \subseteq R$，至少满足以下条件之一，那么关系模式 $R$ 是符合第四范式（4NF）的：
+
   - $\alpha \rightarrow \beta$ 是平凡的（即 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$）。
   - $\alpha$ 是关系模式 $R$ 的超键。
 
-- 如果一个关系模式符合第四范式（4NF），那么它也符合BCNF（Boyce-Codd范式）。
-$4NF\subset BCNF \subset 3NF \subset 2NF \subset 1NF$
+- 如果一个关系模式符合第四范式（4NF），那么它也符合 BCNF（Boyce-Codd 范式）。
+  $4NF\subset BCNF \subset 3NF \subset 2NF \subset 1NF$
 
 :::info 范式之间的关系
 第一范式(1NF)
@@ -434,10 +439,10 @@ $4NF\subset BCNF \subset 3NF \subset 2NF \subset 1NF$
 ↓ 消除非主属性对码的传递函数依赖
 第三范式(3NF)
 ↓ 消除主属性对码的部分和传递函数依赖
-BC范式(BCNF)
+BC 范式(BCNF)
 ↓ 消除非平凡且非函数依赖的多值依赖
 第四范式(4NF)
-↓消除不是由候选码所蕴含的连接依赖
+↓ 消除不是由候选码所蕴含的连接依赖
 第五范式(5NF)
 
 :::

@@ -4,7 +4,7 @@ title: Chapter10 Storage and File Structure
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-30
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -23,19 +23,19 @@ copyright: 转载请注明出处
 
 - 磁盘
   - 1 block = 多个连续的 sector
-  - 1个文件(哈希文件除外)= 多个连续的block
+  - 1 个文件(哈希文件除外)= 多个连续的 block
 - 磁头与磁盘
-  - 磁头往磁盘读写数据的最小单位是sector
+  - 磁头往磁盘读写数据的最小单位是 sector
 - 内存与磁盘
-  - 内存与磁盘交换信息的最小单位是block
+  - 内存与磁盘交换信息的最小单位是 block
 - 开销=寻道时间+ 旋转时间+传输时间
 - 数据库只关注:
   - 寻道次数
   - 传输磁盘块个数
 - 设访问的磁盘块依次分别是: B1, B2
-  - 寻道次数 : 如果B1, B2相邻, 则寻道1次
-  - 传输磁盘块的个数:  无论相邻与否, 都是2.
-![磁盘结构示意图](<images/Chapter10 Storage and File Structure/image.png>)
+  - 寻道次数 : 如果 B1, B2 相邻, 则寻道 1 次
+  - 传输磁盘块的个数: 无论相邻与否, 都是 2.
+    ![磁盘结构示意图](<images/Chapter10 Storage and File Structure/image.png>)
 
 ## 缓冲管理(Buffer Management)
 
@@ -50,9 +50,9 @@ copyright: 转载请注明出处
 ### 缓冲替换策略(Buffer-Replacement Policies)
 
 - 大多数操作系统使用`最近最少使用（LRU）`策略替换块。
-- LRU的思想是利用过去的块引用模式作为对未来引用的预测器。
+- LRU 的思想是利用过去的块引用模式作为对未来引用的预测器。
 - 查询具有明确定义的访问模式（例如顺序扫描），数据库系统可以利用用户查询中的信息来预测未来的引用。
-- 对于涉及重复数据扫描的某些访问模式，LRU可能是一个不好的策略。
+- 对于涉及重复数据扫描的某些访问模式，LRU 可能是一个不好的策略。
   - 例如：计算两个关系 $r$ 和 $s$ 的连接操作时，通过嵌套循环进行：
     - 对于 $r$ 的每个元组 $t_r$，
     - 对于 $s$ 的每个元组 $t_s$，
@@ -63,7 +63,7 @@ copyright: 转载请注明出处
 - 最近使用（Most recently used (MRU) strategy）策略 - 系统必须固定当前正在处理的块。在处理完该块的最后一个元组后，取消固定该块，并使其成为最近使用的块。
 - 缓冲管理器可以使用关于请求将引用特定关系的概率的统计信息。
   - 例如，数据字典经常被访问。启发式方法：将数据字典块保留在主内存缓冲区中。
-- 缓冲管理器还支持强制输出块(forced output)以进行恢复的目的（有关更多信息，请参阅第16章）。
+- 缓冲管理器还支持强制输出块(forced output)以进行恢复的目的（有关更多信息，请参阅第 16 章）。
 
 ## 文件组织(File Organization)
 
@@ -76,9 +76,9 @@ copyright: 转载请注明出处
   - 每个文件只包含一种特定类型的记录。
   - 不同的文件用于不同的关系。
 - 这种情况最容易实现；稍后我们将考虑可变长度的记录。
-![Fixed-Length Records](<images/Chapter10 Storage and File Structure/image-1.png>)
+  ![Fixed-Length Records](<images/Chapter10 Storage and File Structure/image-1.png>)
 - 用空闲链表来存储空余空间
-![Free Lists](<images/Chapter10 Storage and File Structure/image-2.png>)
+  ![Free Lists](<images/Chapter10 Storage and File Structure/image-2.png>)
 
 ### 变长记录(Variable-Length Records: Slotted Page Structure)
 
@@ -96,13 +96,13 @@ copyright: 转载请注明出处
 - `堆（Heap）`- 记录可以放置在文件中的任何有空间的位置。
 
 - `顺序（Sequential）`- 根据每个记录的搜索键值，按顺序存储记录。
-![顺序组织](<images/Chapter10 Storage and File Structure/image-4.png>)
-![顺序组织](<images/Chapter10 Storage and File Structure/image-5.png>)
+  ![顺序组织](<images/Chapter10 Storage and File Structure/image-4.png>)
+  ![顺序组织](<images/Chapter10 Storage and File Structure/image-5.png>)
 - `哈希（Hashing）`- 对每个记录的某个属性计算哈希函数；结果指定了记录应该放置在文件的哪个块中。
 - 每个关系的记录可以存储在单独的文件中。在`多表聚集文件组织(multitable clustering file organization)`中，多个不同关系的记录可以存储在同一个文件中。
-- 动机：将相关的记录存储在同一个块中，以最小化I/O操作。
-![多表聚集文件组织(multitable clustering file organization)](<images/Chapter10 Storage and File Structure/image-6.png>)
-![多表聚集文件组织(multitable clustering file organization)](<images/Chapter10 Storage and File Structure/image-7.png>)
+- 动机：将相关的记录存储在同一个块中，以最小化 I/O 操作。
+  ![多表聚集文件组织(multitable clustering file organization)](<images/Chapter10 Storage and File Structure/image-6.png>)
+  ![多表聚集文件组织(multitable clustering file organization)](<images/Chapter10 Storage and File Structure/image-7.png>)
 
 ## 数据字典存储(Data Dictionary Storage)
 
@@ -119,4 +119,4 @@ copyright: 转载请注明出处
 - 物理文件组织信息
   - 关系的存储方式（顺序/哈希/...）
   - 关系的物理位置
-- 关于索引的信息（第11章中介绍）
+- 关于索引的信息（第 11 章中介绍）

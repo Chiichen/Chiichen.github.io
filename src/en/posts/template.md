@@ -5,15 +5,15 @@ title: template
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: template
 category:
-  - 
+  -
 tag:
-    -
+  -
 sticky: true
 star: false
-footer: 
+footer:
 copyright: Copyright with marking the source
 article: false
 index: false

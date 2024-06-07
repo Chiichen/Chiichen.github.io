@@ -4,7 +4,7 @@ title: gRPC入门
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2024-06-01
 category:
   - 笔记
@@ -17,18 +17,18 @@ tag:
 sticky: true
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
 
-## 什么是gRPC
+## 什么是 gRPC
 
 ## 前期准备
 
-在本篇内容中，我们将通过`go+gin+gRPC`的组合来初步认识gRPC，并实现一个简单的网关应用
+在本篇内容中，我们将通过`go+gin+gRPC`的组合来初步认识 gRPC，并实现一个简单的网关应用
 
-### Go环境安装
+### Go 环境安装
 
 略
 
@@ -49,11 +49,11 @@ go install github.com/golang/protobuf/protoc-gen-go@latest # 安装go编译插�
 sudo cp -r $GOPATH/bin/protoc-gen-go /usr/bin # 或者把 $GOPATH/bin 添加到 PATH
 ```
 
-## 定义gRPC服务
+## 定义 gRPC 服务
 
-定义gRPC服务实际上就是编写`.proto`文件并编译为对应高级语言的过程
+定义 gRPC 服务实际上就是编写`.proto`文件并编译为对应高级语言的过程
 
-### 构建proto文件
+### 构建 proto 文件
 
 我们新建如下的项目结构
 
@@ -75,7 +75,7 @@ sudo cp -r $GOPATH/bin/protoc-gen-go /usr/bin # 或者把 $GOPATH/bin 添加到 
 
 ```
 
-`message.proto`就是我们的proto文件，有如下内容
+`message.proto`就是我们的 proto 文件，有如下内容
 
 ```proto3
 syntax = "proto3";
@@ -116,13 +116,11 @@ message ReceiveMessageResponse {
 
 ```
 
-
 :::info Highlight
-vscode中可以使用插件`vscode-proto3`获得高亮提示
+vscode 中可以使用插件`vscode-proto3`获得高亮提示
 :::
 
-
-### 编译proto文件
+### 编译 proto 文件
 
 :::info 编译指令
 
@@ -130,10 +128,10 @@ vscode中可以使用插件`vscode-proto3`获得高亮提示
 protoc --proto_path=IMPORT_PATH  --go_out=OUT_DIR  --go_opt=paths=source_relative path/to/file.proto
 ```
 
-- proto_path或者-I ：指定 import 路径，可以指定多个参数，编译时按顺序查找，不指定时默认查找当前目录。
+- proto_path 或者-I ：指定 import 路径，可以指定多个参数，编译时按顺序查找，不指定时默认查找当前目录。
   - proto 文件中也可以引入其他 .proto 文件，这里主要用于指定被引入文件的位置。
-- go_out：golang编译支持，指定输出文件路径
-- go_opt：指定参数，比如--go_opt=paths=source_relative就是表明生成文件输出使用相对路径。
+- go_out：golang 编译支持，指定输出文件路径
+- go_opt：指定参数，比如--go_opt=paths=source_relative 就是表明生成文件输出使用相对路径。
 - path/to/file.proto ：被编译的 .proto 文件放在最后面
 
 :::
@@ -148,14 +146,14 @@ protoc -I ./src/proto/ --go_out=plugins=grpc:./src/proto ./src/proto/message.pro
 
 - -I 指定代码输出目录，忽略服务定义的包名，否则会根据包名创建目录
 - --go_out 指定代码输出目录，格式：--go_out=plugins=grpc:目录名
-- plugins=grpc表示启用rpc，并且指定是grpc
-- 命令最后面的参数是proto协议文件 编译成功后在proto目录生成了helloworld.pb.go文件，里面包含了，我们的服务和接口定义。
+- plugins=grpc 表示启用 rpc，并且指定是 grpc
+- 命令最后面的参数是 proto 协议文件 编译成功后在 proto 目录生成了 helloworld.pb.go 文件，里面包含了，我们的服务和接口定义。
 
 :::
 
-## 实现gRPC服务
+## 实现 gRPC 服务
 
-在项目/src目录下下创建一个名为`server`的文件夹，并在其中创建一个名为`server.go`的文件。这个文件将实现我们的 gRPC 服务。
+在项目/src 目录下下创建一个名为`server`的文件夹，并在其中创建一个名为`server.go`的文件。这个文件将实现我们的 gRPC 服务。
 
 ```go
 package server
@@ -202,7 +200,7 @@ func NewMessageServer() *MessageServer {
 
 ### 实现 Server
 
-我们还需要一个server来承载grpc
+我们还需要一个 server 来承载 grpc
 
 ```go
 // src/cmd/server.go
@@ -234,6 +232,7 @@ func main() {
 ```
 
 ### 实现 Client
+
 ```go
 // src/cmd/client
 package main

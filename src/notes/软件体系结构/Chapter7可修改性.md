@@ -4,7 +4,7 @@ title: Chapter7 可修改性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-14
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -60,7 +60,7 @@ copyright: 转载请注明出处
 
 - 控制进行变更的复杂性
 - 控制进行变更的时间和成本
-![Goal of modifiability tactics](images/Chapter7可修改性/image.png)
+  ![Goal of modifiability tactics](images/Chapter7可修改性/image.png)
 
 ## 可修改性策略
 
@@ -73,7 +73,7 @@ copyright: 转载请注明出处
 
 ### 增加内聚性
 
-- 增加语义连贯性：如果模块中的职责A和B不具有相同的目的，它们应该放置在不同的模块中。
+- 增加语义连贯性：如果模块中的职责 A 和 B 不具有相同的目的，它们应该放置在不同的模块中。
 - 这可能涉及创建一个新的模块，或者将职责移动到现有的模块中。
 
 ### 减少耦合性
@@ -83,9 +83,9 @@ copyright: 转载请注明出处
   - 耦合性通过这种重叠来衡量，即修改一个模块将会传播到另一个模块的概率
   - 高耦合性是可修改性的敌人。
 - 减少耦合性的方法：
-  - 封装：封装为模块引入了一个明确的接口。该接口包括一个API及其相关的职责。
-  - 使用中间层：如果职责A和职责B之间存在依赖关系（例如，首先执行A需要执行B），可以通过使用一个中间层来打破依赖。
-  - 使用[发布/订阅模型 (Publish/Subscribe model)](#发布订阅模型-publishsubscribe-model )
+  - 封装：封装为模块引入了一个明确的接口。该接口包括一个 API 及其相关的职责。
+  - 使用中间层：如果职责 A 和职责 B 之间存在依赖关系（例如，首先执行 A 需要执行 B），可以通过使用一个中间层来打破依赖。
+  - 使用[发布/订阅模型 (Publish/Subscribe model)](#发布订阅模型-publishsubscribe-model)
   - 限制依赖关系：限制一个模块与其交互或依赖的模块。
     - 通过限制模块的可见性和授权来实现。
     - 例如，
@@ -101,7 +101,7 @@ copyright: 转载请注明出处
 
 ### 发布/订阅模型的动机
 
-- 传统的客户端/服务器通信模型（采用RPC、消息队列等）
+- 传统的客户端/服务器通信模型（采用 RPC、消息队列等）
 - 同步、紧密耦合的请求调用。-对于分布式应用程序，特别是对于广域网和移动环境，非常受限制。-当节点/链路故障时，系统会受到影响。 必须构建容错性以支持此功能。
 - 需要更灵活、解耦的通信方式，提供异步机制。
 
@@ -120,21 +120,21 @@ copyright: 转载请注明出处
 ![Publish-Subscribe Basic Model Overview](images/Chapter7可修改性/image-3.png)
 
 - 提供了在时间、空间和同步上的解耦
-![Space, time and synchronization decoupling with the publish/subscribe paradigm](images/Chapter7可修改性/image-2.png)
+  ![Space, time and synchronization decoupling with the publish/subscribe paradigm](images/Chapter7可修改性/image-2.png)
 
 ### 发布/订阅架构的分类
 
 - 集中式代理模型(Centralized Broker model)
   - 由多个发布者和多个订阅者以及集中式代理/代理组成（代理之间相互交互的叠加网络）。
   - 订阅者/发布者将联系一个代理(Broker)，不需要了解其他代理的存在。
-  - 例如，CORBA事件服务、JMS等。
+  - 例如，CORBA 事件服务、JMS 等。
 - 对等模型(Perr-to-peer model)
   - 每个节点可以是发布者、订阅者或代理。
   - 订阅者直接订阅发布者，发布者直接通知订阅者。因此，它们必须保持彼此的信息。
-  - 本质上较为复杂，采用了DHT（分布式哈希表）和CHORD等机制来定位网络中的节点。
-  - 例如，Java分布式事件服务。
+  - 本质上较为复杂，采用了 DHT（分布式哈希表）和 CHORD 等机制来定位网络中的节点。
+  - 例如，Java 分布式事件服务。
 
-### P/S中间件服务实现的关键功能
+### P/S 中间件服务实现的关键功能
 
 - 事件过滤（事件选择）
   - 选择对给定事件表示兴趣的订阅者集合的过程。

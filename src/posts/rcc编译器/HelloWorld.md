@@ -4,7 +4,7 @@ title: template
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-11-01
 category:
   - 笔记

@@ -4,7 +4,7 @@ title: 基于Ninja的代码Intellisense实践
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2024-02-26
 category:
   - 杂谈
@@ -14,18 +14,18 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
 
 ## 插件安装
 
-在VSCode中安装clangd作为前端，要记得关闭C/C++的Intellisense
+在 VSCode 中安装 clangd 作为前端，要记得关闭 C/C++的 Intellisense
 
-## 生成compile_commands.json
+## 生成 compile_commands.json
 
-在Ninja输出目录，以`out`为例，执行
+在 Ninja 输出目录，以`out`为例，执行
 
 ```bash
 ninja -C out -t  compdb cxx cc > compile_commands.json

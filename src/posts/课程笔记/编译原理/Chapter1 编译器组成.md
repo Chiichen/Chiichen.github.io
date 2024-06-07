@@ -4,16 +4,15 @@ title: Chapter1 编译器组成
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-11
 category:
   - 课程笔记
 tag:
-
   - 编译原理
 sticky: true
 star: false
-footer: 
+footer:
 copyright: 转载请注明出处
 isOriginal: true
 ---
@@ -22,12 +21,12 @@ isOriginal: true
 
 ### 编译器的结构
 
-- 词法分析Lexical analysis (Scanning)
-- 语法分析Syntax analysis (Parsing)
+- 词法分析 Lexical analysis (Scanning)
+- 语法分析 Syntax analysis (Parsing)
 - 语义分析 Semantic analysis
 
 ::: info
- 以上三步的目的是通过分析输入代码，生成能被统一处理的中间层代码，亦即编译器前端（front-end）
+以上三步的目的是通过分析输入代码，生成能被统一处理的中间层代码，亦即编译器前端（front-end）
 :::
 
 - 中间代码生成 IR Generation
@@ -39,13 +38,13 @@ $$C(源代码)\rightarrow TAC(Three Address Code)中间（intermediate）码\rig
 
 ### 词法分析
 
-- 本质上就是为了输出一个合法的token序列，每个token就是一个关键词或者一个关键词+词素(lexeme)的组合如
-  
+- 本质上就是为了输出一个合法的 token 序列，每个 token 就是一个关键词或者一个关键词+词素(lexeme)的组合如
+
   $$\begin{array}{c}T\_While\quad 关键词\\ T\_Identifier \;\;x \quad 关键词+词素\end{array}$$
 
 ### 语法分析
 
-- 就是将一个token序列表示为一棵语法树
+- 就是将一个 token 序列表示为一棵语法树
 
 ### 语义分析
 

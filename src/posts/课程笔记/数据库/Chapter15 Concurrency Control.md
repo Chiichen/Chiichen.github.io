@@ -4,7 +4,7 @@ title: Chapter15 Concurrency Control
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2024-01-01
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -23,22 +23,22 @@ copyright: 转载请注明出处
 
 - 锁是一种控制对数据项并发访问的机制。
 - 数据项可以以两种模式进行锁定：
-  1. 独占（X）模式：数据项既可以读取也可以写入。使用lock-X指令请求X锁。
-  2. 共享（S）模式：数据项只能读取。使用lock-S指令请求S锁。
+  1. 独占（X）模式：数据项既可以读取也可以写入。使用 lock-X 指令请求 X 锁。
+  2. 共享（S）模式：数据项只能读取。使用 lock-S 指令请求 S 锁。
 - 锁请求发送给并发控制管理器。只有在请求被授予后，事务才能继续进行。
 
 ![事务执行锁定的示例](<images/Chapter15 Concurrency Control/image.png>)
 
 - 上述方式的锁操作不能足够保证可串行化性
-  - 如果在读取A和B之间对它们进行了更新，显示的总和将是错误的。
+  - 如果在读取 A 和 B 之间对它们进行了更新，显示的总和将是错误的。
 - 锁协议是所有事务在请求和释放锁时遵循的一组规则。锁协议限制了可能的调度集合。
 
 ### 锁兼容性矩阵
 
-| |S|X|
-|---|---|---|
-|S|true|false|
-|X|false|false|
+|     | S     | X     |
+| --- | ----- | ----- |
+| S   | true  | false |
+| X   | false | false |
 
 - 如果请求的锁与其他事务已经持有的锁在数据项上兼容，那么可以向事务授予对该数据项的锁。
 - 如果无法授予锁，请求的事务将被要求等待，直到其他事务持有的所有不兼容的锁都被释放。
@@ -51,22 +51,22 @@ copyright: 转载请注明出处
 考虑以下部分调度：
 ![基于锁的协议的陷阱(Pitfalls of Lock-Based Protocols)](<images/Chapter15 Concurrency Control/image-1.png>)
 
-- T3和T4都无法进行进一步的操作 - 执行lock-S(B)导致T4等待T3释放对B的锁，而执行lock-X(A)导致T3等待T4释放对A的锁。
+- T3 和 T4 都无法进行进一步的操作 - 执行 lock-S(B)导致 T4 等待 T3 释放对 B 的锁，而执行 lock-X(A)导致 T3 等待 T4 释放对 A 的锁。
 - 这种情况被称为`死锁(deadlock)`。
-- 为了处理死锁，必须回滚T3或T4之一，并释放其持有的锁。
+- 为了处理死锁，必须回滚 T3 或 T4 之一，并释放其持有的锁。
 - 大多数锁协议存在死锁的潜在风险。死锁是一种必要的弊端。
 
 #### 饥饿(Starvation)
 
 - 如果并发控制管理器设计不良，也可能发生`饥饿(Starvation)`现象。例如：
-  - T1请求L-S(Q)；
-  - T2请求L-X(Q)；
-  - T3请求L-S(Q)；
-  - T4请求L-S(Q)；
-  - T5请求L-S(Q)；
-  - T6请求L-S(Q)；
-  - ...如果T3、T4、T5、T6被授予S锁，那么T2将被饿死（无法获得锁）。
-- 一个事务可能在等待对某个项的X锁，而一系列其他事务请求并被授予对同一项的S锁。
+  - T1 请求 L-S(Q)；
+  - T2 请求 L-X(Q)；
+  - T3 请求 L-S(Q)；
+  - T4 请求 L-S(Q)；
+  - T5 请求 L-S(Q)；
+  - T6 请求 L-S(Q)；
+  - ...如果 T3、T4、T5、T6 被授予 S 锁，那么 T2 将被饿死（无法获得锁）。
+- 一个事务可能在等待对某个项的 X 锁，而一系列其他事务请求并被授予对同一项的 S 锁。
 - 由于死锁，同一个事务可能被多次回滚。
 - 并发控制管理器可以设计成防止饥饿现象。
 
@@ -80,28 +80,28 @@ copyright: 转载请注明出处
     - 事务可以释放锁。
     - 事务不可以获取锁。
 - 两阶段锁定协议确保可串行化。可以证明，事务可以按照其锁点（即事务获得最终锁的点）的顺序进行序列化。
-![两阶段锁协议(The Two-Phase Locking Protocol)](<images/Chapter15 Concurrency Control/image-2.png>)
+  ![两阶段锁协议(The Two-Phase Locking Protocol)](<images/Chapter15 Concurrency Control/image-2.png>)
 
 #### 优缺点与改进
 
 - 优点：确保可串化
 - 缺点：可能有死锁和级联回滚
 - 改进：
-  1. 改进1：严格的两阶段锁定（strict two-phase locking）。在这种协议中，事务必须保持其所有独占锁直到提交/中止。
-  2. 改进2：强两阶段锁定（Rigorous two-phase locking）更加严格：在这里，所有的锁都保持到提交/中止。在这个协议中，事务可以按照提交的顺序进行串行化。
+  1. 改进 1：严格的两阶段锁定（strict two-phase locking）。在这种协议中，事务必须保持其所有独占锁直到提交/中止。
+  2. 改进 2：强两阶段锁定（Rigorous two-phase locking）更加严格：在这里，所有的锁都保持到提交/中止。在这个协议中，事务可以按照提交的顺序进行串行化。
 
 ### 具有锁转换(Lock Conversions)的两阶段锁定
 
 - 第一阶段：
   - 可以获取数据项的锁-S。
   - 可以获取数据项的锁-X。
-  - 可以将锁-S转换为锁-X（升级）。
+  - 可以将锁-S 转换为锁-X（升级）。
 - 第二阶段：
   - 可以释放锁-S。
   - 可以释放锁-X。
-  - 可以将锁-X转换为锁-S（降级）。
+  - 可以将锁-X 转换为锁-S（降级）。
 - 这个协议确保了可串行化。但仍然依赖于程序员插入各种锁定指令。
-![具有锁转换(Lock Conversions)的两阶段锁定](<images/Chapter15 Concurrency Control/image-3.png>)
+  ![具有锁转换(Lock Conversions)的两阶段锁定](<images/Chapter15 Concurrency Control/image-3.png>)
 
 ### 锁表(Lock Table)
 
@@ -120,7 +120,7 @@ copyright: 转载请注明出处
 ### 树协议(Tree Protocol)
 
 - 树协议是图协议的一种简单类型。
-![树形结构数据库图](<images/Chapter15 Concurrency Control/image-5.png>)
+  ![树形结构数据库图](<images/Chapter15 Concurrency Control/image-5.png>)
 
 1. 只允许独占锁(lock-X)。
 2. $T_i$的第一个锁可以是任何数据项。随后，只有当$Q$的父项当前被$T_i$锁定时，$T_i$才能锁定数据项$Q$。
@@ -145,40 +145,40 @@ copyright: 转载请注明出处
   - 可能降低并发性。
   - 在两阶段锁定下不可能的调度在树协议下可能实现，反之亦然。
 
-|协议名|conflict serializable|NO deadlock|Recoverability|cascadelessness|
-|---|---|---|---|---|
-|Two-Phase Locking Protocol|Y|N|N|N
-|strict Two-Phase Locking Protocol|Y|N|Y|Y|
-|Rigorous Two-Phase Locking Protocol|Y|N|Y|Y|
-|Tree Protocols|Y|Y|N|N|
+| 协议名                              | conflict serializable | NO deadlock | Recoverability | cascadelessness |
+| ----------------------------------- | --------------------- | ----------- | -------------- | --------------- |
+| Two-Phase Locking Protocol          | Y                     | N           | N              | N               |
+| strict Two-Phase Locking Protocol   | Y                     | N           | Y              | Y               |
+| Rigorous Two-Phase Locking Protocol | Y                     | N           | Y              | Y               |
+| Tree Protocols                      | Y                     | Y           | N              | N               |
 
 ### 死锁处理(Deadlock Handling)
 
 - 如果存在一组事务，并且该组中的每个事务都在等待该组中的另一个事务，则系统将发生死锁。
-- 对待死锁的2种策略:
+- 对待死锁的 2 种策略:
   1. 预防， 使得死锁不出现(Deadlock prevention)
   2. 允许出现死锁, 然后解锁. 检测+恢复.
 
-#### 策略1：死锁处理
+#### 策略 1：死锁处理
 
 - 如果存在一组事务，其中每个事务都在等待该组中的另一个事务，那么系统就处于死锁状态。
 - 死锁预防协议确保系统永远不会进入死锁状态。一些预防策略包括：
-  - 预防策略1：要求每个事务在开始执行之前锁定其所有数据项（预声明）。
-  - 预防策略2：对所有数据项强制部分排序，并要求事务只能按照部分排序指定的顺序锁定数据项（基于图的协议）。
+  - 预防策略 1：要求每个事务在开始执行之前锁定其所有数据项（预声明）。
+  - 预防策略 2：对所有数据项强制部分排序，并要求事务只能按照部分排序指定的顺序锁定数据项（基于图的协议）。
 - 以下方案仅出于死锁预防的目的使用事务时间戳。
-  - 预防策略3：等待-死亡方案（wait-die scheme）- 非抢占式（老的等，新的死）
+  - 预防策略 3：等待-死亡方案（wait-die scheme）- 非抢占式（老的等，新的死）
     - 较旧的事务可能等待较新的事务释放数据项。较新的事务永远不会等待较旧的事务；相反，它们会被回滚。
     - 一个事务可能在获取所需的数据项之前多次回滚。
-  - 预防策略4：伤害-等待方案（wound-wait scheme）- 抢占式（老的抢，新的等）
+  - 预防策略 4：伤害-等待方案（wound-wait scheme）- 抢占式（老的抢，新的等）
     - 较旧的事务强制回滚较新的事务，而不是等待它。较新的事务可能等待较旧的事务。
     - 可能比等待-死亡方案中的回滚次数少。
 - 在等待-死亡方案和伤害-等待方案中，被回滚的事务会使用其原始时间戳重新启动。因此，较旧的事务优先于较新的事务，从而避免了饥饿（starvation）。
-  - 预防策略5：基于超时的方案：
+  - 预防策略 5：基于超时的方案：
     - 事务仅在指定的时间内等待锁。超过该时间后，等待超时，事务被回滚。
     - 因此，死锁是不可能发生的。
     - 实施简单，但可能会出现饥饿的情况。同时，确定超时间隔的合适值也比较困难。
 
-#### 策略2：死锁检测
+#### 策略 2：死锁检测
 
 - 死锁可以被描述为一个`等待图（wait-for graph）`，它由一对 $G = (V, E)$ 组成。
   - $V$ 是一个顶点集合（系统中的所有事务）。
@@ -186,7 +186,7 @@ copyright: 转载请注明出处
 - 图的构造：$T_i \rightarrow T_j$当且仅当 $T_i$ 正在等待 $T_j$ 释放一个数据项。
 - 当 $T_i$ 请求当前由 $T_j$ 持有的数据项时，在等待图中插入边 $(T_i, T_j)$。只有当 $T_j$ 不再持有 $T_i$需要的数据项时，才会移除该边。
 - 判断定理：如果等待图中存在一个循环，那么系统处于死锁状态。必须定期调用死锁检测算法来查找循环。
-![等待图（wait-for graph）](<images/Chapter15 Concurrency Control/image-6.png>)
+  ![等待图（wait-for graph）](<images/Chapter15 Concurrency Control/image-6.png>)
 
 #### 死锁恢复
 
@@ -205,7 +205,7 @@ copyright: 转载请注明出处
 - 锁定的粒度（在树中进行锁定的层级）：
   - 细粒度（树的较低层级）：高并发性，高锁定开销。
   - 粗粒度（树的较高层级）：低锁定开销，低并发性。
-![多重粒度（Multiple Granularity）](<images/Chapter15 Concurrency Control/image-7.png>)
+    ![多重粒度（Multiple Granularity）](<images/Chapter15 Concurrency Control/image-7.png>)
 
 #### 意向锁定模式(Intention Lock Modes)
 
@@ -225,14 +225,14 @@ copyright: 转载请注明出处
   - X 锁持有直到事务结束。
   - 是二级一致性的特殊情况。
 
-### 在SQL中的弱一致性级别
+### 在 SQL 中的弱一致性级别
 
-- SQL允许非串行化的执行。
+- SQL 允许非串行化的执行。
   - 串行化（Serializable）：是默认设置。
   - 可重复读（Repeatable read）：只允许读取已提交的记录，并且重复读取应返回相同的值（因此应保留读取锁）。
     - 然而，并不需要阻止幻影现象
-      - 事务T1可以看到事务T2插入的一些记录，但可能看不到T2插入的其他记录。
+      - 事务 T1 可以看到事务 T2 插入的一些记录，但可能看不到 T2 插入的其他记录。
   - 读已提交（Read committed）：与二级一致性相同，但大多数系统将其实现为游标稳定性。
   - 读未提交（Read uncommitted）：允许读取未提交的数据。
 - 在某些数据库系统中，默认的一致性级别是读已提交。
-- 当需要时，必须明确更改为串行化：设置隔离级别为serializable。
+- 当需要时，必须明确更改为串行化：设置隔离级别为 serializable。

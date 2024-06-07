@@ -4,27 +4,27 @@ title: LWN：针对多层内存系统重新进行NUMA平衡
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-30
 category:
-    - 笔记
-    - Linux 内核
+  - 笔记
+  - Linux 内核
 tag:
-    - Linux 内核
-    - 内存管理
-    - NUMA
+  - Linux 内核
+  - 内存管理
+  - NUMA
 # this page is sticky in article list
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: false
 copyright: 转载请注明出处
 ---
 
 ## 参考
 
-转载自 [LWN：针对多层内存系统重新进行NUMA平衡！](https://mp.weixin.qq.com/s?__biz=Mzg2MjE0NDE5OA==&mid=2247486608&idx=1&sn=51eb34edabfbcc6f730dd9c0efb1c0c6&chksm=ce0d1f39f97a962f20b3501bdbc6684ba043b88f924ba8db52aa77710b91899d7a2e069c0d95&scene=126&&sessionid=0)，作者为公众号：Linux News搬运工，原文创作时间为  2022-05-17
+转载自 [LWN：针对多层内存系统重新进行 NUMA 平衡！](https://mp.weixin.qq.com/s?__biz=Mzg2MjE0NDE5OA==&mid=2247486608&idx=1&sn=51eb34edabfbcc6f730dd9c0efb1c0c6&chksm=ce0d1f39f97a962f20b3501bdbc6684ba043b88f924ba8db52aa77710b91899d7a2e069c0d95&scene=126&&sessionid=0)，作者为公众号：Linux News 搬运工，原文创作时间为 2022-05-17
 
 ## NUMA rebalancing on tiered-memory systems
 

@@ -5,7 +5,7 @@ title: Surface View 异常释放引起的 Segv Fault
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2024-04-03
 category:
   - 杂谈
@@ -85,4 +85,3 @@ android::RefBase::incStrong(void const*) const:
 	br     x1
 	ret
 ```
-

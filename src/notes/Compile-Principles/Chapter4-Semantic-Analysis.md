@@ -4,16 +4,15 @@ title: Chapter4 语义分析
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-11
 category:
   - 课程笔记
 tag:
-
   - 编译原理
 sticky: true
 star: false
-footer: 
+footer:
 copyright: 转载请注明出处
 isOriginal: true
 ---
@@ -34,12 +33,12 @@ isOriginal: true
 
 ### 语法制导的语法分析(Syntax-Directed Semantics Analysis )
 
-- 又称SDS、SDT、SDD
+- 又称 SDS、SDT、SDD
 - 属性是附着在文法符号上的
 
 #### 属性(Attribute)
 
-- CFG中的所有文法符号$X$都用属性以描述，把某个属性$a$ 表示为$X.a$
+- CFG 中的所有文法符号$X$都用属性以描述，把某个属性$a$ 表示为$X.a$
 
 ##### 属性等式(Attribute Equation)
 
@@ -47,7 +46,7 @@ isOriginal: true
 - 给定属性 集合$a_1 ，... ,a_k$
 - 对于每个语法规则$X_0→X_1X_2...X_n$，每个语法符号$X_i$ 的属性 $X_i.a_j$ 的值与规则中其他符号的属性值相关
 - 属性等式就是如下格式
-$$X_i.a_j = f_{ij} (X_0 .a_1,...,X_0.a_k,X_1 .a_1,... ,X_1.a_k,...,X_n.a_1,...,X_n.a_k)$$
+  $$X_i.a_j = f_{ij} (X_0 .a_1,...,X_0.a_k,X_1 .a_1,... ,X_1.a_k,...,X_n.a_1,...,X_n.a_k)$$
 
 ##### 属性文法
 
@@ -57,7 +56,7 @@ $$X_i.a_j = f_{ij} (X_0 .a_1,...,X_0.a_k,X_1 .a_1,... ,X_1.a_k,...,X_n.a_1,...,X
 | ------------ | ------------------------------ |
 | Rule1        | Associated attribute equations |
 | ...          |                                |
-| Rule n       | Associated attribute equations                               |
+| Rule n       | Associated attribute equations |
 
 ###### 无符号数和数字属性
 
@@ -86,7 +85,7 @@ $$X_i.a_j = f_{ij} (X_0 .a_1,...,X_0.a_k,X_1 .a_1,... ,X_1.a_k,...,X_n.a_1,...,X
 
 2. 综合(Synthesized)属性和继承(Inherited)属性
 
-   - 综合属性：属性由子节点属性决定(如果所有属性都是综合属性，那这个文法是一个综合属性文法S-attributed grammar)，在bottom-up的过程中，可以边分析边计算属性(从叶子节点生成父节点)
+   - 综合属性：属性由子节点属性决定(如果所有属性都是综合属性，那这个文法是一个综合属性文法 S-attributed grammar)，在 bottom-up 的过程中，可以边分析边计算属性(从叶子节点生成父节点)
    - 继承属性：属性由兄弟节点或兄弟和子节点属性决定(不是综合就是继承)
 
 3. 在分析的过程中计算属性
@@ -113,8 +112,8 @@ $$X_i.a_j = f_{ij} (X_0 .a_1,...,X_0.a_k,X_1 .a_1,... ,X_1.a_k,...,X_n.a_1,...,X
 
 - 如果解析树中的所有依赖项都从子级指向父级，那么就是综合属性。
 - 等价地，如果给定语法规则 $A → X_1X_2…X_n$，左侧带有 $a$ 的*唯一*(不能存在另一个可能为从非子节点获取属性的属性方程)关联属性方程的形式为以下所示，那么$a$就是综合属性
-$$A.a=f(x_1.a_1,..X_1.a_k,…,X_n.a_1,…X_n.a_k)$$
-![[综合属性定义.png]](./images/语义分析/综合属性定义.png)
+  $$A.a=f(x_1.a_1,..X_1.a_k,…,X_n.a_1,…X_n.a_k)$$
+  ![[综合属性定义.png]](./images/语义分析/综合属性定义.png)
 
 ###### 综合属性文法(S-attributed grammar)
 
@@ -123,10 +122,10 @@ $$A.a=f(x_1.a_1,..X_1.a_k,…,X_n.a_1,…X_n.a_k)$$
 
 ```c
 procedure PostEval(T:treenode)
-begin 
- for each child C of T do 
- PostEval(C); 
- compute all synthesized attributes of T; 
+begin
+ for each child C of T do
+ PostEval(C);
+ compute all synthesized attributes of T;
 end;
 ```
 
@@ -134,17 +133,17 @@ end;
 
 - 一个属性不是综合属性就被称为一个继承属性
 - 继承属性具有在解析树中从父级流向子级或从同级流向同级的依赖关系
-![[继承属性示例1.png]](./images/语义分析/继承属性示例1.png)
-![[继承属性示例2.png]](./images/语义分析/继承属性示例2.png)
+  ![[继承属性示例1.png]](./images/语义分析/继承属性示例1.png)
+  ![[继承属性示例2.png]](./images/语义分析/继承属性示例2.png)
 
 - 继承属性的计算可以通过前序遍历(preorder traversal)来完成
 
 ```c
-procedure PreEval(T:treenode); 
+procedure PreEval(T:treenode);
 begin
- for each child C of T do 
- compute all inherited attributes of C; 
- PreEval(C); 
+ for each child C of T do
+ compute all inherited attributes of C;
+ PreEval(C);
 end;
 ```
 
@@ -164,19 +163,19 @@ end;
 
 - 有一些值在计算的过程中反复使用，如果用上面的方法，会在分析树中占用大量的空间来存储这些相同的属性值。
 - 例如：
-![[属性计算basenum1.png]](./images/语义分析/属性计算basenum1.png)
-![[属性计算basenum2.png]](./images/语义分析/属性计算basenum2.png)
-![[属性计算basenum3.png]](./images/语义分析/属性计算basenum3.png)
+  ![[属性计算basenum1.png]](./images/语义分析/属性计算basenum1.png)
+  ![[属性计算basenum2.png]](./images/语义分析/属性计算basenum2.png)
+  ![[属性计算basenum3.png]](./images/语义分析/属性计算basenum3.png)
 
 - 可以把属性作为函数的参数和返回值
 - 事实上，一个单个递归遍历的函数中，通过前序遍历计算继承属性，后序遍历计算综合属性，可以将继承属性值作为参数传递给子级的递归调用，并接收综合属性值作为这些相同调用的返回值
 
-- 例如，在十进制和八进制的语法中，base是继承属性而val是综合属性，递归的属性计算函数为：
+- 例如，在十进制和八进制的语法中，base 是继承属性而 val 是综合属性，递归的属性计算函数为：
 
 ![[属性计算basenum4.png]](./images/语义分析/属性计算basenum4.png)
 ![[属性计算basenum5.png]](./images/语义分析/属性计算basenum5.png)
 
-- base值作为一个共享的属性值，在每个节点都保存一个值会占用大量的空间，因此可以通过把这个属性作为参数进行传递
+- base 值作为一个共享的属性值，在每个节点都保存一个值会占用大量的空间，因此可以通过把这个属性作为参数进行传递
 
 - 当属性值具有重要结构并且在翻译过程中的任意点可能需要时，数据结构（例如查找表、图表和其他结构）可能有助于属性值的正确行为和可访问性。主要数据结构之一是符号表，它存储与程序中声明的常量、变量和过程相关的属性
 
@@ -188,7 +187,7 @@ end;
 
 - 所有属性都是由综合属性或者满足特定条件的继承属性决定
 - L-Attributed grammar：满足从左至右计算，即对于一个语法规则：
-$$\begin{array}{c}X_0\rightarrow X_1X_2...X_n\\那么每个属性X_i.a_i都只能由比它靠前的属性计算出来\\即X_i.a_i=f(X_0.a_1,…,X_0.a_k,X_1.a_1,…X_1.a_k,…X_i-1.a_1,…X_i-1.a_k)\end{array}$$
+  $$\begin{array}{c}X_0\rightarrow X_1X_2...X_n\\那么每个属性X_i.a_i都只能由比它靠前的属性计算出来\\即X_i.a_i=f(X_0.a_1,…,X_0.a_k,X_1.a_1,…X_1.a_k,…X_i-1.a_1,…X_i-1.a_k)\end{array}$$
 - 把综合属性作为返回值，继承属性作为传入参数
 
 ##### 在递归下降中的属性计算
@@ -198,23 +197,23 @@ $$\begin{array}{c}X_0\rightarrow X_1X_2...X_n\\那么每个属性X_i.a_i都只�
 ![[递归下降计算属性3.png]](./images/语义分析/递归下降计算属性3.png)
 ![[递归下降计算属性4.png]](./images/语义分析/递归下降计算属性4.png)
 
-##### 在LR分析中的属性计算
+##### 在 LR 分析中的属性计算
 
 ###### 综合属性计算
 
-- 增加一个Value stack 来存储综合属性
-- 在parsing stack运行的过程中，这个value stack也在并行的工作
-- 当在parsing stack中进行一次规约，在value stack中会进行一次value的计算
-- shift操作在parsing stack和value stack中都提现为push一个token到栈顶
-![[LR分析计算属性1.png]](./images/语义分析/LR分析计算属性1.png)
-![[LR分析计算属性2.png]](./images/语义分析/LR分析计算属性2.png)
+- 增加一个 Value stack 来存储综合属性
+- 在 parsing stack 运行的过程中，这个 value stack 也在并行的工作
+- 当在 parsing stack 中进行一次规约，在 value stack 中会进行一次 value 的计算
+- shift 操作在 parsing stack 和 value stack 中都提现为 push 一个 token 到栈顶
+  ![[LR分析计算属性1.png]](./images/语义分析/LR分析计算属性1.png)
+  ![[LR分析计算属性2.png]](./images/语义分析/LR分析计算属性2.png)
 
 ###### 继承属性计算
 
 ![[LR分析计算属性继承属性1.png]](./images/语义分析/LR分析计算属性继承属性1.png)
 
 - 通过插入一个$\varepsilon$ 表达式来在不改变语法规则的情况下增加一个语义规则，来对这个继承属性进行分析
-![[LR分析计算属性继承属性2.png]](./images/语义分析/LR分析计算属性继承属性2.png)
+  ![[LR分析计算属性继承属性2.png]](./images/语义分析/LR分析计算属性继承属性2.png)
 
 ## 符号表
 
@@ -224,7 +223,7 @@ $$\begin{array}{c}X_0\rightarrow X_1X_2...X_n\\那么每个属性X_i.a_i都只�
   - Insert：用于在声明时，向符号表中插入变量所声明的信息。
   - Lookup：当在关联代码中使用该名称时，需要检索与该名称关联的信息
   - Delete：当声明不再适用时，需要删除该声明提供的信息
-![[符号表.png]](./images/语义分析/符号表.png)
+    ![[符号表.png]](./images/语义分析/符号表.png)
 
 ### 常见的语义
 
@@ -232,12 +231,12 @@ $$\begin{array}{c}X_0\rightarrow X_1X_2...X_n\\那么每个属性X_i.a_i都只�
 
 - 一个声明中的信息会被插入到符号表中$insert(id.name,dtype)$
 - 属性文法如下
-![[声明的属性文法.png]](./images/语义分析/声明的属性文法.png)
+  ![[声明的属性文法.png]](./images/语义分析/声明的属性文法.png)
 
 #### Statements
 
 - 通常用来进行类型检查
-![[statement的属性文法4.png]](./images/语义分析/statement的属性文法4.png)
-![[statement的属性文法3.png]](./images/语义分析/statement的属性文法3.png)
-![[statement的属性文法1.png]](./images/语义分析/statement的属性文法1.png)
-![[statement的属性文法2.png]](./images/语义分析/statement的属性文法2.png)
+  ![[statement的属性文法4.png]](./images/语义分析/statement的属性文法4.png)
+  ![[statement的属性文法3.png]](./images/语义分析/statement的属性文法3.png)
+  ![[statement的属性文法1.png]](./images/语义分析/statement的属性文法1.png)
+  ![[statement的属性文法2.png]](./images/语义分析/statement的属性文法2.png)

@@ -4,7 +4,7 @@ title: Chapter11 Indexing and Hashing
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-31
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -25,8 +25,8 @@ copyright: 转载请注明出处
 - 搜索键（Search Key）是用于在文件中查找记录的一组属性。
 - 索引文件由记录（称为索引条目）组成，形式为：
 
-|search-key|pointer|
-|---|---|
+| search-key | pointer |
+| ---------- | ------- |
 
 - 索引文件通常比原始文件小得多。
 - 基本的两种索引类型：
@@ -41,22 +41,22 @@ copyright: 转载请注明出处
   - 主索引的搜索键通常是主键，但不一定是。
 - 次索引(Secondary index)：其搜索键指定与文件的顺序不同的顺序的索引。也称为非聚集索引(non-clustering index)。
 - 索引顺序文件：带有主索引的有序顺序文件(Index-sequential file)。
-![主索引(Primary index)](<images/Chapter11 Indexing and Hashing/image.png>)
-![次索引(Secondary index)](<images/Chapter11 Indexing and Hashing/image-1.png>)
+  ![主索引(Primary index)](<images/Chapter11 Indexing and Hashing/image.png>)
+  ![次索引(Secondary index)](<images/Chapter11 Indexing and Hashing/image-1.png>)
 
 ### 稠密索引文件(Dense Index Files)
 
 - 稠密索引（Dense Index）：在文件中的每个搜索键值都出现索引记录。
-例如，教师关系的ID属性上的索引。
-![稠密索引文件(Dense Index Files) - 1](<images/Chapter11 Indexing and Hashing/image-2.png>)
-![稠密索引文件(Dense Index Files) - 2](<images/Chapter11 Indexing and Hashing/image-3.png>)
+  例如，教师关系的 ID 属性上的索引。
+  ![稠密索引文件(Dense Index Files) - 1](<images/Chapter11 Indexing and Hashing/image-2.png>)
+  ![稠密索引文件(Dense Index Files) - 2](<images/Chapter11 Indexing and Hashing/image-3.png>)
 
 ### 稀疏索引文件(Sparse Index Files)
 
 - 稀疏索引（Sparse Index）：仅包含某些搜索键值的索引记录。
 - 适用于记录按搜索键顺序排列的情况。
-- 要找到具有搜索键值K的记录，我们：
-  - 找到最大的搜索键值小于K的索引记录。
+- 要找到具有搜索键值 K 的记录，我们：
+  - 找到最大的搜索键值小于 K 的索引记录。
   - 从索引记录指向的记录开始，在文件中顺序查找。
 
 ![稀疏索引文件(Sparse Index Files)](<images/Chapter11 Indexing and Hashing/image-4.png>)
@@ -74,7 +74,7 @@ copyright: 转载请注明出处
   - 内部索引 - 主索引文件
 - 如果即使外部索引也太大无法放入主存储器中，可以创建另一级索引，依此类推。
 - 所有级别的索引在对文件进行插入或删除时必须进行更新。
-![多级索引(Multilevel Index)](<images/Chapter11 Indexing and Hashing/image-5.png>)
+  ![多级索引(Multilevel Index)](<images/Chapter11 Indexing and Hashing/image-5.png>)
 
 ### 索引的增删
 
@@ -94,7 +94,7 @@ copyright: 转载请注明出处
 
 - 索引记录指向一个桶（bucket），该桶包含指向具有特定搜索键值的所有实际记录的指针。
 - 次级索引必须是稠密索引。
-![次索引(Secondary index)](<images/Chapter11 Indexing and Hashing/image-6.png>)
+  ![次索引(Secondary index)](<images/Chapter11 Indexing and Hashing/image-6.png>)
 
 :::info
 
@@ -102,9 +102,9 @@ copyright: 转载请注明出处
 - 但是，更新索引会对数据库修改施加开销 - 当文件被修改时，必须更新文件上的每个索引。
 - 使用主索引进行顺序扫描是高效的，但使用次级索引进行顺序扫描是昂贵的。
 - 每次记录访问可能需要从磁盘中获取一个新的块。
-- 块获取大约需要5到10毫秒的时间，而内存访问大约需要100纳秒的时间。
-$10^6:10^2=10^4:1$
-:::
+- 块获取大约需要 5 到 10 毫秒的时间，而内存访问大约需要 100 纳秒的时间。
+  $10^6:10^2=10^4:1$
+  :::
 
 ### B+树索引文件(B+ Tree Index Files)
 
@@ -120,7 +120,7 @@ $10^6:10^2=10^4:1$
 
 ![B+树索引文件(B+ Tree Index Files)](<images/Chapter11 Indexing and Hashing/image-10.png>)
 
-- B树是满足以下属性的根树：
+- B 树是满足以下属性的根树：
   - 从根到叶子的所有路径长度相同。
   - 内部节点（不是根节点或叶子节点）：具有 $[⌈n/2⌉, n]$ 个子节点。
   - 叶子节点：具有 $[⌈(n–1)/2⌉, n–1]$ 个值。
@@ -128,10 +128,10 @@ $10^6:10^2=10^4:1$
     - 如果不是叶子节点，则至少有$2$个子节点。
     - 如果是叶子节点，则可以有$0$到$(n–1)$个值。
 - 例如下图所示：
-  - 叶子节点必须有3到5个值（⌈(n–1)/2⌉和n–1，其中n = 6）。
-  - 非根的非叶子节点必须有3到6个子节点（⌈n/2⌉和n，其中n = 6）。
-  - 根节点必须至少有2个子节点。
-![B+树示例](<images/Chapter11 Indexing and Hashing/image-7.png>)
+  - 叶子节点必须有 3 到 5 个值（⌈(n–1)/2⌉和 n–1，其中 n = 6）。
+  - 非根的非叶子节点必须有 3 到 6 个子节点（⌈n/2⌉和 n，其中 n = 6）。
+  - 根节点必须至少有 2 个子节点。
+    ![B+树示例](<images/Chapter11 Indexing and Hashing/image-7.png>)
 
 #### B+ 树的节点结构
 
@@ -141,18 +141,18 @@ $10^6:10^2=10^4:1$
   - 在非叶子节点中，它们是指向子节点的指针。
   - 在叶子节点中，它们是指向记录或记录桶的指针。
 - 节点中的搜索键按顺序排列：
-$K_1 < K_2 < K_3 < \ldots < K_{n-1}$
-（最初假设没有重复的键，稍后处理重复键的情况）
+  $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
+  （最初假设没有重复的键，稍后处理重复键的情况）
 - 叶子节点满足：$P_1=K_1<P_2=K_2<P_3=K_3<\ldots<P_{n-1}=K_{n-1}<P_n$，且$P_n$指向按搜索键顺序的下一个节点
-![叶子节点](<images/Chapter11 Indexing and Hashing/image-9.png>)
+  ![叶子节点](<images/Chapter11 Indexing and Hashing/image-9.png>)
 - 非叶子节点满足：$P_1<K_1\leq P_2<K_2\leq P_3<K_3\leq\ldots<P_{n-1}<K_{n-1}\leq P_n$
 
 :::info
 
 - 由于节点之间的连接是通过指针完成的，"逻辑上"接近的块（查找关键字的值相近）和"物理上"接近的块（磁盘地址相近）不一定需要在索引中相邻。
-- 例如：Einstein和Gold
+- 例如：Einstein 和 Gold
 - B+树的非叶子节点实际上构成了一个稀疏索引的架构
-:::
+  :::
 
 #### B+树的高度
 
@@ -160,19 +160,19 @@ $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
   - 根节点下面的级别至少有$2 \times ⌈n/2⌉$个值。
   - 下一级至少有$2 \times⌈n/2⌉\times ⌈n/2⌉$个值。
   - 依此类推。
-- 如果文件中有m个搜索键值，则树的高度不超过$⌈\log_{⌈n/2⌉}(m)⌉$，因此搜索可以高效地进行。
+- 如果文件中有 m 个搜索键值，则树的高度不超过$⌈\log_{⌈n/2⌉}(m)⌉$，因此搜索可以高效地进行。
 - 主文件的插入和删除操作可以高效处理，因为索引可以在对数时间内重新结构（后面将会看到）。
 
-#### 在B+树中进行查询
+#### 在 B+树中进行查询
 
-查找具有搜索键值V的记录：
+查找具有搜索键值 V 的记录：
 
 1. 将$C$设为根节点。
 2. 当$C$不是叶子节点时执行以下操作：(在内部节点进行查找)
-    1. 找到最小的索引$i$，使得$V \le K_i$。
-    2. 如果不存在这样的索引i，则将C设为C中的最后一个非空指针。
-    3. 否则，如果$V = K_i$，则将$C$设置为$P_{i+1}$。
-    4. 否则，如果$V < K_i$，则将$C$设置为$Pi$。
+   1. 找到最小的索引$i$，使得$V \le K_i$。
+   2. 如果不存在这样的索引 i，则将 C 设为 C 中的最后一个非空指针。
+   3. 否则，如果$V = K_i$，则将$C$设置为$P_{i+1}$。
+   4. 否则，如果$V < K_i$，则将$C$设置为$Pi$。
 3. 令$i$是最小的，使得$Ki = V $（在叶子节点上）的值。(在叶子节点进行查找)
    - 如果存在这样的值$i$，则按照指针$P_i$查找所需的记录。
    - 否则，不存在具有搜索键值$V$的记录。
@@ -180,23 +180,23 @@ $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
 :::info B+树性能
 
 - 如果文件中有$m$个搜索键值，则树的高度不超过$⌈\log_{⌈n/2⌉}(m)⌉$。
-- 一个节点通常与一个磁盘块的大小相同，通常为4千字节。
-- $n$通常约为100（每个索引条目约为40字节）。
-- 对于有100万（$10^6$）个搜索键值且n = 100的情况，在查找操作中最多访问4个节点。
-- 与具有100万搜索键值的平衡二叉树相比，查找操作中访问约20个节点。
-- 上述差异非常显著，因为每次节点访问可能需要进行磁盘I/O，耗费约20毫秒的时间。
+- 一个节点通常与一个磁盘块的大小相同，通常为 4 千字节。
+- $n$通常约为 100（每个索引条目约为 40 字节）。
+- 对于有 100 万（$10^6$）个搜索键值且 n = 100 的情况，在查找操作中最多访问 4 个节点。
+- 与具有 100 万搜索键值的平衡二叉树相比，查找操作中访问约 20 个节点。
+- 上述差异非常显著，因为每次节点访问可能需要进行磁盘 I/O，耗费约 20 毫秒的时间。
 
 :::
 
 #### B+树文件组织
 
-- 使用B+树索引解决了索引文件退化问题。
-- 使用B+树文件组织解决了数据文件退化问题。
+- 使用 B+树索引解决了索引文件退化问题。
+- 使用 B+树文件组织解决了数据文件退化问题。
 - B+树文件组织中，B+树的叶子节点存储记录，而不是指针。
 - 叶子节点仍需要保持至少半满。
 - 由于记录比指针更大，叶子节点中可以存储的记录数目少于非叶子节点中的指针数目。
-- 插入和删除的处理方式与B+树索引中的插入和删除条目相同。
-![B+树文件组织](<images/Chapter11 Indexing and Hashing/image-11.png>)
+- 插入和删除的处理方式与 B+树索引中的插入和删除条目相同。
+  ![B+树文件组织](<images/Chapter11 Indexing and Hashing/image-11.png>)
 - 通过对两个兄弟节点的重新分配(尽可能避免拆分/合并)，来确保每个节点至少有$\lfloor 2n/3 \rfloor$个项
 - 不同节点的子节点数目差异巨大的原因是：
   - 节点的物理大小是固定的，而键值的大小是可变的。
@@ -209,29 +209,29 @@ $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
 #### 多键索引(Indices on Multiple Keys)
 
 - 对于某些类型的查询，可以使用多个索引。例如：
-- 从instructor表中选择ID，其中dept_name = "Finance"且salary = 80000。
+- 从 instructor 表中选择 ID，其中 dept_name = "Finance"且 salary = 80000。
 - 处理使用单个属性索引的查询的可能策略：
-    1. 使用dept_name索引找到部门名称为"Finance"的教师，然后检查salary是否为80000。
-    2. 使用salary索引找到薪水为80000的教师，然后检查dept_name是否为"Finance"。
-    3. 使用dept_name索引找到与"Finance"部门相关的所有记录的指针，类似地，使用salary索引。取两组指针的交集。
+  1. 使用 dept_name 索引找到部门名称为"Finance"的教师，然后检查 salary 是否为 80000。
+  2. 使用 salary 索引找到薪水为 80000 的教师，然后检查 dept_name 是否为"Finance"。
+  3. 使用 dept_name 索引找到与"Finance"部门相关的所有记录的指针，类似地，使用 salary 索引。取两组指针的交集。
 - 假设我们有一个组合搜索键（dept_name，salary）的索引。
-- 对于where子句where dept_name = "Finance" and salary = 80000，
+- 对于 where 子句 where dept_name = "Finance" and salary = 80000，
 - 索引（dept_name，salary）可以仅用于获取满足两个条件的记录。
-使用单独的索引效率较低-可能会获取满足其中一个条件的许多记录（或指针）。
-- 还可以高效处理where子句where dept_name = "Finance" and salary < 80000。
-- 但是不能高效处理where子句where dept_name < "Finance" and balance = 80000。
+  使用单独的索引效率较低-可能会获取满足其中一个条件的许多记录（或指针）。
+- 还可以高效处理 where 子句 where dept_name = "Finance" and salary < 80000。
+- 但是不能高效处理 where 子句 where dept_name < "Finance" and balance = 80000。
 - 可能会获取满足第一个条件但不满足第二个条件的许多记录。
 
 #### B+树的插入
 
 - 分裂叶子节点：
   - 按照排序顺序获取$n$个（搜索键值，指针）对（包括要插入的对）。将前面的$⌈n/2⌉$个放在原始节点中，将剩余的放在一个新节点中。
-  - 在被分裂的节点的父节点中插入$(k，p)$，其中p指向右边的节点，$k$是$p$中最小的键值。
+  - 在被分裂的节点的父节点中插入$(k，p)$，其中 p 指向右边的节点，$k$是$p$中最小的键值。
   - 如果父节点已满，将其分裂并向上传播分裂。
-  - 节点的分裂向上进行，直到找到一个不满的节点。在最坏的情况下，根节点可能会分裂，将树的高度增加1。
-![B+树的插入 - 1](<images/Chapter11 Indexing and Hashing/image-12.png>)
-![B+树的插入 - 2](<images/Chapter11 Indexing and Hashing/image-13.png>)
-![B+树的插入 - 3](<images/Chapter11 Indexing and Hashing/image-14.png>)
+  - 节点的分裂向上进行，直到找到一个不满的节点。在最坏的情况下，根节点可能会分裂，将树的高度增加 1。
+    ![B+树的插入 - 1](<images/Chapter11 Indexing and Hashing/image-12.png>)
+    ![B+树的插入 - 2](<images/Chapter11 Indexing and Hashing/image-13.png>)
+    ![B+树的插入 - 3](<images/Chapter11 Indexing and Hashing/image-14.png>)
 
 #### B+树的删除
 
@@ -244,9 +244,9 @@ $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
     - 更新节点的父节点中相应的搜索键值。
 - 节点删除可能会向上级联，直到找到一个具有$⌈n/2⌉$或更多指针的节点。
 - 如果根节点在删除后只剩下一个指针，那么根节点将被删除，唯一的子节点将成为新的根节点。
-![B+树的删除 - 1](<images/Chapter11 Indexing and Hashing/image-15.png>)
-![B+树的删除 - 2](<images/Chapter11 Indexing and Hashing/image-16.png>)
-![B+树的删除 - 3](<images/Chapter11 Indexing and Hashing/image-17.png>)
+  ![B+树的删除 - 1](<images/Chapter11 Indexing and Hashing/image-15.png>)
+  ![B+树的删除 - 2](<images/Chapter11 Indexing and Hashing/image-16.png>)
+  ![B+树的删除 - 3](<images/Chapter11 Indexing and Hashing/image-17.png>)
 
 ## 哈希(Hashing)
 
@@ -255,12 +255,12 @@ $K_1 < K_2 < K_3 < \ldots < K_{n-1}$
 - 一个桶(bucket)是一个存储单元，包含一个或多个记录（通常是一个磁盘块）。
 - 在哈希文件组织中，我们通过哈希函数直接从搜索键值获取记录所在的桶。
 - 哈希函数
-$$h：K\rightarrow B$$
-是从所有搜索键值 $K$ 的集合到所有桶地址 $B$ 的集合的函数。
+  $$h：K\rightarrow B$$
+  是从所有搜索键值 $K$ 的集合到所有桶地址 $B$ 的集合的函数。
 - 哈希函数用于定位记录的访问、插入和删除。
 - 具有不同搜索键值的记录可能映射到同一个桶中，因此必须顺序地搜索整个桶以定位记录。
-- 例如下图所示是用$dept\_name$作为键值，哈希函数是模8
-![哈希桶](<images/Chapter11 Indexing and Hashing/image-18.png>)
+- 例如下图所示是用$dept\_name$作为键值，哈希函数是模 8
+  ![哈希桶](<images/Chapter11 Indexing and Hashing/image-18.png>)
 
 ### 哈希函数
 
@@ -282,7 +282,7 @@ $$h：K\rightarrow B$$
 - 尽管可以减少桶溢出的概率，但无法完全消除；它通过使用溢出桶(overflow buckets)来处理。
 - 溢出链表法：给定桶的溢出桶通过链表连接在一起。又被称为闭散列/闭哈希(Closed Hashing)
 - 另一种称为开放散列(Open Hashing)的替代方案不使用溢出桶，但对数据库应用不适用。
-![溢出桶(overflow buckets)](<images/Chapter11 Indexing and Hashing/image-19.png>)
+  ![溢出桶(overflow buckets)](<images/Chapter11 Indexing and Hashing/image-19.png>)
 
 ### 哈希索引(Hash Indices)
 
@@ -291,11 +291,11 @@ $$h：K\rightarrow B$$
 - 严格来说，那么哈希索引始终是次要索引。
   - 如果文件本身使用哈希进行组织，在使用相同的搜索键进行哈希的情况下，对其创建单独的主要哈希索引是不必要的。
   - 然而，我们使用术语哈希索引来指代次要索引结构和哈希组织的文件。
-![哈希索引(Hash Indices)](<images/Chapter11 Indexing and Hashing/image-20.png>)
+    ![哈希索引(Hash Indices)](<images/Chapter11 Indexing and Hashing/image-20.png>)
 
 ### 静态哈希的不足之处
 
-- 在静态哈希中，哈希函数h将搜索键值映射到一个固定的桶地址集合B。数据库随着时间的推移而增长或缩小。
+- 在静态哈希中，哈希函数 h 将搜索键值映射到一个固定的桶地址集合 B。数据库随着时间的推移而增长或缩小。
   - 如果初始桶的数量过小，并且文件不断增长，由于溢出过多，性能将下降。
   - 如果为预期增长分配空间，最初将浪费大量空间（桶将不充分）。
   - 如果数据库缩小，同样会浪费空间。
@@ -313,6 +313,6 @@ $$h：K\rightarrow B$$
 
 在实践中：
 
-- PostgreSQL支持哈希索引，但由于性能较差，不鼓励使用。
-- Oracle支持B+树、位图等。
-- SQLServer仅支持B+树。
+- PostgreSQL 支持哈希索引，但由于性能较差，不鼓励使用。
+- Oracle 支持 B+树、位图等。
+- SQLServer 仅支持 B+树。

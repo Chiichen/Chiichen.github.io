@@ -4,7 +4,7 @@ title: Chapter1 什么是软件架构
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-13
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -138,7 +138,7 @@ copyright: 转载请注明出处
 #### 分解结构(Decompositon Structure)
 
 - 用来展示模块是如何被划分成更小的模块的，例如
-![Decomposition structure: an example](images/Chapter1什么是软件架构/image-1.png)
+  ![Decomposition structure: an example](images/Chapter1什么是软件架构/image-1.png)
 
 #### 使用结构(Uses structure)
 
@@ -190,16 +190,16 @@ copyright: 转载请注明出处
 #### 部署结构(Deployment structure)
 
 - 部署结构显示软件如何分配给硬件处理和通信元素。
-- 元素包括软件元素（通常是来自C&C视图的进程）、硬件实体（处理器）和通信路径。
-- 关系是`allocated-to`，显示软件元素驻留在哪些物理单元上，以及如果分配是动态的，则是migrates-to。
+- 元素包括软件元素（通常是来自 C&C 视图的进程）、硬件实体（处理器）和通信路径。
+- 关系是`allocated-to`，显示软件元素驻留在哪些物理单元上，以及如果分配是动态的，则是 migrates-to。
 - 这个结构可用于推理性能、数据完整性、安全性和可用性。
 - 它在分布式和并行系统中尤为重要。
-![Task allocation in mobile cloud](images/Chapter1什么是软件架构/image-4.png)
+  ![Task allocation in mobile cloud](images/Chapter1什么是软件架构/image-4.png)
 
 #### 实现结构(Implementation structure)
 
 - 这个结构显示了软件元素（通常是模块）在系统的开发、集成或配置控制环境中如何映射到`文件结构`。
-![Implementation structure](images/Chapter1什么是软件架构/image-5.png)
+  ![Implementation structure](images/Chapter1什么是软件架构/image-5.png)
 
 #### 工作分配结构(Work assignment structure)
 
@@ -228,7 +228,7 @@ copyright: 转载请注明出处
 
 - 这个模式包括创建、存储和访问`持久数据`的组件和连接器。
 - 存储库通常采用（商业）数据库的形式。
-- 连接器是用于管理数据的协议，如SQL。
+- 连接器是用于管理数据的协议，如 SQL。
 
 ![Shared data pattern](images/Chapter1什么是软件架构/image-7.png)
 

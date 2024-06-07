@@ -3,14 +3,14 @@ title: eBPF开发入门
 # cover: /assets/images/cover1.jpg
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-11-15
 category:
-    - 杂谈
-    - Linux内核
+  - 杂谈
+  - Linux内核
 tag:
-    - Linux内核
-    - eBPF
+  - Linux内核
+  - eBPF
 sticky: false
 star: false
 footer:
@@ -19,7 +19,7 @@ copyright: 转载请注明出处
 
 ## 依赖安装
 
-### Rust安装
+### Rust 安装
 
 需要安装 Nightly 版本，略
 
@@ -163,7 +163,7 @@ note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.ht
 ```
 
 :::info
-    在根目录下 `Cargo.toml` 下加一行`resolver = "2"`在原有的 `members = ["xtask", "memory-scan", "memory-scan-common"]` 一行后面就可以解决这个 warning
+在根目录下 `Cargo.toml` 下加一行`resolver = "2"`在原有的 `members = ["xtask", "memory-scan", "memory-scan-common"]` 一行后面就可以解决这个 warning
 :::
 
 编译完成后，对应的程序保存在 target 目录下：
@@ -256,7 +256,7 @@ $ RUST_LOG=info cargo xtask run -- --iface lo
 $ ip link show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 xdpgeneric qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    prog/xdp id 351 
+    prog/xdp id 351
 
 $ sudo bpftool prog list
 300: cgroup_device  tag e3dbd137be8d6168  gpl

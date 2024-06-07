@@ -4,7 +4,7 @@ title: 软件项目管理2019复习笔记
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-18
 category:
   - 课程笔记
@@ -14,30 +14,30 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: false
 copyright: 转载请注明出处
 ---
 
-# 2019IT项目管理复习笔记Ver3.0（终版）
+# 2019IT 项目管理复习笔记 Ver3.0（终版）
 
 ## 整理人：彭晓轩
 
-## Ver1.0整理日期：2019/11/26
+## Ver1.0 整理日期：2019/11/26
 
-## Ver2.0、Ver2.1整理日期：2019/11/27
+## Ver2.0、Ver2.1 整理日期：2019/11/27
 
-## Ver3.0整理日期：2019/11/29（终版，不再更新）
+## Ver3.0 整理日期：2019/11/29（终版，不再更新）
 
-##### 修改说明：Ver2.0额外补充了部分知识点以及修正了部分拼写错误，Ver2.1添加了必需的额外的中文翻译以及再次修正部分拼写错误，Ver3.0再次添加了部分知识点，现在已经相对比较完备了，以及修正了部分拼写错误
+##### 修改说明：Ver2.0 额外补充了部分知识点以及修正了部分拼写错误，Ver2.1 添加了必需的额外的中文翻译以及再次修正部分拼写错误，Ver3.0 再次添加了部分知识点，现在已经相对比较完备了，以及修正了部分拼写错误
 
-## 注：整理不易，大家可以在这个基础上自行调整优化笔记，内容不全，3.0版本的内容相对还是比较详细的了，⭐标记是笔者认为的重点，笔者建议复习的时候可以这份笔记为主，前提是已经看过一遍PPT或者书本！有需要的同学另外还要附加其他资料去看。转载请标明原作者和相关文档链接
+## 注：整理不易，大家可以在这个基础上自行调整优化笔记，内容不全，3.0 版本的内容相对还是比较详细的了，⭐ 标记是笔者认为的重点，笔者建议复习的时候可以这份笔记为主，前提是已经看过一遍 PPT 或者书本！有需要的同学另外还要附加其他资料去看。转载请标明原作者和相关文档链接
 
-#### 虽然我也不知道还会不会出名词解释题5555，大家最好还是看看叭👇
+#### 虽然我也不知道还会不会出名词解释题 5555，大家最好还是看看叭 👇
 
 ### ⭐1.Project（去年已出）
 
-A project is a temporary endeavor undertaken to  create a unique product, service, or result.
+A project is a temporary endeavor undertaken to create a unique product, service, or result.
 
 ### ⭐2.Project Management
 
@@ -123,7 +123,7 @@ Analyzing Strengths, Weaknesses, Opportunities, and Threats
 
 A systems development life cycle is a framework for describing the phases of developing information systems.
 
-#### Some predictive SDLC models:The waterfall life cycle、 The spiral life cycle、 The  incremental build life cycle
+#### Some predictive SDLC models:The waterfall life cycle、 The spiral life cycle、 The incremental build life cycle
 
 ### ⭐22.Six Sigma
 
@@ -143,7 +143,7 @@ A gantt chart that compares planned and actual project schedule information.The 
 
 Subdividing project deliverables into smaller pieces.
 
-### 26.Scrum图相关（去年已出）
+### 26.Scrum 图相关（去年已出）
 
 Product backlog（产品订单）、Sprint backlog（冲刺订单）、Potentially shippable product increment（潜在可交付产品增量）、（Burndown Chart 燃尽图）
 
@@ -285,7 +285,7 @@ The SMART criteria are guidelines suggesting that milestones should be:
 
 5.Closing: Close project or phase
 
-### 项目组织结构（书本Ch2）
+### 项目组织结构（书本 Ch2）
 
 #### Functional
 
@@ -346,13 +346,13 @@ The three main objectives of integrated change control are:
 
 ### ⭐PERT
 
-PERT weighted average = **(optimistic time+4*most likely time+pessimistic time)/6**
+PERT weighted average = **(optimistic time+4\*most likely time+pessimistic time)/6**
 
-### ⭐EVM计算
+### ⭐EVM 计算
 
 | Term                               | Formula                    |
 | ---------------------------------- | -------------------------- |
-| Earned Value(EV)                   | EV=PV to date * RP         |
+| Earned Value(EV)                   | EV=PV to date \* RP        |
 | Cost Variance(CV)                  | CV=EV-AC                   |
 | Schedule Variance(SV)              | SV=EV-PV                   |
 | Cost Performance Variance(CPI)     | CPI=EV/AC                  |
@@ -368,7 +368,7 @@ EV: Earned Value, is an estimate of the value of the physical work actually comp
 
 RP: The rate of performance, is the ratio of actual work completed to the percentage of work planned to have been completed at any given time during the life of the project or activity.
 
-#### 如果CV、SV、CPI、SPI是负数，那么这个项目就会出现成本方面的问题
+#### 如果 CV、SV、CPI、SPI 是负数，那么这个项目就会出现成本方面的问题
 
 ### Number Of Communication Channels
 
@@ -423,15 +423,15 @@ n(n-1)/2
 
 5. Repeat Steps 3 and 4 many times to obtain the probability distribution of the model's results.
 
-### ⭐项目时间管理计算大题解答步骤总结
+### ⭐ 项目时间管理计算大题解答步骤总结
 
-#### 先正推法求出所有活动的ES、EF
+#### 先正推法求出所有活动的 ES、EF
 
-#### 再反推法求出所有活动的LS、LF
+#### 再反推法求出所有活动的 LS、LF
 
-#### 对于总时差（Total Float），计算公式为：ES-LS或EF-LF
+#### 对于总时差（Total Float），计算公式为：ES-LS 或 EF-LF
 
-#### 对于自由时差（Free Float)，计算公式为min{ES1-EF0,ES2-EF0,...},1号活动和2号活动都在0号活动之后
+#### 对于自由时差（Free Float)，计算公式为 min{ES1-EF0,ES2-EF0,...},1 号活动和 2 号活动都在 0 号活动之后
 
 ### Four basic response strategies for negative risks
 
@@ -509,20 +509,20 @@ PTA = （**ceiling price-target price)/government share + target cost**
 - **Cost-reimbursable contracts**:involve payment to the supplier for direct and indirect actual costs.
 - **Time and material(T&M)contracts**:a hybrid of fixed-price and cost-imbursable contracts.
 
-### ⭐几种合约对买方和卖方的风险
+### ⭐ 几种合约对买方和卖方的风险
 
 #### 按顺序买方风险从高到低、卖方风险从低到高
 
 CPPC、CPFF、CPIF、CPAF、FPI、FP-EPA、FFP
 
-### Gantt Chart(书本P214英文版)
+### Gantt Chart(书本 P214 英文版)
 
 - The black diamond represents a milestone.
 - The thick black bars with arrows at the beginning and end represent summary tasks.
 - The light gray horizontal bars for Tasks... represent the duration of each individual task.
 - Arrows connecting these symbols show relationships or dependencies between tasks.
 
-### Tracking Gantt Chart（书本P216英文版）
+### Tracking Gantt Chart（书本 P216 英文版）
 
 - The top horizontal bars represents the planned or baseline duration for each task. The bar below it represents the actual duration.
 - A white diamond represents a slipped milestone. A slipped milestone means the milestone activity was actually completed later than originally planned.
@@ -534,7 +534,7 @@ CPPC、CPFF、CPIF、CPAF、FPI、FP-EPA、FFP
 
 **Fallback plans** are developed for risks that have a high impact on meeting project objectives, and are put into effect if attempts to reduce the risk do not work.
 
-**Contingency reserves** or **contingency allowances**  are provisions held by the project sponsor or organization to reduce the risk of cost or schedule over-runs to an acceptable level.
+**Contingency reserves** or **contingency allowances** are provisions held by the project sponsor or organization to reduce the risk of cost or schedule over-runs to an acceptable level.
 
 **A risk register** is a document that contains results of various risk management processes.
 
@@ -643,19 +643,19 @@ The cost of conformance（一致，适应） plus the cost of nonconformance.
 
 **The cost of nonconformance** means taking responsibility for failures or not meeting quality expectations.
 
-### Herzberg’s Motivation-Hygiene Theory赫茨伯格的激励--保健因素理论
+### Herzberg’s Motivation-Hygiene Theory 赫茨伯格的激励--保健因素理论
 
 他把影响工作满意的因素称为激励因素，把导致不满的因素称为保健因素。“保健”一词用于这些因素被认为只是用来避免产生不满，而又并不能提供满意感的维持因素。
 
-### McGregor’s Theory X and Theory Y麦格雷戈的X理论和Y理论
+### McGregor’s Theory X and Theory Y 麦格雷戈的 X 理论和 Y 理论
 
-- 信奉X理论的人认为，员工不喜欢并且设法逃避工作，为了使员工充分发挥工作效果来完成目标，经理必须进行强制监督、威胁并制定多种控制制度。他们认为他们认为普通的员工宁愿接受指挥而不愿承担责任，缺乏上进心，安于现状。
-- 信奉Y理论的人则认为，人非天生懒惰和不喜欢工作，只是有时候需要放松和休息。最重要的奖励应是如马斯洛所说的，满足他们的尊重和自我实现需求。
-- 麦格雷戈强烈建议经理在Y理论的指导下制定激励员工计划。
+- 信奉 X 理论的人认为，员工不喜欢并且设法逃避工作，为了使员工充分发挥工作效果来完成目标，经理必须进行强制监督、威胁并制定多种控制制度。他们认为他们认为普通的员工宁愿接受指挥而不愿承担责任，缺乏上进心，安于现状。
+- 信奉 Y 理论的人则认为，人非天生懒惰和不喜欢工作，只是有时候需要放松和休息。最重要的奖励应是如马斯洛所说的，满足他们的尊重和自我实现需求。
+- 麦格雷戈强烈建议经理在 Y 理论的指导下制定激励员工计划。
 
-### Thamhain and Wilemon’s Influence and Power塞姆海恩和威利蒙的影响力和权力理论
+### Thamhain and Wilemon’s Influence and Power 塞姆海恩和威利蒙的影响力和权力理论
 
-塞姆海恩和威利蒙通过调查项目经理处理员工关系的方法，以及这些方法与项目成功之间的关系，找到了9种项目经理可用的影响基础。
+塞姆海恩和威利蒙通过调查项目经理处理员工关系的方法，以及这些方法与项目成功之间的关系，找到了 9 种项目经理可用的影响基础。
 
 - Authority
 - Assignment

@@ -5,14 +5,14 @@ title: Edition 设置引起的一个 Rust 编译器报错
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-11-15
 category:
-    - 杂谈
-    - Debug杂谈
-    - Rust
+  - 杂谈
+  - Debug杂谈
+  - Rust
 tag:
-    - Rust
+  - Rust
 sticky: false
 star: false
 footer:
@@ -81,4 +81,4 @@ chumsky = { version = "1.0.0-alpha.6", features = ["label"] }
 ariadne = "0.3.0"
 ```
 
-就不会出现这个错误了。但是具体的原因我还不清楚，cargo 生成的 rustc 编译命令中也只是把 `edition = "2021"` 作为参数传入了，暂不清楚这个参数具体是怎么作用于编译器的，虽然按照官方的说法，如果不指定 `edition = "2015|2018|2021"` 默认是用 `edition = "2015"`的，但是在系统内是没有这个版本的编译器的，我猜测这个 edition 是通过开关某些 feature 来实现的，因此虽然安装的是最新的编译器，但是默认使用了2015的feature，就会导致编译器行为异常
+就不会出现这个错误了。但是具体的原因我还不清楚，cargo 生成的 rustc 编译命令中也只是把 `edition = "2021"` 作为参数传入了，暂不清楚这个参数具体是怎么作用于编译器的，虽然按照官方的说法，如果不指定 `edition = "2015|2018|2021"` 默认是用 `edition = "2015"`的，但是在系统内是没有这个版本的编译器的，我猜测这个 edition 是通过开关某些 feature 来实现的，因此虽然安装的是最新的编译器，但是默认使用了 2015 的 feature，就会导致编译器行为异常

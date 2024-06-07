@@ -3,7 +3,7 @@ title: decltype(auto)的应用
 # cover: /assets/images/cover1.jpg
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-19
 category:
   - C++
@@ -11,22 +11,22 @@ tag:
   - C++
 sticky: false
 star: false
-footer: 
+footer:
 copyright: 转载请注明出处
 ---
 
 ## 非模板中应用
 
-印象中google的C++编程规范手册说过，如果不是为了代码更安全或者不熟悉项目的人读起来更方便，尽量不要使用类型推导，比如为了省显示类型书写。
+印象中 google 的 C++编程规范手册说过，如果不是为了代码更安全或者不熟悉项目的人读起来更方便，尽量不要使用类型推导，比如为了省显示类型书写。
 
 ### 最常见推导
 
-对于变量或者普通的返回值来说，常见有4种auto用法，还有一种`const auto &&`基本没有用，不去讨论。
+对于变量或者普通的返回值来说，常见有 4 种 auto 用法，还有一种`const auto &&`基本没有用，不去讨论。
 
 1. `auto`: 产生拷贝,可以修改
 2. `auto&`: 左值引用，接受左值，可以修改
-3. `const auto&`: const引用,可以接受左右值，不可修改
-4. `auto&&`: 万能引用，可以接受左右值，const引用时不能修改
+3. `const auto&`: const 引用,可以接受左右值，不可修改
+4. `auto&&`: 万能引用，可以接受左右值，const 引用时不能修改
 
 代码示例：
 
@@ -48,15 +48,15 @@ auto p3 = &TestType::v1; // p3为int TestType::*,成员对象指针
 
 这里对于最普通的`auto`写法，就算=右边的表达式或者函数返回是引用，这里也还是会`产生一次拷贝的代价，产生副本`，现实项目还遇到代码非常复杂，有新人不熟悉业务，刚好这个类没有实现深拷贝导致拷贝崩溃的。如果从安全角度出发推荐用`const auto&`，因为如果产生了修改编译不过，再推荐用`auto&&`万能引用。
 
-`decltype(auto)` 本质是对括号auto的表达式替换，然后再decltype推断。
+`decltype(auto)` 本质是对括号 auto 的表达式替换，然后再 decltype 推断。
 
 ### 函数返回值推导
 
-auto可以作函数返回值的推导，我了解有三类写法,相互接近，但有时略有不同。
+auto 可以作函数返回值的推导，我了解有三类写法,相互接近，但有时略有不同。
 
-1. 最普通的`auto作返回`，编译器会从返回语句的所用表达式类型推到，符合模板实参推导，对应下面示例代码中fun1,fun2,funlambda
-2. `auto配合尾随返回类型`，在模板编程中用的比较多些，函数返回类型为尾随返回类型，一般来说这种用于复杂的或者不太好直接书写的返回类型,比如`函数指针`，对应下面示例代码中fun3,fun4，funp,作为对比：funp写法明显比以前的funp1写法易读
-3. `decltype(auto)作返回`,它实质是将返回值表达式代入到auto然后`再用decltype规则进行推断`，所以是不同于第一种的，比如直接推出引用，对应下面示例代码中fun5,fun6
+1. 最普通的`auto作返回`，编译器会从返回语句的所用表达式类型推到，符合模板实参推导，对应下面示例代码中 fun1,fun2,funlambda
+2. `auto配合尾随返回类型`，在模板编程中用的比较多些，函数返回类型为尾随返回类型，一般来说这种用于复杂的或者不太好直接书写的返回类型,比如`函数指针`，对应下面示例代码中 fun3,fun4，funp,作为对比：funp 写法明显比以前的 funp1 写法易读
+3. `decltype(auto)作返回`,它实质是将返回值表达式代入到 auto 然后`再用decltype规则进行推断`，所以是不同于第一种的，比如直接推出引用，对应下面示例代码中 fun5,fun6
 
 ```cpp
 // 返回值是float型
@@ -64,7 +64,7 @@ auto fun1(float a) {return a;}
 // 返回值是const float&型
 const auto& fun2() {return a;}
 // 返回值是lambda表达式
-auto funlambda() { 
+auto funlambda() {
   return [](int a)->int {return a; };}
 
 // 返回值是float型,尾随返回类型
@@ -82,7 +82,7 @@ auto funp(int)
 { return testfun;}
 // funp1以前的写法,很不直观
 int (*funp1(int))(float, double)
-{ return testfun;}    
+{ return testfun;}
 
 // 返回值是float型，decltype(value)
 float value;
@@ -93,23 +93,23 @@ decltype(auto) fun6(){return (value);}
 
 函数返回中也有几个注意点：
 
-- 不能对虚函数用auto作返回推断
-- 返回值类型必一致，比如if，else返回有return 18和return 18.f时不通过,我们平时不用auto写法可以,只是发生了转换
-- 不能对decltype(auto)进行修饰,比如加上const或&等
-- 不能对返回语句是花括号初始化器列表推导，如auto fun7() return {1};
+- 不能对虚函数用 auto 作返回推断
+- 返回值类型必一致，比如 if，else 返回有 return 18 和 return 18.f 时不通过,我们平时不用 auto 写法可以,只是发生了转换
+- 不能对 decltype(auto)进行修饰,比如加上 const 或&等
+- 不能对返回语句是花括号初始化器列表推导，如 auto fun7() return {1};
 
-:::info 关于auto与decltype(auto)以及return a与return (a)的区别
+:::info 关于 auto 与 decltype(auto)以及 return a 与 return (a)的区别
 
 - `auto`默认为永不推断为引用，而`decltype(auto)`会根据实际情况可能推断为引用
-- 在使用`auto`为返回值时，`return a` 和 `return (a)`没区别(a为一个标识符，)
-- 而在用decltype(auto)为返回值时，`return a`的返回类型就是标识符`a`的声明类型(假设为`int a`)即为`int`，而`(a)`是一个表达式，因此会把这个左值推断为引用类型，即为`int& a`，因此如果返回值改为`(a++)`，这是个右值，因此类型推导为`int`
-:::
+- 在使用`auto`为返回值时，`return a` 和 `return (a)`没区别(a 为一个标识符，)
+- 而在用 decltype(auto)为返回值时，`return a`的返回类型就是标识符`a`的声明类型(假设为`int a`)即为`int`，而`(a)`是一个表达式，因此会把这个左值推断为引用类型，即为`int& a`，因此如果返回值改为`(a++)`，这是个右值，因此类型推导为`int`
+  :::
 
 ## 在模板中的应用
 
 ### 普通函数内实用简写
 
-通常模板类通过相互嵌套略微复杂，显示写出类型会比较长，在语意明确的情况下，可以用auto简写，这种情况可以用typedef或using代替，如下代码：
+通常模板类通过相互嵌套略微复杂，显示写出类型会比较长，在语意明确的情况下，可以用 auto 简写，这种情况可以用 typedef 或 using 代替，如下代码：
 
 ```cpp
 std::map<std::string,
@@ -125,7 +125,7 @@ auto unptr_TestClass = std::make_unique<MyTestClass>();
 
 ### 模板函数中简写
 
-普通函数内简写可能还比较容易，或者感觉只是省略一点点，但我们再放到模板类或模板函数中，可能就比较有用了，可以省去很多typename,给一段对比代码
+普通函数内简写可能还比较容易，或者感觉只是省略一点点，但我们再放到模板类或模板函数中，可能就比较有用了，可以省去很多 typename,给一段对比代码
 
 ```cpp
 template<typename TContainer>
@@ -156,9 +156,9 @@ void TestContainer(const TContainer& cont)
 }
 ```
 
-### auto非类型模板形参推断
+### auto 非类型模板形参推断
 
-在C++模板形参中，还有一部分为非类型的，比如直接整数18，枚举类型，在[从常量字符串编译期映射初探C++模板元编程《一》](https://zhuanlan.zhihu.com/p/377145104)一文中有经典用法，我人我们先看一个例子：
+在 C++模板形参中，还有一部分为非类型的，比如直接整数 18，枚举类型，在[从常量字符串编译期映射初探 C++模板元编程《一》](https://zhuanlan.zhihu.com/p/377145104)一文中有经典用法，我人我们先看一个例子：
 
 ```cpp
 template<typename T,T v>
@@ -167,7 +167,7 @@ struct TNonType{};
 TNonType<int, 100> t1;
 ```
 
-从C++17起，这种无类型形参，可以用auto代替,根据规定，可以由下面类型
+从 C++17 起，这种无类型形参，可以用 auto 代替,根据规定，可以由下面类型
 
 - 整数类型
 - 指针类型
@@ -206,7 +206,7 @@ TNonTypeAutosSame < 'a', 'b','c','d'> t6;
 TNonTypeAutosSame < 'a', 'b', 'c', nullptr> t7;
 ```
 
-对于C++17也可以用decltype(auto) 作模板参数
+对于 C++17 也可以用 decltype(auto) 作模板参数
 
 ```cpp
 template<decltype(auto) v>
@@ -218,9 +218,9 @@ extern int g_value;
 TNonTypeDecltypeAuto<(g_value)> t9;// int&
 ```
 
-### 模板auto综合类型擦除应用
+### 模板 auto 综合类型擦除应用
 
-我们来看一应用，算是比较综合，体会一下auto的妙用，可以更加通用，不用显式传入类型，做到类型擦除。这里用到了成员对象指针和对应用法，不太了解的可以参考文章[C++中几种原生指针（普通指针，成员指针，函数指针）](https://zhuanlan.zhihu.com/p/361462790)
+我们来看一应用，算是比较综合，体会一下 auto 的妙用，可以更加通用，不用显式传入类型，做到类型擦除。这里用到了成员对象指针和对应用法，不太了解的可以参考文章[C++中几种原生指针（普通指针，成员指针，函数指针）](https://zhuanlan.zhihu.com/p/361462790)
 
 ```cpp
 struct OneTestStruct
@@ -258,11 +258,11 @@ CounterHandle<&OneTestStruct::value> h(one);
 h.increase();
 ```
 
-辅助模板`PMClassHelper`用于给一个成员对象指针PM作模板参数（形式如：T1 T2::\*），推断出指针对应类的类型ClassType，以及成员对象类型MemberType；`CounterHandle`模板类使用auto PMD作参数，是一个非类型的模板形参，当为成员对象指针时实例化时，decltype(PMD)能推出其指针类型T1 T2::\*；然后用PMClassType相当于萃取出T2的具体类型，也就是_c所对应类。结构看到这里，基本发现有个很重要设计点，就是类型擦除。
+辅助模板`PMClassHelper`用于给一个成员对象指针 PM 作模板参数（形式如：T1 T2::\*），推断出指针对应类的类型 ClassType，以及成员对象类型 MemberType；`CounterHandle`模板类使用 auto PMD 作参数，是一个非类型的模板形参，当为成员对象指针时实例化时，decltype(PMD)能推出其指针类型 T1 T2::\*；然后用 PMClassType 相当于萃取出 T2 的具体类型，也就是\_c 所对应类。结构看到这里，基本发现有个很重要设计点，就是类型擦除。
 
-再看一下`CounterHandle`设计，其成员c是一个引用类型，在构造函数里面初始化，不产生拷贝，保证一定性能，通过auto与decltype的联合设计，可以不显示声明类型，可以做到类型擦除。在increase函数，调用成员对象指针自增，可以统一出一个接口，也可以进行特化处理，这都是模板编程的常用手段。
+再看一下`CounterHandle`设计，其成员 c 是一个引用类型，在构造函数里面初始化，不产生拷贝，保证一定性能，通过 auto 与 decltype 的联合设计，可以不显示声明类型，可以做到类型擦除。在 increase 函数，调用成员对象指针自增，可以统一出一个接口，也可以进行特化处理，这都是模板编程的常用手段。
 
-我们再看一下，不用auto,要么用`template<typename T1,T1 v> struct CounterHandleOld`定义时不显式，但需要在实例化时显式声明`CounterHandleOld<int OneTestStruct::*,&OneTestStruct::value>` ,要么`template<int OneTestStruct::*v> struct CounterHandleOld2`显式定义，更不好的设计，但实例化可以隐式`CounterHandleOld2<&OneTestStruct::value>`。
+我们再看一下，不用 auto,要么用`template<typename T1,T1 v> struct CounterHandleOld`定义时不显式，但需要在实例化时显式声明`CounterHandleOld<int OneTestStruct::*,&OneTestStruct::value>` ,要么`template<int OneTestStruct::*v> struct CounterHandleOld2`显式定义，更不好的设计，但实例化可以隐式`CounterHandleOld2<&OneTestStruct::value>`。
 
 ```cpp
 template<typename T1,T1 v>
@@ -293,16 +293,16 @@ CounterHandleOld2<&OneTestStruct::value> h2(one);
 h2.increase();
 ```
 
-## 在泛型lambda中应用
+## 在泛型 lambda 中应用
 
-可以用auto代替难以书写的lambda表达式类型，这是最常用的
+可以用 auto 代替难以书写的 lambda 表达式类型，这是最常用的
 
 ```cpp
 auto alam1= [](int x)->int {return x; };
 ```
 
-泛型lambda表达式：
-对于形参中为auto的参数，该lambda为泛型lambda表达式。
+泛型 lambda 表达式：
+对于形参中为 auto 的参数，该 lambda 为泛型 lambda 表达式。
 
 ```cpp
 auto alam2 = [](auto a, auto&& b) { return a < b; };
@@ -323,7 +323,7 @@ MyInvoke([]
 
 ## 结构化绑定、
 
-这一小部分也是C++17引入，将指定的名称绑到指定对象上，算是已有对象的别名，和引用相似，但不一定为引用类型。先看一下代码：
+这一小部分也是 C++17 引入，将指定的名称绑到指定对象上，算是已有对象的别名，和引用相似，但不一定为引用类型。先看一下代码：
 
 ```cpp
 struct  stBindType
@@ -336,10 +336,10 @@ auto [b, N] = st;
 auto& [br, Nr] = st;
 ```
 
-第一处：创建一个对象e，将st内容复制到e，期中b指代e的bValid，N指代e的iValue
-第二处：直接br指代st的bValid，Nr指代st的iValue
+第一处：创建一个对象 e，将 st 内容复制到 e，期中 b 指代 e 的 bValid，N 指代 e 的 iValue
+第二处：直接 br 指代 st 的 bValid，Nr 指代 st 的 iValue
 结构化绑定，这一块我用的不多，其它不再讨论。
 
 ## 参考
 
-基本内容搬运自[谈谈C++的auto，decltype(auto)及在模板中的应用](https://zhuanlan.zhihu.com/p/404831186)
+基本内容搬运自[谈谈 C++的 auto，decltype(auto)及在模板中的应用](https://zhuanlan.zhihu.com/p/404831186)

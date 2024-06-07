@@ -5,20 +5,19 @@ title: could not dial endpoint 'orderer-api.127-0-0-1.nip.io:8080' 问题解决
 
 icon: page
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-18
 category:
-    - 杂谈
-    - Debug杂谈
-    - 网络问题
+  - 杂谈
+  - Debug杂谈
+  - 网络问题
 tag:
-    - Debug
-    - 网络问题
+  - Debug
+  - 网络问题
 sticky: false
 star: false
 footer:
 copyright: 转载请注明出处
-
 ---
 
 ## could not dial endpoint 'orderer-api.127-0-0-1.nip.io:8080'
@@ -29,9 +28,9 @@ copyright: 转载请注明出处
 could not dial endpoint 'orderer-api.127-0-0-1.nip.io:8080'
 ```
 
-刚开始的时候一直在想这个域名是什么，看起来是某个服务的端口，但是似乎这个过程中又没有让我登录，不可能不登陆就能访问这种 API 服务的吧。后来上网搜索发现 `.nip.io` 会被 DNS 服务器 rebind 成一个特殊的地址，例如 `hello.192.168.199.12.nip.io` 就会变成 `192.168.199.12` ，那么这个原来的地址理应是 `127.0.0.1` 也就是 `Localhost` ，我ping了一下
+刚开始的时候一直在想这个域名是什么，看起来是某个服务的端口，但是似乎这个过程中又没有让我登录，不可能不登陆就能访问这种 API 服务的吧。后来上网搜索发现 `.nip.io` 会被 DNS 服务器 rebind 成一个特殊的地址，例如 `hello.192.168.199.12.nip.io` 就会变成 `192.168.199.12` ，那么这个原来的地址理应是 `127.0.0.1` 也就是 `Localhost` ，我 ping 了一下
 
-``` bash
+```bash
 ping orderer-api.127-0-0-1.nip.io
 ```
 

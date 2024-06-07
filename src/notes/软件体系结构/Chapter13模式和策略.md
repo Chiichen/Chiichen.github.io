@@ -4,7 +4,7 @@ title: Chapter13 模式和策略
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-16
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -38,7 +38,7 @@ copyright: 转载请注明出处
   - 发布-订阅模式
   - 共享数据模式
 - 分配模式
-  - Map-Reduce模式
+  - Map-Reduce 模式
   - 多层模式
 
 ### 分层模式(Layer Pattern)
@@ -47,7 +47,7 @@ copyright: 转载请注明出处
 - 每个层是一组模块，提供一套协调一致的服务。
 - 每个层通过`公共接口(public interface)`进行暴露。
 - 使用必须是单向的。
-![Stack-of-boxes notation for layered designs](images/Chapter13模式和策略/image.png)
+  ![Stack-of-boxes notation for layered designs](images/Chapter13模式和策略/image.png)
 
 #### 分层模式解决方案
 
@@ -60,7 +60,7 @@ copyright: 转载请注明出处
   - 添加层会增加系统的成本和复杂性。
   - 层会对性能产生负面影响。
 - 例如下图所示的三层分层应用结构
-![ Layered design with segmented layers ](images/Chapter13模式和策略/image-2.png)
+  ![ Layered design with segmented layers ](images/Chapter13模式和策略/image-2.png)
 
 ### 代理模式(Broker Pattern)
 
@@ -97,8 +97,8 @@ copyright: 转载请注明出处
   - 模型、视图和控制器必须至少有一个实例。
 - 弱点：
   - 对于简单的用户界面来说，复杂性可能不值得。
-- 例如下图所示为一个MVC模式示意图
-![The model-view-controller pattern](images/Chapter13模式和策略/image-1.png)
+- 例如下图所示为一个 MVC 模式示意图
+  ![The model-view-controller pattern](images/Chapter13模式和策略/image-1.png)
 
 ### 管道和过滤器模式(Pipe and Filter Pattern)
 
@@ -115,7 +115,7 @@ copyright: 转载请注明出处
 - 关系：附加关系将过滤器的输出与管道的输入相关联，反之亦然。
 - 约束条件：
   - 连接的过滤器必须就沿着连接管道传递的数据类型达成一致。
-![A UML diagram of a pipe-and-filter-based system](images/Chapter13模式和策略/image-3.png)
+    ![A UML diagram of a pipe-and-filter-based system](images/Chapter13模式和策略/image-3.png)
 
 ### 客户端-服务器模式(Client-Server Pattern)
 
@@ -123,7 +123,7 @@ copyright: 转载请注明出处
 - 问题：通过`集中控制`这些资源和服务来提高可用性。
 - 解决方案：客户端通过请求服务器的服务进行交互。
   - 可能存在一个中央服务器或多个分布式服务器。
-![The client-server architecture of an ATM banking system](images/Chapter13模式和策略/image-4.png)
+    ![The client-server architecture of an ATM banking system](images/Chapter13模式和策略/image-4.png)
 
 #### 客户端-服务器模式解决方案
 
@@ -138,7 +138,7 @@ copyright: 转载请注明出处
 - 使它们能够以高可用性和可扩展性组织和共享其服务？
 - 解决方案：在点对点（P2P）模式中，组件作为对等体直接进行交互。所有对等体都是“相等的”。
   - 点对点通信通常是一种请求/响应的交互方式，`没有客户端-服务器模式中的非对称性`。
-![A peer-to-peer view](images/Chapter13模式和策略/image-5.png)
+    ![A peer-to-peer view](images/Chapter13模式和策略/image-5.png)
 
 #### 点对点模式解决方案
 
@@ -150,7 +150,7 @@ copyright: 转载请注明出处
 
 - 问题：如何支持在不同平台上运行、使用不同实现语言编写、由不同组织提供并分布在互联网上的分布式组件之间的互操作性？
 - 解决方案：面向服务的体系结构（SOA）模式描述了一组提供和/或消费服务的分布式组件。
-![Diagram of the SOA view](images/Chapter13模式和策略/image-6.png)
+  ![Diagram of the SOA view](images/Chapter13模式和策略/image-6.png)
 
 #### 面向服务的体系结构模式解决方案
 
@@ -161,8 +161,8 @@ copyright: 转载请注明出处
     - 企业服务总线（Enterprise Service Bus, ESB）：作为`中间件元素`，可以在服务提供者和消费者之间路由和转换消息。
     - 服务注册表：供应商可使用注册表注册其服务，并在运行时由消费者发现服务。
 - 连接器：
-  - SOAP连接器：使用SOAP协议进行Web服务之间的同步通信，通常通过HTTP进行。
-  - REST连接器：依赖于HTTP协议的基本请求/响应操作。
+  - SOAP 连接器：使用 SOAP 协议进行 Web 服务之间的同步通信，通常通过 HTTP 进行。
+  - REST 连接器：依赖于 HTTP 协议的基本请求/响应操作。
   - 异步消息连接器：使用消息系统进行点对点或发布-订阅的`异步消息交换(asynchronous message exchanges)`。
 - 弱点：
   - 中间件存在与性能相关的开销，可能成为性能瓶颈，并且通常不提供性能保证。
@@ -170,8 +170,8 @@ copyright: 转载请注明出处
 ### 发布-订阅模式(Publish-Subscribe Pattern)
 
 - 问题：如何在生产者和消费者之间传递消息，使它们对彼此的身份甚至存在都毫不知情？
-![Publish-Subscribe Basic Model Overview](images/Chapter7可修改性/image-3.png)
-![A typical publish-subscribe pattern realization](images/Chapter13模式和策略/image-7.png)
+  ![Publish-Subscribe Basic Model Overview](images/Chapter7可修改性/image-3.png)
+  ![A typical publish-subscribe pattern realization](images/Chapter13模式和策略/image-7.png)
 
 #### 发布-订阅模式优缺点
 
@@ -190,7 +190,7 @@ copyright: 转载请注明出处
 - 问题：系统如何存储和操作被多个独立组件访问的`持久`数据？
 - 解决方案：在共享数据模式中，交互主要通过多个数据访问者和至少一个共享数据存储之间的持久数据交换来实现。
   - 交换可以由访问者或数据存储发起。连接器类型是数据读取和写入。
-  
+
 ![The shared-data diagram of an enterprise access management system](images/Chapter13模式和策略/image-9.png)
 ![The Google File System. SOSP](images/Chapter13模式和策略/image-8.png)
 
@@ -204,32 +204,32 @@ copyright: 转载请注明出处
 
 ### MapReduce（分布式计算模型）
 
-- 源自Google，[OSDI'04]
+- 源自 Google，[OSDI'04]
 - 一种简单的编程模型
 - 用于大规模数据处理
   - 利用大量的通用计算机
   - 分布式执行过程
   - 提供高可用性
-![The Overall MapReduce Word Count Process](images/Chapter13模式和策略/image-10.png)
-- 详见[第一个MapReduce程序——WordCount](https://songlee24.github.io/2015/07/29/mapreduce-word-count/)
+    ![The Overall MapReduce Word Count Process](images/Chapter13模式和策略/image-10.png)
+- 详见[第一个 MapReduce 程序——WordCount](https://songlee24.github.io/2015/07/29/mapreduce-word-count/)
 
 :::info HDFS 和 GFS
 
-- HDFS(Hadoop分布式文件系统)是根据GFS(Google文件系统)的原理开发的,是GFS的简化版。
+- HDFS(Hadoop 分布式文件系统)是根据 GFS(Google 文件系统)的原理开发的,是 GFS 的简化版。
 - 不同点：
-    1. GFS支持多客户端并发Append模型,允许文件被多次或者多个客户端同时打开以追加数据;HDFS文件只允许一次打开并追加数据,客户端先把所有数据写入本地的临时文件中,等到数据量达到一个块的大小(通常为64MB),再一次性写入HDFS文件。
-    2. GFS采用主从模式备份Master的系统元数据,当主Master失效时,可以通过分布式选举备机接替,继续对外提供服务;而HDFS的Master的持久化数据只写入到到本机,可能采用磁盘镜像作为预防,出现故障时需要人工介入
-    3. GFS支持数据库快照,而HDFS不支持
-    4. GFS写入数据时,是实时写入到物理块;而HDFS是积赞到一定量,才持久化到磁盘。
+  1. GFS 支持多客户端并发 Append 模型,允许文件被多次或者多个客户端同时打开以追加数据;HDFS 文件只允许一次打开并追加数据,客户端先把所有数据写入本地的临时文件中,等到数据量达到一个块的大小(通常为 64MB),再一次性写入 HDFS 文件。
+  2. GFS 采用主从模式备份 Master 的系统元数据,当主 Master 失效时,可以通过分布式选举备机接替,继续对外提供服务;而 HDFS 的 Master 的持久化数据只写入到到本机,可能采用磁盘镜像作为预防,出现故障时需要人工介入
+  3. GFS 支持数据库快照,而 HDFS 不支持
+  4. GFS 写入数据时,是实时写入到物理块;而 HDFS 是积赞到一定量,才持久化到磁盘。
 
 :::
 
 #### 本地化问题
 
 - 主节点调度策略
-  - 向GFS请求输入文件块副本的位置
-  - Map任务通常按照64MB（等于GFS块大小）划分
-  - 调度Map任务时，使GFS输入块副本位于同一台机器或同一机架上
+  - 向 GFS 请求输入文件块副本的位置
+  - Map 任务通常按照 64MB（等于 GFS 块大小）划分
+  - 调度 Map 任务时，使 GFS 输入块副本位于同一台机器或同一机架上
 - 影响
   - 成千上万台机器以本地磁盘速度读取输入
   - 若没有本地化策略，机架切换将限制读取速率
@@ -255,11 +255,11 @@ copyright: 转载请注明出处
 
 #### 需要强调的要点
 
-- 在map完成之前，reduce不能开始执行。
+- 在 map 完成之前，reduce 不能开始执行。
 - 主节点必须传达中间文件的位置信息。
 - 任务调度基于数据的位置。
-- 如果map工作节点在reduce完成之前任何时候失败，任务必须完全重新运行。
-- MapReduce库为我们完成了大部分繁重的工作！
+- 如果 map 工作节点在 reduce 完成之前任何时候失败，任务必须完全重新运行。
+- MapReduce 库为我们完成了大部分繁重的工作！
 
 ### 多层模式
 
@@ -305,21 +305,23 @@ copyright: 转载请注明出处
 
 - 每个策略都有其优点（存在的原因）和缺点 - 副作用。
 - 使用策略可以帮助减轻缺点。
-- 但没有什么是免费的，一个常见的检测故障的策略是Ping/Echo（ping/echo），Ping/Echo的常见副作用包括：
-  - 安全性：如何防止Ping洪水攻击？
-  - 性能：如何确保Ping/Echo的性能开销较小？
-  - 可修改性：如何将Ping/Echo添加到现有架构中？
-![Stage 1](images/Chapter13模式和策略/image-12.png)
+- 但没有什么是免费的，一个常见的检测故障的策略是 Ping/Echo（ping/echo），Ping/Echo 的常见副作用包括：
+
+  - 安全性：如何防止 Ping 洪水攻击？
+  - 性能：如何确保 Ping/Echo 的性能开销较小？
+  - 可修改性：如何将 Ping/Echo 添加到现有架构中？
+    ![Stage 1](images/Chapter13模式和策略/image-12.png)
 
 - 一个用于解决性能副作用的策略是“增加可用资源”（Increase Available Resources）。增加可用资源的常见副作用包括：
+
   - 成本：增加资源会带来额外的成本。
   - 性能：如何高效利用增加的资源？
-![Stage 2](images/Chapter13模式和策略/image-13.png)
+    ![Stage 2](images/Chapter13模式和策略/image-13.png)
 
 - 一个用于解决资源高效利用副作用的策略是“调度策略”（Scheduling Policy）。调度策略的常见副作用包括：
   - 可修改性：如何将调度策略添加到现有架构中？
   - 可修改性：如何在将来更改调度策略？
-![Stage 3](images/Chapter13模式和策略/image-14.png)
+    ![Stage 3](images/Chapter13模式和策略/image-14.png)
 
 :::info 这样的递归何时结束？
 

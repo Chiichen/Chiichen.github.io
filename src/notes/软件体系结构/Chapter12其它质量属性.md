@@ -4,7 +4,7 @@ title: Chapter12 其它质量属性
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-16
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -40,13 +40,13 @@ copyright: 转载请注明出处
 
 - 在集中式架构中，控制和决策集中在一个单一的中央实体或服务器上。这种方法可以提供更好的资源协调和管理，但可能会成为单点故障并限制可扩展性。
 - 相比之下，分散式架构将控制和决策分布在多个实体或服务器之间。这种方法可以提供更好的容错性、可扩展性和弹性，但可能会引入协调和一致性方面的挑战。
-:::
+  :::
 
 ## 部署性(Deployability)
 
 - 部署性关注的是可执行文件如何到达主机平台以及如何被调用。
 - 例如：
-  - JavaScript脚本
+  - JavaScript 脚本
   - 病毒
   - 代理程序
 

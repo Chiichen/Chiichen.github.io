@@ -4,18 +4,18 @@ title: Linux Kernel Map
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-10-24
 category:
-    - 笔记
-    - Linux 内核
+  - 笔记
+  - Linux 内核
 tag:
-    - Linux 内核
+  - Linux 内核
 # this page is sticky in article list
 sticky: true
 # this page will appear in starred articles
 star: true
-footer: 
+footer:
 isOriginal: false
 copyright: 转载请注明出处
 ---

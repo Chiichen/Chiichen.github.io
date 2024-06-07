@@ -4,7 +4,7 @@ title: Chapter8 性能
 icon: page
 # This control sidebar order
 order: 1
-author: ChiChen
+author: Chiichen
 date: 2023-12-14
 category:
   - 课程笔记
@@ -14,7 +14,7 @@ tag:
 sticky: false
 # this page will appear in starred articles
 star: false
-footer: 
+footer:
 isOriginal: true
 copyright: 转载请注明出处
 ---
@@ -40,7 +40,7 @@ copyright: 转载请注明出处
 
 - 在基于时间的约束条件内，对进入系统的事件生成响应。
 - 事件可以是单个事件或事件流，并且是执行计算的触发器。
-![ The goal of performance tactics](images/Chapter8性能/image.png)
+  ![ The goal of performance tactics](images/Chapter8性能/image.png)
 
 ## 两种策略类别
 
@@ -50,10 +50,10 @@ copyright: 转载请注明出处
 - 管理资源
   - 使现有资源在处理需求时更有效
   - 在响应方面进行操作
-::info资源
-- 硬件资源，例如CPU、数据存储、网络带宽和内存
+    ::info 资源
+- 硬件资源，例如 CPU、数据存储、网络带宽和内存
 - 软件资源，例如缓冲区或关键区域
-:::
+  :::
 
 ## 性能策略
 
@@ -94,7 +94,7 @@ copyright: 转载请注明出处
   - 缓冲区需要进行调度
   - 网络需要进行调度
 
-### 3维度调度框架问题(3-Dimension Framework for Scheduling Problem)
+### 3 维度调度框架问题(3-Dimension Framework for Scheduling Problem)
 
 - 任务(Tasks)
 - 资源(Resources)
@@ -206,6 +206,7 @@ copyright: 转载请注明出处
 :::info 调度方法：系统考虑因素
 
 - 以机器为中心的方法
+
   - 当一台机器空闲时触发调度
   - 对于每台空闲机器，根据一些策略选择任务，例如：
     - 先到先得（First-Come-First-Serve，FCFS）
@@ -223,39 +224,38 @@ copyright: 转载请注明出处
 
 摘自论文[Performance-effective and low-complexity task scheduling for heterogeneous computing](http://doi.org/10.1109/71.993206)
 
-1. 步骤1：任务选择
-通过为每个任务分配优先级构建一个有序任务列表，然后按照它们的优先级顺序选择任务。
-2. 步骤2：处理器选择
-将每个选定的任务调度到能够最小化预定义成本函数的处理器上。
-3. 重复执行步骤1和步骤2，直到所有任务都被调度。
+1. 步骤 1：任务选择
+   通过为每个任务分配优先级构建一个有序任务列表，然后按照它们的优先级顺序选择任务。
+2. 步骤 2：处理器选择
+   将每个选定的任务调度到能够最小化预定义成本函数的处理器上。
+3. 重复执行步骤 1 和步骤 2，直到所有任务都被调度。
 
 例如：
 
 ![Example: List Scheduling](images/Chapter8性能/image-9.png)
 
 1. Step 1: 任务选择 - 上行排名（Upward rank）
-节点i的上行排名是最长路径的长度。
-![Task selection – Upward rank](images/Chapter8性能/image-8.png)
-:::info 计算方法
-在我们的算法中，任务按照基于向上和向下排名的调度优先级进行排序。任务 $n_i$ 的向上排名由
+   节点 i 的上行排名是最长路径的长度。
+   ![Task selection – Upward rank](images/Chapter8性能/image-8.png)
+   :::info 计算方法
+   在我们的算法中，任务按照基于向上和向下排名的调度优先级进行排序。任务 $n_i$ 的向上排名由
 
 $$
 rank_u(n_i)=\overline{w_i}+\max_{n_j\in succ(n_i)}(\overline{c_{i,j}}+rank_u(n_j)),
 $$
 
-递归定义。其中 $succ n_i$ 是任务$n_i$的直接后继集合，$\overline{c_{i,j}}$ 是边$(i,j)$的平均通信成本；$\overline{w_i}$ 为任务 $n_i$ 的平均计算成本。由于Rank是通过向上遍历任务图递归计算的，因此从退出任务开始，称为向上Rank。对于退出任务$n_{exit}$，向上Rank值等于
+递归定义。其中 $succ n_i$ 是任务$n_i$的直接后继集合，$\overline{c_{i,j}}$ 是边$(i,j)$的平均通信成本；$\overline{w_i}$ 为任务 $n_i$ 的平均计算成本。由于 Rank 是通过向上遍历任务图递归计算的，因此从退出任务开始，称为向上 Rank。对于退出任务$n_{exit}$，向上 Rank 值等于
 
 $$
 rank_u(n_{exit})=\overline{w_{exit}}.
-$$  
+$$
 
 基本上，$rank_u(n_i)$ 是从任务 $n_i$ 到退出任务的关键路径的长度，包括任务 $n_i$ 的计算成本。文献中有一些算法仅使用计算成本来计算排名值，其中称为静态向上排名，$rank_u^s$。类似地，任务$n_i$的向下排名由
 
 $$rank_d(n_i)=\max_{n_j\in pred(n_i)}\{rank_d(n_j)+\overline{w_j}+\overline{c_{j,i}}\left.\right\}$$
 
-递归定义；其中$pred(n_i)$是任务$n_i$的直接前驱集合。通过从图的入口任务开始向下遍历任务图来递归地计算向下排名。对于入口任务$n_{entry}$，向下排名值等于0。基本上，$rank_d(n_i)$ 是从入口任务到任务$n_i$的最长距离，不包括任务本身的计算成本。
-:::
-2. Step 2: 处理器选择 - 最早完成时间
+递归定义；其中$pred(n_i)$是任务$n_i$的直接前驱集合。通过从图的入口任务开始向下遍历任务图来递归地计算向下排名。对于入口任务$n_{entry}$，向下排名值等于 0。基本上，$rank_d(n_i)$ 是从入口任务到任务$n_i$的最长距离，不包括任务本身的计算成本。
+::: 2. Step 2: 处理器选择 - 最早完成时间
 
 在处理器选择阶段，选择能够最早完成任务的处理器。这意味着根据任务的执行时间和处理器的当前状态，选择能够最快完成任务的处理器进行调度。
 
@@ -264,9 +264,11 @@ $$rank_d(n_i)=\max_{n_j\in pred(n_i)}\{rank_d(n_j)+\overline{w_j}+\overline{c_{j
 :::info 计算方法
 
 $EST(n_i,,p_j)$ 和 $EFT(n_i,p_j)$ 分别是任务 $n_i$ 在处理器 $p_j$ 上的最早执行开始时间和最早执行结束时间。对于入口任务 $n_entry$，
+
 $$
 EST(n_{entry},p_j)=0
 $$
+
 对于图中的其他任务，从入口任务开始递归计算 $EFT$ 和 $EST$ 值，分别如下所示。为了计算任务 $n_i$ 的 $EFT$，需要计算任务 $n_i$ 的所有直接前置任务你肯定已经被安排好了。
 
 $$
@@ -280,9 +282,11 @@ $$
 其中 $pred (n_i)$ 是任务 $n_i$ 的直接前置任务的集合，$avail[j] $ 是处理器 $p_j$ 准备好执行任务的最早时间。如果 $n_k$ 是处理器 $p_j$ 上最后分配的任务，则$avail [j]$ 是当我们有基于非插入的调度策略时处理器 $p_j$ ，完成了任务 $n_k$ 的执行，并且准备好执行另一个任务的时间。$EST$ 方程中的内部 $max$ 块返回就绪时间，即 $n_i$ 所需的所有数据都已到达处理器$p_j$的时间
 
 任务 $n_m$ 在处理器 $p_j$ 上调度后， $n_m$ 在处理器 $p_j$ 上的最早开始时间和最早完成时间分别等于任务 $n_m$ 的实际开始时间 $AST (n_m)$ 和实际完成时间 $AFT (n_m)$ 。当一个图中的所有任务都被调度后，调度长度（即总体完成时间）是退出任务$n_{exit}$的实际完成时间。如果有多个退出任务并且插入伪退出任务的约定不适用，调度长度(也称为$makespan$)定义为
+
 $$
 makespan=\max\{AFT(n_{exit})\}
 $$
+
 :::
 
 ## 摘要
