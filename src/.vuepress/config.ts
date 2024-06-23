@@ -31,6 +31,9 @@ export default defineUserConfig({
       `
     ],
     /*************** end 添加谷歌统计 ***********/
+    [
+      'link',{ rel: 'icon', href: '/KissingCat.jpg' }
+    ],
   ],
   plugins: [
     // googleAnalyticsPlugin({
