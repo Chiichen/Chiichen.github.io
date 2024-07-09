@@ -13,8 +13,8 @@ importers:
         version: 2.0.0-rc.9(@types/node@20.14.8)(sass@1.77.6)
     devDependencies:
       '@vuepress/client':
-        specifier: 2.0.0-rc.13
-        version: 2.0.0-rc.13
+        specifier: 2.0.0-rc.14
+        version: 2.0.0-rc.14
       '@vuepress/plugin-docsearch':
         specifier: 2.0.0-rc.26
         version: 2.0.0-rc.26(@algolia/client-search@4.23.3)(search-insights@2.14.0)(vuepress@2.0.0-rc.9(@vuepress/bundler-vite@2.0.0-rc.9(@types/node@20.14.8)(sass@1.77.6))(vue@3.4.31))
@@ -955,8 +955,8 @@ packages:
     resolution: {integrity: sha512-uv7Xmv3QmPpzCaUAq0oKEwp2tY64AO+7mxamgr7tr+t6FEnCYqr+X0nLlH17UtMkmGWIsbHLIlMjteprxGxIMg==}
     hasBin: true
 
-  '@vuepress/client@2.0.0-rc.13':
-    resolution: {integrity: sha512-kFHVyroAFZ+/ZVaItjIXOZA6r+ympWN+C+0yZYVkMpzyDVFdZrl9WazqhwHBIUj0/sA+NLq2o2EvoqvAPa1lFg==}
+  '@vuepress/client@2.0.0-rc.14':
+    resolution: {integrity: sha512-ULwxOiWoUi15HWQ6qH60gWjxSXB0797uExCUa4HgHV/8SpIqv4SHFn6jqjo7qCzOxuTqj1RT47JH3oWfUF4XPA==}
 
   '@vuepress/client@2.0.0-rc.9':
     resolution: {integrity: sha512-V5jA6L1nHQ8tXBshRHBJKei7HPFonGxFzmVK5yjj2Ho/Xtp/SD9rBS6dyYd5CSkKRGQDgy19Z+BUUPXtdI1qzg==}
@@ -1108,9 +1108,6 @@ packages:
     resolution: {integrity: sha512-3eN68ada9+gdzCNzK6o6uRfpTUoUHXo8EUXRUBk2K9bCtb/dL20Q+BUE61iN9zeEidVcf02BBrqvgBrjEU5CGQ==}
     peerDependencies:
       vuepress: 2.0.0-rc.9
-
-  '@vuepress/shared@2.0.0-rc.13':
-    resolution: {integrity: sha512-xtruKVH9QqTLIQxbPbU3iZWthLC8uR5yYUzVA6eL+knjHkpCXOlzqMYnlp4xT0tzQNw+gBHWLKo8zVEccSkqug==}
 
   '@vuepress/shared@2.0.0-rc.14':
     resolution: {integrity: sha512-VDDnPpz4x1Q07richcVRGbc4qc2RG/6bKoEYSImofTFzvdmHer538ouv8kD2SNU10UrSOpxxUiphnhlhNIe03A==}
@@ -3273,10 +3270,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@vuepress/client@2.0.0-rc.13':
+  '@vuepress/client@2.0.0-rc.14':
     dependencies:
       '@vue/devtools-api': 6.6.3
-      '@vuepress/shared': 2.0.0-rc.13
+      '@vuepress/shared': 2.0.0-rc.14
       vue: 3.4.31
       vue-router: 4.4.0(vue@3.4.31)
     transitivePeerDependencies:
@@ -3537,10 +3534,6 @@ snapshots:
       vuepress: 2.0.0-rc.9(@vuepress/bundler-vite@2.0.0-rc.9(@types/node@20.14.8)(sass@1.77.6))(vue@3.4.31)
     transitivePeerDependencies:
       - typescript
-
-  '@vuepress/shared@2.0.0-rc.13':
-    dependencies:
-      '@mdit-vue/types': 2.1.0
 
   '@vuepress/shared@2.0.0-rc.14':
     dependencies:
