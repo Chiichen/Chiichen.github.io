@@ -19,48 +19,103 @@ isOriginal: true
 copyright: 转载请注明出处
 ---
 
-## 推导过程
 
-当我们考虑一个实心球体的静电能时，我们可以假设球体带有均匀的电荷密度$\rho$。我们希望推导出球体的静电能，即球体内部的电荷与外部的电荷之间的相互作用能。
+# 均匀带电球体静电能的推导
 
-首先，考虑球体内部的一个体积元素$dV$，该体积元素距离球心的距离为$r$。该体积元素所带电荷量$dQ$可以表示为：
+考虑一个半径为 \( a \) 的均匀带电球体，总电荷量为 \( Q \)。我们需要计算这个球体的静电能。
 
-$$dQ = \rho \cdot dV$$
+## 1. 电场
 
-接下来，我们考虑球体内部的一个点电荷元素$dQ_1$与体积元素$dV$之间的相互作用能$dU$。根据库伦定律，两个电荷之间的相互作用能可以表示为：
+根据高斯定律，球体内外的电场分别为：
 
-$$dU = \frac{1}{4\pi\epsilon_0} \cdot \frac{dQ \cdot dQ_1}{r}$$
+$
+\mathbf{E} = 
+\begin{cases} 
+\frac{Q \mathbf{r}}{4 \pi \epsilon_0 a^3} = \frac{\rho \mathbf{r}}{3 \epsilon_0}, & (r < a) \\
+\frac{Q \mathbf{r}}{4 \pi \epsilon_0 r^3}, & (r \geq a)
+\end{cases}
+$
 
-其中，$\epsilon_0$是真空介电常数。
+其中，\($\rho = \frac{Q}{\frac{4}{3} \pi a^3}$\) 是电荷密度。
 
-现在我们来计算球体内部的所有点电荷元素$dQ_1$与体积元素$dV$之间的相互作用能的总和。由于球体带有均匀的电荷密度，我们可以将$dQ_1$看作是球体内部的其他体积元素的电荷，而$dV$表示的体积元素则是球体内部的一个体积小球。因此，我们可以将$dU$表示为球体内部的所有体积小球与其他体积元素之间相互作用能的总和。这可以通过对体积元素$dV$进行积分来实现。
+## 2. 球内电势
 
-对球体内部的体积元素$dV$进行积分，可以得到球体的静电能$U$：
+球内任意点 \( $r$ \) 处的电势 \($\varphi(r)$\) 可以通过积分电场得到：
 
-$$U = \iiint \frac{1}{4\pi\epsilon_0} \cdot \frac{dQ \cdot dQ_1}{r}$$
+$$
+\varphi(r) = \int_r^a \vec{E} \cdot d\vec{l} = \int_r^a E \, dr + \int_a^\infty E \, dr
+$$
 
-将$dQ$替换为$\rho \cdot dV$，并将积分范围限定在球体内部，我们可以得到：
+对于 \( $r < a$ \) 的情况：
 
-$$U = \iiint \frac{1}{4\pi\epsilon_0} \cdot \frac{\rho \cdot dV \cdot \rho \cdot dV_1}{r}$$
+$$
+\varphi(r) = \int_r^a \frac{Q r}{4 \pi \epsilon_0 a^3} \, dr + \int_a^\infty \frac{Q}{4 \pi \epsilon_0 r^2} \, dr
+$$
 
-其中，$dV_1$表示球体内部的另一个体积元素。
+计算积分：
 
-对上式进行化简，我们可以得到：
+$$
+\varphi(r) = \left. \frac{Q r^2}{8 \pi \epsilon_0 a^3} \right|_r^a + \left. -\frac{Q}{4 \pi \epsilon_0 r} \right|_a^\infty
+$$
 
-$$U = \frac{\rho^2}{8\pi\epsilon_0} \iiint \frac{dV \cdot dV_1}{r}$$
+$$
+\varphi(r) = \frac{Q a^2}{8 \pi \epsilon_0 a^3} - \frac{Q r^2}{8 \pi \epsilon_0 a^3} + \frac{Q}{4 \pi \epsilon_0 a}
+$$
 
-接下来，我们来解决积分部分。由于球体是对称的，我们可以使用球坐标来进行积分。设$dV$所对应的球坐标为$(r, \theta, \phi)$，$dV_1$所对应的球坐标为$(r_1, \theta_1, \phi_1)$。由于球体是实心的，所以$r$的取值范围是从$0$到球体半径$R$，$r_1$的取值范围也是从$0$到$R$。
+$$
+\varphi(r) = \frac{Q}{4 \pi \epsilon_0 a} \left( \frac{a^2}{2 a^2} - \frac{r^2}{2 a^2} + 1 \right)
+$$
 
-使用球坐标进行积分后，我们可以得到：
+$$
+\varphi(r) = \frac{Q}{4 \pi \epsilon_0 a} \left( \frac{3}{2} - \frac{r^2}{2 a^2} \right)
+$$
 
-$$U = \frac{\rho^2}{8\pi\epsilon_0} \int_0^R \int_0^\pi \int_0^{2\pi} \frac{r^2 \sin\theta \cdot r_1^2 \sin\theta_1 \cdot d\phi \cdot d\theta \cdot d\phi_1}{\sqrt{r^2 + r_1^2 - 2rr_1\cos\gamma}}$$
+$$
+\varphi(r) = \frac{Q}{4 \pi \epsilon_0 a} \left( \frac{3}{2} - \frac{r^2}{2 a^2} \right) = \frac{\rho a^2}{6 \epsilon_0} \left( 3 - \frac{r^2}{a^2} \right)
+$$
 
-其中，$\gamma$表示$dV$和$dV_1$之间的夹角。
+## 3. 静电能
 
-由于积分过程较为复杂，这里不再展开具体的推导过程。但是通过进行适当的变量替换和积分计算，可以最终得到实心球体的静电能的表达式：
+静电能 \( $W$ \) 为电荷密度和电势的乘积在整个球体体积上的积分：
 
-$$U = \frac{3}{5} \frac{1}{4\pi\epsilon_0} \frac{Q^2}{R}$$
+$$
+W = \frac{1}{2} \int_V \rho \varphi(r) \, dV
+$$
 
-其中，$Q$表示球体的总电荷量，$R$表示球体的半径，$\epsilon_0$表示真空介电常数。
+$$
+W = \frac{1}{2} \int_0^a \rho \left( \frac{\rho a^2}{6 \epsilon_0} \left( 3 - \frac{r^2}{a^2} \right) \right) 4 \pi r^2 \, dr
+$$
 
-这个表达式表示了实心球体的静电能与球体的总电荷量和半径之间的关系。这个结果表明，实心球体的静电能正比于电荷量的平方，反比于球体的半径。
+$$
+W = \frac{1}{2} \cdot \frac{\rho^2 a^2}{6 \epsilon_0} \cdot 4 \pi \int_0^a \left( 3 - \frac{r^2}{a^2} \right) r^2 \, dr
+$$
+
+计算积分：
+
+$$
+\int_0^a \left( 3r^2 - \frac{r^4}{a^2} \right) \, dr = \left[ r^3 - \frac{r^5}{5a^2} \right]_0^a = a^3 - \frac{a^5}{5a^2} = a^3 - \frac{a^3}{5} = \frac{4a^3}{5}
+$$
+
+因此：
+
+$$
+W = \frac{1}{2} \cdot \frac{\rho^2 a^2}{6 \epsilon_0} \cdot 4 \pi \cdot \frac{4a^3}{5} = \frac{4 \pi \rho^2 a^5}{15 \epsilon_0}
+$$
+
+将 \($\rho = \frac{Q}{\frac{4}{3} \pi a^3}$\) 代入：
+
+$$
+\rho = \frac{3Q}{4 \pi a^3}
+$$
+
+$$
+W = \frac{4 \pi \left( \frac{3Q}{4 \pi a^3} \right)^2 a^5}{15 \epsilon_0} = \frac{4 \pi \cdot \frac{9Q^2}{16 \pi^2 a^6} \cdot a^5}{15 \epsilon_0} = \frac{36 Q^2}{60 \pi \epsilon_0 a} = \frac{3 Q^2}{5 \cdot 4 \pi \epsilon_0 a} = \frac{3 Q^2}{20 \pi \epsilon_0 a}
+$$
+
+## 4. 结论
+
+均匀带电球体的静电能为：
+
+$$
+W = \frac{3 Q^2}{20 \pi \epsilon_0 a}
+$$
