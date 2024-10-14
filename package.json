@@ -18,7 +18,7 @@
     "@vuepress/utils": "2.0.0-rc.14",
     "mathjax-full": "^3.2.2",
     "mermaid": "^10.9.1",
-    "vue": "^3.5.10",
+    "vue": "^3.5.12",
     "vuepress": "2.0.0-rc.9",
     "vuepress-plugin-md-enhance": "2.0.0-rc.43",
     "vuepress-theme-hope": "2.0.0-rc.38"
