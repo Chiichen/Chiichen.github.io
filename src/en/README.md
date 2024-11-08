@@ -3,7 +3,7 @@ home: true
 layout: BlogHome
 icon: home
 title: Blog Home
-heroImage: /logo.svg
+heroImage: /KissingCat.jpg
 heroText: Chiichen's Blog
 tagline: A true master is an eternal student
 heroFullScreen: true
